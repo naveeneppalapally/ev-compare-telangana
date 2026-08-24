@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%" style="background:#020617;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#090d16" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+
+    <!-- Brand Accent Gradient -->
+    <linearGradient id="brandAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+
+    <!-- Cyber Grid Pattern -->
+    <pattern id="cyberGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.75" stroke-opacity="0.4" />
+    </pattern>
+
+    <!-- Subtle Radial Glow -->
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#020617" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="800" height="500" fill="url(#bgGrad)" rx="20" />
+  <rect width="800" height="500" fill="url(#cyberGrid)" rx="20" />
+  <circle cx="400" cy="260" r="240" fill="url(#centerGlow)" />
+
+  <!-- Top Badges Bar -->
+  <g transform="translate(30, 30)">
+    <!-- Brand Pill -->
+    <rect x="0" y="0" width="140" height="32" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="70" y="21" font-size="11" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="1.5">
+      BAJAJ AUTO
+    </text>
+
+    <!-- Archetype Pill -->
+    <rect x="150" y="0" width="210" height="32" rx="8" fill="#0f172a" stroke="#0284c7" stroke-width="1" stroke-opacity="0.5" />
+    <text x="255" y="21" font-size="11" font-weight="700" fill="#0284c7" text-anchor="middle">
+      🛵 RETRO METAL-BODY SCOOTER
+    </text>
+  </g>
+
+  <!-- Top Right Battery / Spec Badge -->
+  <g transform="translate(540, 30)">
+    <rect x="0" y="0" width="230" height="32" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="115" y="21" font-size="11" font-weight="700" font-family="monospace" fill="#38bdf8" text-anchor="middle">
+      ⚡ 2.88 kWh • NMC
+    </text>
+  </g>
+
+  <!-- Center Vehicle Silhouette Vector Artwork -->
+  <g class="silhouette-archetype" data-archetype="retro-metal-scooter">
+    <!-- Horizon Ground Shadow -->
+    <ellipse cx="400" cy="405" rx="280" ry="12" fill="#000000" fill-opacity="0.6" />
+    <line x1="160" y1="405" x2="640" y2="405" stroke="#0284c7" stroke-width="1" stroke-opacity="0.3" />
+
+    <!-- Injected Archetype Geometry -->
+    
+        <!-- Retro Curved Metal Body Panels (Bajaj Chetak) -->
+        <g stroke="#0284c7" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Round/Horseshoe Retro Headlamp Nacelle -->
+          <path d="M 330 185 Q 315 155, 345 155 Q 365 155, 350 185 Z" fill="#0f172a" stroke="#f8fafc" stroke-width="3" />
+          <circle cx="330" cy="170" r="10" stroke="#f59e0b" stroke-width="2" fill="none" />
+          <!-- Classic Curved Front Apron -->
+          <path d="M 335 185 Q 285 240, 275 305 L 335 315 L 360 240 Z" fill="#0284c7" fill-opacity="0.2" stroke="#0284c7" stroke-width="3.5" />
+          <!-- Flat Metal Floorboard -->
+          <path d="M 330 315 L 440 315" stroke="#f8fafc" stroke-width="4" />
+          <!-- Curvaceous Teardrop Side Panel (Metal cowl) -->
+          <path d="M 410 270 Q 480 230, 560 260 Q 575 310, 480 320 Z" fill="#0284c7" fill-opacity="0.25" stroke="#0284c7" stroke-width="3.5" />
+          <!-- Classic Curved Bench Seat -->
+          <path d="M 380 255 Q 460 235, 540 245" stroke="#f8fafc" stroke-width="4" />
+          <!-- Chrome Grab Handle -->
+          <path d="M 525 240 Q 565 235, 560 260" stroke="#06b6d4" stroke-width="3" />
+          <line x1="300" y1="290" x2="270" y2="360" stroke="#94a3b8" stroke-width="4" />
+        </g>
+        <!-- Classic 12-inch Solid Rim Wheels -->
+        <g>
+          <circle cx="270" cy="360" r="42" stroke="#f8fafc" stroke-width="6" fill="#0b1329" />
+          <circle cx="270" cy="360" r="22" stroke="#0284c7" stroke-width="2" fill="none" />
+          <circle cx="270" cy="360" r="9" fill="#94a3b8" />
+          <circle cx="525" cy="360" r="42" stroke="#f8fafc" stroke-width="6" fill="#0b1329" />
+          <circle cx="525" cy="360" r="22" stroke="#0284c7" stroke-width="2" fill="none" />
+          <circle cx="525" cy="360" r="9" fill="#94a3b8" />
+        </g>
+      
+  </g>
+
+  <!-- Bottom Information Bar -->
+  <g transform="translate(30, 425)">
+    <!-- Model Title -->
+    <text x="0" y="20" font-size="22" font-weight="900" fill="#f8fafc" letter-spacing="-0.5">
+      Bajaj Auto Bajaj Chetak 2901 (2.88 kWh Metal Body)
+    </text>
+
+    <!-- Spec Summary Bar -->
+    <text x="0" y="44" font-size="12" font-family="monospace" fill="#94a3b8">
+      Top Speed: <tspan fill="#f8fafc" font-weight="bold">63 km/h</tspan> • Real City: <tspan fill="#0284c7" font-weight="bold">90 km</tspan> • ARAI: <tspan fill="#38bdf8">123 km</tspan>
+    </text>
+
+    <!-- Offline Vector Fallback Watermark -->
+    <text x="740" y="44" font-size="10" font-weight="600" fill="#475569" text-anchor="end">
+      VECTOR SILHOUETTE PREVIEW
+    </text>
+  </g>
+</svg>

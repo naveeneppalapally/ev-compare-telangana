@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%" style="background:#020617;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#090d16" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+
+    <!-- Brand Accent Gradient -->
+    <linearGradient id="brandAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e3a8a" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+
+    <!-- Cyber Grid Pattern -->
+    <pattern id="cyberGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.75" stroke-opacity="0.4" />
+    </pattern>
+
+    <!-- Subtle Radial Glow -->
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1e3a8a" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#020617" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="800" height="500" fill="url(#bgGrad)" rx="20" />
+  <rect width="800" height="500" fill="url(#cyberGrid)" rx="20" />
+  <circle cx="400" cy="260" r="240" fill="url(#centerGlow)" />
+
+  <!-- Top Badges Bar -->
+  <g transform="translate(30, 30)">
+    <!-- Brand Pill -->
+    <rect x="0" y="0" width="140" height="32" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="70" y="21" font-size="11" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="1.5">
+      ATHER ENERGY
+    </text>
+
+    <!-- Archetype Pill -->
+    <rect x="150" y="0" width="210" height="32" rx="8" fill="#0f172a" stroke="#1e3a8a" stroke-width="1" stroke-opacity="0.5" />
+    <text x="255" y="21" font-size="11" font-weight="700" fill="#1e3a8a" text-anchor="middle">
+      🛵 SPORTY AERODYNAMIC SCOOTER
+    </text>
+  </g>
+
+  <!-- Top Right Battery / Spec Badge -->
+  <g transform="translate(540, 30)">
+    <rect x="0" y="0" width="230" height="32" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="115" y="21" font-size="11" font-weight="700" font-family="monospace" fill="#38bdf8" text-anchor="middle">
+      ⚡ 3.7 kWh • NMC
+    </text>
+  </g>
+
+  <!-- Center Vehicle Silhouette Vector Artwork -->
+  <g class="silhouette-archetype" data-archetype="sporty-scooter">
+    <!-- Horizon Ground Shadow -->
+    <ellipse cx="400" cy="405" rx="280" ry="12" fill="#000000" fill-opacity="0.6" />
+    <line x1="160" y1="405" x2="640" y2="405" stroke="#1e3a8a" stroke-width="1" stroke-opacity="0.3" />
+
+    <!-- Injected Archetype Geometry -->
+    
+        <!-- Sporty Origami Apron & Steep Upswept Tail (Ather / Simple / Ola S1 Pro) -->
+        <g stroke="#1e3a8a" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Handlebar Cowl with Sporty Display -->
+          <path d="M 335 185 L 310 180 L 330 160 L 350 180 Z" fill="#0f172a" stroke="#f8fafc" stroke-width="3" />
+          <!-- Sharp Creased Aerodynamic Front Apron -->
+          <path d="M 325 185 L 290 260 L 260 290 L 305 310 L 355 240 Z" fill="#1e3a8a" fill-opacity="0.2" stroke="#1e3a8a" stroke-width="3.5" />
+          <!-- Floorboard spine bridge -->
+          <path d="M 305 310 L 415 315 L 435 285" stroke="#f8fafc" stroke-width="3.5" />
+          <!-- Sharp upswept angular seat & tail section -->
+          <path d="M 390 265 L 530 225 L 570 240 L 480 300 L 420 300 Z" fill="#1e3a8a" fill-opacity="0.12" stroke="#1e3a8a" stroke-width="3.5" />
+          <!-- Sporty Step-up Seat -->
+          <path d="M 375 260 L 460 250 L 545 220" stroke="#f8fafc" stroke-width="3.5" />
+          <line x1="290" y1="280" x2="265" y2="360" stroke="#94a3b8" stroke-width="4" />
+        </g>
+        <!-- Sporty 12-inch Alloy Wheels -->
+        <g>
+          <circle cx="265" cy="360" r="42" stroke="#f8fafc" stroke-width="5" fill="#0b1329" />
+          <circle cx="265" cy="360" r="24" stroke="#06b6d4" stroke-width="2" fill="none" stroke-dasharray="4,4" />
+          <circle cx="265" cy="360" r="9" fill="#94a3b8" />
+          <circle cx="535" cy="360" r="42" stroke="#f8fafc" stroke-width="5" fill="#0b1329" />
+          <circle cx="535" cy="360" r="24" stroke="#06b6d4" stroke-width="2" fill="none" stroke-dasharray="4,4" />
+          <circle cx="535" cy="360" r="9" fill="#94a3b8" />
+        </g>
+      
+  </g>
+
+  <!-- Bottom Information Bar -->
+  <g transform="translate(30, 425)">
+    <!-- Model Title -->
+    <text x="0" y="20" font-size="22" font-weight="900" fill="#f8fafc" letter-spacing="-0.5">
+      Ather Energy Ather 450 Apex (3.7 kWh Warp+)
+    </text>
+
+    <!-- Spec Summary Bar -->
+    <text x="0" y="44" font-size="12" font-family="monospace" fill="#94a3b8">
+      Top Speed: <tspan fill="#f8fafc" font-weight="bold">100 km/h</tspan> • Real City: <tspan fill="#1e3a8a" font-weight="bold">110 km</tspan> • ARAI: <tspan fill="#38bdf8">157 km</tspan>
+    </text>
+
+    <!-- Offline Vector Fallback Watermark -->
+    <text x="740" y="44" font-size="10" font-weight="600" fill="#475569" text-anchor="end">
+      VECTOR SILHOUETTE PREVIEW
+    </text>
+  </g>
+</svg>

@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%" style="background:#020617;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#090d16" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+
+    <!-- Brand Accent Gradient -->
+    <linearGradient id="brandAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#b91c1c" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+
+    <!-- Cyber Grid Pattern -->
+    <pattern id="cyberGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.75" stroke-opacity="0.4" />
+    </pattern>
+
+    <!-- Subtle Radial Glow -->
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#b91c1c" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#020617" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="800" height="500" fill="url(#bgGrad)" rx="20" />
+  <rect width="800" height="500" fill="url(#cyberGrid)" rx="20" />
+  <circle cx="400" cy="260" r="240" fill="url(#centerGlow)" />
+
+  <!-- Top Badges Bar -->
+  <g transform="translate(30, 30)">
+    <!-- Brand Pill -->
+    <rect x="0" y="0" width="140" height="32" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="70" y="21" font-size="11" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="1.5">
+      RAPTEE ENERGY
+    </text>
+
+    <!-- Archetype Pill -->
+    <rect x="150" y="0" width="210" height="32" rx="8" fill="#0f172a" stroke="#b91c1c" stroke-width="1" stroke-opacity="0.5" />
+    <text x="255" y="21" font-size="11" font-weight="700" fill="#b91c1c" text-anchor="middle">
+      🏍️ SUPERSPORT FAIRING
+    </text>
+  </g>
+
+  <!-- Top Right Battery / Spec Badge -->
+  <g transform="translate(540, 30)">
+    <rect x="0" y="0" width="230" height="32" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="115" y="21" font-size="11" font-weight="700" font-family="monospace" fill="#38bdf8" text-anchor="middle">
+      ⚡ 5.4 kWh • High-Voltage NMC (240V Architecture)
+    </text>
+  </g>
+
+  <!-- Center Vehicle Silhouette Vector Artwork -->
+  <g class="silhouette-archetype" data-archetype="supersport">
+    <!-- Horizon Ground Shadow -->
+    <ellipse cx="400" cy="405" rx="280" ry="12" fill="#000000" fill-opacity="0.6" />
+    <line x1="160" y1="405" x2="640" y2="405" stroke="#b91c1c" stroke-width="1" stroke-opacity="0.3" />
+
+    <!-- Injected Archetype Geometry -->
+    
+        <!-- Supersport Track Fairing & Low Clip-ons -->
+        <g stroke="#b91c1c" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Aerodynamic windshield & front nose fairing -->
+          <path d="M 220 280 L 260 210 L 320 185 L 370 195 L 430 240 L 510 245 L 610 210 L 635 220 L 585 270 L 500 285 L 440 330 L 320 335 L 250 315 Z" fill="#b91c1c" fill-opacity="0.12" />
+          <!-- Aerodynamic windshield cowl -->
+          <path d="M 280 200 L 335 155 L 375 185" stroke="#06b6d4" stroke-width="2.5" />
+          <!-- Clip-on drop handlebars -->
+          <path d="M 330 190 L 305 195" stroke="#f8fafc" stroke-width="3" />
+          <!-- Tank & Stepped Racing Seat Cowl -->
+          <path d="M 370 195 C 410 190, 450 215, 480 240 L 560 240 L 620 205 L 640 220 L 580 270" stroke="#f8fafc" stroke-width="3" />
+          <!-- Full belly aerodynamic pan -->
+          <path d="M 330 335 L 450 340 L 490 310" stroke="#b91c1c" stroke-width="3" />
+          <!-- Upside Down Front Fork -->
+          <line x1="330" y1="195" x2="250" y2="355" stroke="#94a3b8" stroke-width="4" />
+          <!-- Rear Racing Swingarm & Mono-shock -->
+          <line x1="470" y1="285" x2="570" y2="355" stroke="#94a3b8" stroke-width="4" />
+          <line x1="460" y1="260" x2="490" y2="310" stroke="#f59e0b" stroke-width="3" />
+        </g>
+        <!-- Alloy Wheels with Disc Brake Rotors -->
+        <g>
+          <!-- Front Wheel -->
+          <circle cx="250" cy="355" r="48" stroke="#f8fafc" stroke-width="6" fill="#0b1329" />
+          <circle cx="250" cy="355" r="30" stroke="#b91c1c" stroke-width="2" fill="none" stroke-dasharray="6,4" />
+          <circle cx="250" cy="355" r="10" fill="#94a3b8" />
+          <!-- Rear Wheel -->
+          <circle cx="570" cy="355" r="48" stroke="#f8fafc" stroke-width="6" fill="#0b1329" />
+          <circle cx="570" cy="355" r="30" stroke="#b91c1c" stroke-width="2" fill="none" stroke-dasharray="6,4" />
+          <circle cx="570" cy="355" r="10" fill="#94a3b8" />
+        </g>
+      
+  </g>
+
+  <!-- Bottom Information Bar -->
+  <g transform="translate(30, 425)">
+    <!-- Model Title -->
+    <text x="0" y="20" font-size="22" font-weight="900" fill="#f8fafc" letter-spacing="-0.5">
+      Raptee Energy Raptee HV T30 (High-Voltage CCS2)
+    </text>
+
+    <!-- Spec Summary Bar -->
+    <text x="0" y="44" font-size="12" font-family="monospace" fill="#94a3b8">
+      Top Speed: <tspan fill="#f8fafc" font-weight="bold">135 km/h</tspan> • Real City: <tspan fill="#b91c1c" font-weight="bold">150 km</tspan> • ARAI: <tspan fill="#38bdf8">200 km</tspan>
+    </text>
+
+    <!-- Offline Vector Fallback Watermark -->
+    <text x="740" y="44" font-size="10" font-weight="600" fill="#475569" text-anchor="end">
+      VECTOR SILHOUETTE PREVIEW
+    </text>
+  </g>
+</svg>

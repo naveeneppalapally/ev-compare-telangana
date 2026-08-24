@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%" style="background:#020617;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#090d16" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+
+    <!-- Brand Accent Gradient -->
+    <linearGradient id="brandAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e40af" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+
+    <!-- Cyber Grid Pattern -->
+    <pattern id="cyberGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.75" stroke-opacity="0.4" />
+    </pattern>
+
+    <!-- Subtle Radial Glow -->
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1e40af" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#020617" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="800" height="500" fill="url(#bgGrad)" rx="20" />
+  <rect width="800" height="500" fill="url(#cyberGrid)" rx="20" />
+  <circle cx="400" cy="260" r="240" fill="url(#centerGlow)" />
+
+  <!-- Top Badges Bar -->
+  <g transform="translate(30, 30)">
+    <!-- Brand Pill -->
+    <rect x="0" y="0" width="140" height="32" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="70" y="21" font-size="11" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="1.5">
+      BGAUSS
+    </text>
+
+    <!-- Archetype Pill -->
+    <rect x="150" y="0" width="210" height="32" rx="8" fill="#0f172a" stroke="#1e40af" stroke-width="1" stroke-opacity="0.5" />
+    <text x="255" y="21" font-size="11" font-weight="700" fill="#1e40af" text-anchor="middle">
+      🛵 RUGGED UTILITY SUV SCOOTER
+    </text>
+  </g>
+
+  <!-- Top Right Battery / Spec Badge -->
+  <g transform="translate(540, 30)">
+    <rect x="0" y="0" width="230" height="32" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="115" y="21" font-size="11" font-weight="700" font-family="monospace" fill="#38bdf8" text-anchor="middle">
+      ⚡ 3 kWh • LFP
+    </text>
+  </g>
+
+  <!-- Center Vehicle Silhouette Vector Artwork -->
+  <g class="silhouette-archetype" data-archetype="rugged-suv-scooter">
+    <!-- Horizon Ground Shadow -->
+    <ellipse cx="400" cy="405" rx="280" ry="12" fill="#000000" fill-opacity="0.6" />
+    <line x1="160" y1="405" x2="640" y2="405" stroke="#1e40af" stroke-width="1" stroke-opacity="0.3" />
+
+    <!-- Injected Archetype Geometry -->
+    
+        <!-- Rugged SUV Scooter with Twin Headlights, Perimeter Crash Rails & 14" Wheels (River Indie / RUV) -->
+        <g stroke="#1e40af" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Twin Square Adventure Headlights -->
+          <rect x="255" y="235" width="22" height="22" rx="4" stroke="#f59e0b" stroke-width="3" fill="#0b1329" />
+          <rect x="282" y="235" width="22" height="22" rx="4" stroke="#f59e0b" stroke-width="3" fill="#0b1329" />
+          <!-- Rugged Tubular External Crash Guard / Perimeter Cage -->
+          <path d="M 325 185 L 250 250 L 250 310 L 335 320" stroke="#06b6d4" stroke-width="3.5" />
+          <!-- Wide Utility Floorboard & Footpeg Pegs -->
+          <path d="M 330 320 L 440 320" stroke="#f8fafc" stroke-width="4.5" />
+          <line x1="365" y1="320" x2="365" y2="335" stroke="#f59e0b" stroke-width="3.5" />
+          <!-- High-capacity rugged body with pannier rail mounts -->
+          <path d="M 405 270 L 535 250 L 575 275 L 485 325 Z" fill="#1e40af" fill-opacity="0.2" stroke="#1e40af" stroke-width="3.5" />
+          <path d="M 460 280 L 550 270" stroke="#06b6d4" stroke-width="2.5" stroke-dasharray="4,4" />
+          <!-- Flat Dual Seat & Heavy Pillion Grab Bar -->
+          <path d="M 370 255 L 545 240" stroke="#f8fafc" stroke-width="4" />
+          <path d="M 535 240 L 575 240 L 575 275" stroke="#f8fafc" stroke-width="3.5" />
+          <line x1="290" y1="285" x2="260" y2="355" stroke="#94a3b8" stroke-width="4.5" />
+        </g>
+        <!-- Big 14-inch Rugged All-Terrain Alloy Wheels -->
+        <g>
+          <circle cx="260" cy="355" r="46" stroke="#f8fafc" stroke-width="6" fill="#0b1329" />
+          <circle cx="260" cy="355" r="26" stroke="#1e40af" stroke-width="2" fill="none" stroke-dasharray="8,4" />
+          <circle cx="260" cy="355" r="10" fill="#94a3b8" />
+          <circle cx="535" cy="355" r="46" stroke="#f8fafc" stroke-width="6" fill="#0b1329" />
+          <circle cx="535" cy="355" r="26" stroke="#1e40af" stroke-width="2" fill="none" stroke-dasharray="8,4" />
+          <circle cx="535" cy="355" r="10" fill="#94a3b8" />
+        </g>
+      
+  </g>
+
+  <!-- Bottom Information Bar -->
+  <g transform="translate(30, 425)">
+    <!-- Model Title -->
+    <text x="0" y="20" font-size="22" font-weight="900" fill="#f8fafc" letter-spacing="-0.5">
+      BGauss BGauss RUV 350 (3.0 kWh LFP)
+    </text>
+
+    <!-- Spec Summary Bar -->
+    <text x="0" y="44" font-size="12" font-family="monospace" fill="#94a3b8">
+      Top Speed: <tspan fill="#f8fafc" font-weight="bold">75 km/h</tspan> • Real City: <tspan fill="#1e40af" font-weight="bold">100 km</tspan> • ARAI: <tspan fill="#38bdf8">145 km</tspan>
+    </text>
+
+    <!-- Offline Vector Fallback Watermark -->
+    <text x="740" y="44" font-size="10" font-weight="600" fill="#475569" text-anchor="end">
+      VECTOR SILHOUETTE PREVIEW
+    </text>
+  </g>
+</svg>

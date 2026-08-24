@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%" style="background:#020617;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#090d16" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+
+    <!-- Brand Accent Gradient -->
+    <linearGradient id="brandAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#09090b" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+
+    <!-- Cyber Grid Pattern -->
+    <pattern id="cyberGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.75" stroke-opacity="0.4" />
+    </pattern>
+
+    <!-- Subtle Radial Glow -->
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#09090b" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#020617" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="800" height="500" fill="url(#bgGrad)" rx="20" />
+  <rect width="800" height="500" fill="url(#cyberGrid)" rx="20" />
+  <circle cx="400" cy="260" r="240" fill="url(#centerGlow)" />
+
+  <!-- Top Badges Bar -->
+  <g transform="translate(30, 30)">
+    <!-- Brand Pill -->
+    <rect x="0" y="0" width="140" height="32" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="70" y="21" font-size="11" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="1.5">
+      MATTER MOBILITY
+    </text>
+
+    <!-- Archetype Pill -->
+    <rect x="150" y="0" width="210" height="32" rx="8" fill="#0f172a" stroke="#09090b" stroke-width="1" stroke-opacity="0.5" />
+    <text x="255" y="21" font-size="11" font-weight="700" fill="#09090b" text-anchor="middle">
+      🏍️ NAKED STREETFIGHTER
+    </text>
+  </g>
+
+  <!-- Top Right Battery / Spec Badge -->
+  <g transform="translate(540, 30)">
+    <rect x="0" y="0" width="230" height="32" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="115" y="21" font-size="11" font-weight="700" font-family="monospace" fill="#38bdf8" text-anchor="middle">
+      ⚡ 5 kWh • Fixed NMC
+    </text>
+  </g>
+
+  <!-- Center Vehicle Silhouette Vector Artwork -->
+  <g class="silhouette-archetype" data-archetype="streetfighter">
+    <!-- Horizon Ground Shadow -->
+    <ellipse cx="400" cy="405" rx="280" ry="12" fill="#000000" fill-opacity="0.6" />
+    <line x1="160" y1="405" x2="640" y2="405" stroke="#09090b" stroke-width="1" stroke-opacity="0.3" />
+
+    <!-- Injected Archetype Geometry -->
+    
+        <!-- Naked Streetfighter Angular Shrouds & Exposed Trellis Subframe -->
+        <g stroke="#09090b" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Minimalist aggressive headlight mask -->
+          <path d="M 235 250 L 265 205 L 305 205 L 320 235 L 290 270 Z" fill="#09090b" fill-opacity="0.2" />
+          <!-- Wide straight flat handlebar -->
+          <path d="M 300 180 L 330 185 L 350 185" stroke="#f8fafc" stroke-width="3.5" />
+          <!-- Muscular tank shoulder shrouds -->
+          <path d="M 320 205 L 390 195 L 445 240 L 375 275 L 310 260 Z" fill="#09090b" fill-opacity="0.15" />
+          <!-- Exposed Trellis Truss Frame -->
+          <path d="M 370 235 L 430 280 M 390 220 L 415 310 M 430 240 L 460 295" stroke="#06b6d4" stroke-width="2.5" />
+          <!-- Stepped seat & Sharp upswept tail -->
+          <path d="M 440 238 L 490 245 L 560 215 L 590 225 L 540 270 L 465 275" stroke="#f8fafc" stroke-width="3" />
+          <!-- Front USD Suspension Fork -->
+          <line x1="315" y1="190" x2="250" y2="355" stroke="#94a3b8" stroke-width="4" />
+          <!-- Rear Mono-shock Swingarm -->
+          <line x1="450" y1="280" x2="565" y2="355" stroke="#94a3b8" stroke-width="4" />
+        </g>
+        <!-- Street Wheels -->
+        <g>
+          <circle cx="250" cy="355" r="48" stroke="#f8fafc" stroke-width="6" fill="#0b1329" />
+          <circle cx="250" cy="355" r="26" stroke="#06b6d4" stroke-width="2" fill="none" stroke-dasharray="4,4" />
+          <circle cx="250" cy="355" r="10" fill="#94a3b8" />
+          <circle cx="565" cy="355" r="48" stroke="#f8fafc" stroke-width="6" fill="#0b1329" />
+          <circle cx="565" cy="355" r="26" stroke="#06b6d4" stroke-width="2" fill="none" stroke-dasharray="4,4" />
+          <circle cx="565" cy="355" r="10" fill="#94a3b8" />
+        </g>
+      
+  </g>
+
+  <!-- Bottom Information Bar -->
+  <g transform="translate(30, 425)">
+    <!-- Model Title -->
+    <text x="0" y="20" font-size="22" font-weight="900" fill="#f8fafc" letter-spacing="-0.5">
+      Matter Mobility Matter AERA 5000+ (5.0 kWh Liquid Cooled)
+    </text>
+
+    <!-- Spec Summary Bar -->
+    <text x="0" y="44" font-size="12" font-family="monospace" fill="#94a3b8">
+      Top Speed: <tspan fill="#f8fafc" font-weight="bold">105 km/h</tspan> • Real City: <tspan fill="#09090b" font-weight="bold">115 km</tspan> • ARAI: <tspan fill="#38bdf8">170 km</tspan>
+    </text>
+
+    <!-- Offline Vector Fallback Watermark -->
+    <text x="740" y="44" font-size="10" font-weight="600" fill="#475569" text-anchor="end">
+      VECTOR SILHOUETTE PREVIEW
+    </text>
+  </g>
+</svg>

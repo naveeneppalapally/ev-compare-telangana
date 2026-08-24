@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%" style="background:#020617;font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#090d16" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+
+    <!-- Brand Accent Gradient -->
+    <linearGradient id="brandAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#18181b" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+
+    <!-- Cyber Grid Pattern -->
+    <pattern id="cyberGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.75" stroke-opacity="0.4" />
+    </pattern>
+
+    <!-- Subtle Radial Glow -->
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#18181b" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#020617" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="800" height="500" fill="url(#bgGrad)" rx="20" />
+  <rect width="800" height="500" fill="url(#cyberGrid)" rx="20" />
+  <circle cx="400" cy="260" r="240" fill="url(#centerGlow)" />
+
+  <!-- Top Badges Bar -->
+  <g transform="translate(30, 30)">
+    <!-- Brand Pill -->
+    <rect x="0" y="0" width="140" height="32" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="70" y="21" font-size="11" font-weight="800" fill="#f8fafc" text-anchor="middle" letter-spacing="1.5">
+      OLA ELECTRIC
+    </text>
+
+    <!-- Archetype Pill -->
+    <rect x="150" y="0" width="210" height="32" rx="8" fill="#0f172a" stroke="#18181b" stroke-width="1" stroke-opacity="0.5" />
+    <text x="255" y="21" font-size="11" font-weight="700" fill="#18181b" text-anchor="middle">
+      🏍️ COMMUTER ROADSTER
+    </text>
+  </g>
+
+  <!-- Top Right Battery / Spec Badge -->
+  <g transform="translate(540, 30)">
+    <rect x="0" y="0" width="230" height="32" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="115" y="21" font-size="11" font-weight="700" font-family="monospace" fill="#38bdf8" text-anchor="middle">
+      ⚡ 4.5 kWh • NMC
+    </text>
+  </g>
+
+  <!-- Center Vehicle Silhouette Vector Artwork -->
+  <g class="silhouette-archetype" data-archetype="commuter-roadster">
+    <!-- Horizon Ground Shadow -->
+    <ellipse cx="400" cy="405" rx="280" ry="12" fill="#000000" fill-opacity="0.6" />
+    <line x1="160" y1="405" x2="640" y2="405" stroke="#18181b" stroke-width="1" stroke-opacity="0.3" />
+
+    <!-- Injected Archetype Geometry -->
+    
+        <!-- Balanced Commuter Roadster Ergonomics & Straight Bench -->
+        <g stroke="#18181b" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Upright Handlebar -->
+          <path d="M 315 200 L 305 165 L 325 165" stroke="#f8fafc" stroke-width="3.5" />
+          <!-- Telescopic Front Fork -->
+          <line x1="310" y1="180" x2="250" y2="355" stroke="#94a3b8" stroke-width="4" />
+          <!-- Level Roadster Tank -->
+          <path d="M 315 205 Q 365 195, 410 225 L 330 250 Z" fill="#18181b" fill-opacity="0.18" />
+          <!-- Long Flat Commuter Bench Seat -->
+          <path d="M 400 225 L 550 230 L 575 255 L 430 260 Z" fill="#334155" stroke="#f8fafc" stroke-width="3" />
+          <!-- Utilitarian Pillion Grab Rail -->
+          <path d="M 545 225 L 585 225 L 575 255" stroke="#06b6d4" stroke-width="3" />
+          <!-- Central Battery Enclosure -->
+          <rect x="345" y="255" width="95" height="70" rx="10" stroke="#18181b" stroke-width="3" fill="#0f172a" />
+          <line x1="420" y1="285" x2="560" y2="355" stroke="#94a3b8" stroke-width="4" />
+        </g>
+        <!-- Commuter 17-inch Wheels -->
+        <g>
+          <circle cx="250" cy="355" r="48" stroke="#f8fafc" stroke-width="5" fill="#0b1329" />
+          <circle cx="250" cy="355" r="28" stroke="#18181b" stroke-width="1.5" fill="none" stroke-dasharray="6,4" />
+          <circle cx="250" cy="355" r="10" fill="#94a3b8" />
+          <circle cx="560" cy="355" r="48" stroke="#f8fafc" stroke-width="5" fill="#0b1329" />
+          <circle cx="560" cy="355" r="28" stroke="#18181b" stroke-width="1.5" fill="none" stroke-dasharray="6,4" />
+          <circle cx="560" cy="355" r="10" fill="#94a3b8" />
+        </g>
+      
+  </g>
+
+  <!-- Bottom Information Bar -->
+  <g transform="translate(30, 425)">
+    <!-- Model Title -->
+    <text x="0" y="20" font-size="22" font-weight="900" fill="#f8fafc" letter-spacing="-0.5">
+      Ola Electric Ola Roadster X (4.5 kWh)
+    </text>
+
+    <!-- Spec Summary Bar -->
+    <text x="0" y="44" font-size="12" font-family="monospace" fill="#94a3b8">
+      Top Speed: <tspan fill="#f8fafc" font-weight="bold">124 km/h</tspan> • Real City: <tspan fill="#18181b" font-weight="bold">135 km</tspan> • ARAI: <tspan fill="#38bdf8">200 km</tspan>
+    </text>
+
+    <!-- Offline Vector Fallback Watermark -->
+    <text x="740" y="44" font-size="10" font-weight="600" fill="#475569" text-anchor="end">
+      VECTOR SILHOUETTE PREVIEW
+    </text>
+  </g>
+</svg>
