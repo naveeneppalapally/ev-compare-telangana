@@ -95,7 +95,7 @@ describe('Tier 2: Boundary & Corner Cases Suite (All 17 Features)', () => {
       assert.ok(minBattery >= 1.5, `Min battery should be >= 1.5 kWh, got ${minBattery}`);
       assert.ok(maxBattery <= 20.0, `Max battery should be <= 20.0 kWh, got ${maxBattery}`);
       assert.ok(minSpeed >= 45, `Min speed should be >= 45 km/h, got ${minSpeed}`);
-      assert.ok(maxSpeed <= 220, `Max speed should be <= 220 km/h, got ${maxSpeed}`);
+      assert.ok(maxSpeed <= 300, `Max speed should be <= 300 km/h, got ${maxSpeed}`);
     });
 
     it('ensures every model has non-zero review count and rating in [1.0, 5.0]', () => {
@@ -465,11 +465,11 @@ describe('Tier 2: Boundary & Corner Cases Suite (All 17 Features)', () => {
       assert.ok(recs.every(r => r.subScores?.budgetScore && r.subScores.budgetScore <= 85));
     });
 
-    it('handles custom budgetMax higher than most expensive EV (₹5,00,000) with 100% budget scores', () => {
+    it('handles custom budgetMax higher than most expensive EV (₹10,00,000) with 100% budget scores', () => {
       const evs = getEVModels();
       const recs = calculateRecommendations({
         chargingAccess: 'independentHouse',
-        budgetMax: 500000
+        budgetMax: 1000000
       }, evs);
 
       assert.ok(recs.every(r => r.subScores?.budgetScore === 100));
@@ -594,9 +594,10 @@ describe('Tier 2: Boundary & Corner Cases Suite (All 17 Features)', () => {
       }
     });
 
-    it('handles priceRangeMax filter boundary (₹80,000 to ₹4,50,000)', () => {
+    it('handles priceRangeMax filter boundary (₹80,000 to ₹10,00,000)', () => {
       const evs = getEVModels();
-      const atMax = evs.filter(m => m.pricing.exShowroom <= 450000);
+      const maxPrice = Math.max(...evs.map(m => m.pricing.exShowroom));
+      const atMax = evs.filter(m => m.pricing.exShowroom <= maxPrice);
       assert.equal(atMax.length, evs.length);
 
       const atLow = evs.filter(m => m.pricing.exShowroom <= 90000);

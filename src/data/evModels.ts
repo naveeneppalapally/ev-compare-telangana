@@ -3708,6 +3708,1246 @@ export const EV_MODELS: EVModel[] = [
   },
 
   // ==========================================
+  
+  // --- Ultraviolette Concept X47 (Adventure Crossover) ---
+  {
+    id: 'ultraviolette-concept-x47',
+    name: 'Ultraviolette Concept X47 (Crossover Electric Adventure)',
+    brand: 'Ultraviolette Automotive',
+    tagline: 'High-Performance Electric Adventure Crossover with 323 km Range',
+    category: 'motorcycle',
+    badges: ['Adventure Crossover', '323 km Range', '150 km/h', '200mm Clearance'],
+    rating: 4.9,
+    reviewCount: 38,
+    launchYear: 2025,
+    madeInIndia: true,
+    idealFor: 'Adventure touring enthusiasts, Deccan highway roadtrippers, and riders seeking dual-sport performance with zero fuel cost',
+    imageUrl: 'https://cdn.bikedekho.com/processedimages/ultraviolette/concept-x/source/concept-x68e50f2bdcaa2.jpg?model=ultraviolette-concept-x47&v=2026',
+    colorOptions: [
+      { name: 'Desert Dune Camo', hex: '#b5a176' },
+      { name: 'Stealth Carbon Grey', hex: '#262626' },
+      { name: 'Cyberpunk Fluorescent Yellow', hex: '#eab308' }
+    ],
+    pricing: {
+      exShowroom: 349000,
+      pmEdriveSubsidy: 0,
+      chargerIncluded: true,
+      chargerCost: 0,
+      insuranceEst: 14200,
+      handlingAndDocsEst: 2000
+    },
+    specs: {
+      batteryCapacityKwh: 10.3,
+      usableBatteryCapacityKwh: 9.8,
+      batteryChemistry: 'NMC SRB7',
+      isRemovableBattery: false,
+      araiRangeKm: 323,
+      realWorldEcoRangeKm: 280,
+      realWorldCityRangeKm: 240,
+      realWorldHighwayRangeKm: 175,
+      topSpeedKmh: 150,
+      accel0To40Kmh: 2.8,
+      accel0To60Kmh: 3.8,
+      motorPeakPowerKw: 30.0,
+      motorRatedPowerKw: 15.0,
+      motorPeakTorqueNm: 100,
+      wheelTorqueNm: 580,
+      driveType: 'Chain',
+      chargingTime0To80: '4h 30m',
+      chargingTime0To100: '6h 00m',
+      fastChargingSupport: true,
+      fastChargingRate: '12 kW Boost Charger (0-80% in 90 min)',
+      bootSpaceLiters: 15,
+      ridingModes: ['Glide', 'Combat', 'Ballistic', 'Off-Road Terrain'],
+      brakes: '320mm Front Disc with Radial Caliper, 230mm Rear Disc with Switchable Dual-Channel ABS',
+      brakingSafety: 'Bosch Dual-Channel ABS with Off-Road Mode',
+      kerbWeightKg: 198,
+      groundClearanceMm: 200,
+      seatHeightMm: 830,
+      wheelSizeInches: 19,
+      wheelSizeFront: '100/90-19',
+      wheelSizeRear: '150/70-17',
+      touchscreen: false,
+      displaySizeInches: 5.0,
+      displayType: 'TFT with Turn-by-Turn Navigation',
+      connectivity: ['Bluetooth 5.0', 'LTE 4G Telematics', 'Crash Alert', 'Hill Hold Assist', 'Dynamic Regen']
+    },
+    warranty: {
+      batteryYears: 8,
+      batteryKm: 800000,
+      vehicleYears: 3,
+      vehicleKm: 30000,
+      extendedAvailable: true
+    },
+    features: [
+      'Dual-sport adventure chassis with 200mm ground clearance for rugged Telangana terrains',
+      'Massive 10.3 kWh SRB7 battery pack delivering 240 km real-world city range',
+      'Bosch Dual-Channel ABS with switchable rear ABS for off-road dirt riding',
+      '12 kW Boost fast-charging compatible with public CCS2 stations via adapter'
+    ],
+    pros: [
+      'Unmatched 323 km ARAI range and commanding 200mm ground clearance',
+      '30 kW peak power with relentless 100 Nm motor torque',
+      'Industry-first 8-year / 8,00,000 km battery warranty'
+    ],
+    cons: [
+      'Premium ₹3.49 Lakh pricing',
+      'High 830mm seat height challenging for shorter riders'
+    ],
+    equivalentPetrolBenchmark: {
+      modelName: 'BMW G 310 GS / KTM 390 Adventure',
+      engineCc: 373,
+      petrolBhp: 43.5,
+      petrolTorqueNm: 37.0,
+      petrolMileageKmpl: 28,
+      petrolExShowroom: 360000,
+      petrolOnRoadTG: 425000,
+      classComparison: '390cc Dual-Sport Adventure Tourer',
+      powerComparisonSummary: 'Concept X47 generates 100 Nm instant torque vs KTM 390 Adventure\'s 37 Nm with ₹0 road tax in Telangana'
+    }
+  },
+
+  // --- Ultraviolette F99 Factory Racing Platform ---
+  {
+    id: 'ultraviolette-f99-racing',
+    name: 'Ultraviolette F99 Factory Racing Platform',
+    brand: 'Ultraviolette Automotive',
+    tagline: '120 bhp Active-Aerodynamic Electric Superbike (265 km/h)',
+    category: 'motorcycle',
+    badges: ['265 km/h Superbike', '120 bhp (90 kW)', 'Carbon Fiber', 'Active Aero'],
+    rating: 5.0,
+    reviewCount: 19,
+    launchYear: 2025,
+    madeInIndia: true,
+    idealFor: 'Track-day racers, hyperbike collectors, and supersport enthusiasts demanding 265 km/h track velocity',
+    imageUrl: 'https://cdn.bikedekho.com/processedimages/ultraviolette/f99/source/f996985cc438bb78.jpg?model=ultraviolette-f99-racing&v=2026',
+    colorOptions: [
+      { name: 'Factory Racing Rosso', hex: '#dc2626' },
+      { name: 'Aviation Carbon Matte', hex: '#171717' }
+    ],
+    pricing: {
+      exShowroom: 799000,
+      pmEdriveSubsidy: 0,
+      chargerIncluded: true,
+      chargerCost: 0,
+      insuranceEst: 28500,
+      handlingAndDocsEst: 3000
+    },
+    specs: {
+      batteryCapacityKwh: 10.3,
+      usableBatteryCapacityKwh: 9.8,
+      batteryChemistry: 'NMC 21700 Racing Spec',
+      isRemovableBattery: false,
+      araiRangeKm: 250,
+      realWorldEcoRangeKm: 210,
+      realWorldCityRangeKm: 180,
+      realWorldHighwayRangeKm: 130,
+      topSpeedKmh: 265,
+      accel0To40Kmh: 1.5,
+      accel0To60Kmh: 2.2,
+      motorPeakPowerKw: 90.0,
+      motorRatedPowerKw: 45.0,
+      motorPeakTorqueNm: 200,
+      wheelTorqueNm: 950,
+      driveType: 'Chain',
+      chargingTime0To80: '2h 30m',
+      chargingTime0To100: '3h 30m',
+      fastChargingSupport: true,
+      fastChargingRate: 'DC Fast Charging 15 kW (0-80% in 45 min)',
+      bootSpaceLiters: 0,
+      ridingModes: ['Track', 'Qualifying', 'Rain', 'Supersonic'],
+      brakes: 'Dual 320mm Front Brembo Monobloc Calipers, 240mm Rear Disc with Race ABS',
+      brakingSafety: 'Brembo Racing Dual-Channel ABS with Lean-Angle Sensitivity',
+      kerbWeightKg: 178,
+      groundClearanceMm: 140,
+      seatHeightMm: 810,
+      wheelSizeInches: 17,
+      touchscreen: false,
+      displaySizeInches: 5.5,
+      displayType: 'OLED Race Telemetry Dash',
+      connectivity: ['Live Track Telemetry', 'Tire Pressure/Temp Sensors', 'GPS Lap Timer', 'Lean Angle Logger']
+    },
+    warranty: {
+      batteryYears: 5,
+      batteryKm: 100000,
+      vehicleYears: 3,
+      vehicleKm: 30000,
+      extendedAvailable: true
+    },
+    features: [
+      'Active electronic winglets that articulate based on lean angle and braking deceleration',
+      'Ultra-lightweight aerospace carbon fiber composite fairings and structural subframe',
+      '90 kW (120 bhp) peak output propelling the superbike to an astounding 265 km/h',
+      'Brembo dual monobloc radial front calipers with titanium hardware'
+    ],
+    pros: [
+      'India\'s fastest production electric motorcycle with 265 km/h top speed',
+      '0-100 km/h in 3.0s with active aerodynamic downforce',
+      'Full carbon fiber construction with race-ready Brembo braking'
+    ],
+    cons: [
+      'Track-focused aggressive supersport clip-on ergonomics',
+      '₹7.99 Lakh flagship price tag'
+    ],
+    equivalentPetrolBenchmark: {
+      modelName: 'Kawasaki Ninja ZX-6R / Ducati Panigale V2',
+      engineCc: 636,
+      petrolBhp: 130,
+      petrolTorqueNm: 69.0,
+      petrolMileageKmpl: 15,
+      petrolExShowroom: 1120000,
+      petrolOnRoadTG: 1340000,
+      classComparison: '600cc Supersport Race Track Weapon',
+      powerComparisonSummary: 'F99 provides 120 bhp instant EV torque with active aero winglets at ₹0 road tax in Telangana'
+    }
+  },
+
+  // --- Orxa Mantis (8.9 kWh Performance Streetfighter) ---
+  {
+    id: 'orxa-mantis-89',
+    name: 'Orxa Mantis (8.9 kWh Streetfighter)',
+    brand: 'Orxa Energies',
+    tagline: 'Aerospace-Engineered All-Aluminum Streetfighter with 221 km Range',
+    category: 'motorcycle',
+    badges: ['8.9 kWh Battery', '135 km/h', 'All-Aluminum Frame', '221 km Range'],
+    rating: 4.7,
+    reviewCount: 26,
+    launchYear: 2024,
+    madeInIndia: true,
+    idealFor: 'Urban performance riders and tech enthusiasts who want an agile, aerospace-grade naked streetfighter',
+    imageUrl: 'https://cdn.bikedekho.com/processedimages/orxa-energies/mantis/source/mantis695b75e7cb668.jpg?model=orxa-mantis-89&v=2026',
+    colorOptions: [
+      { name: 'Urban Black', hex: '#111827' },
+      { name: 'Stealth Grey', hex: '#4b5563' }
+    ],
+    pricing: {
+      exShowroom: 360000,
+      pmEdriveSubsidy: 0,
+      chargerIncluded: true,
+      chargerCost: 0,
+      insuranceEst: 14500,
+      handlingAndDocsEst: 2000
+    },
+    specs: {
+      batteryCapacityKwh: 8.9,
+      usableBatteryCapacityKwh: 8.5,
+      batteryChemistry: 'Fixed NMC',
+      isRemovableBattery: false,
+      araiRangeKm: 221,
+      realWorldEcoRangeKm: 195,
+      realWorldCityRangeKm: 175,
+      realWorldHighwayRangeKm: 130,
+      topSpeedKmh: 135,
+      accel0To40Kmh: 2.7,
+      accel0To60Kmh: 3.8,
+      motorPeakPowerKw: 20.5,
+      motorRatedPowerKw: 10.0,
+      motorPeakTorqueNm: 93,
+      wheelTorqueNm: 520,
+      driveType: 'Chain',
+      chargingTime0To80: '4h 00m',
+      chargingTime0To100: '5h 00m',
+      fastChargingSupport: true,
+      fastChargingRate: 'Blitz Fast Charger (0-80% in 2.5h)',
+      bootSpaceLiters: 10,
+      ridingModes: ['Eco', 'City', 'Sport'],
+      brakes: 'Front & Rear Hydraulic Discs with Dual-Channel ABS',
+      brakingSafety: 'Dual-Channel ABS',
+      kerbWeightKg: 182,
+      groundClearanceMm: 180,
+      seatHeightMm: 815,
+      wheelSizeInches: 17,
+      touchscreen: false,
+      displaySizeInches: 5.0,
+      displayType: 'Linux-Powered TFT Cockpit',
+      connectivity: ['Bluetooth', 'GPS Navigation', 'Telemetry Analytics', 'Ride Diagnostics']
+    },
+    warranty: {
+      batteryYears: 5,
+      batteryKm: 100000,
+      vehicleYears: 3,
+      vehicleKm: 30000,
+      extendedAvailable: true
+    },
+    features: [
+      'Aerospace-grade all-aluminum honeycomb frame for class-leading torsional rigidity',
+      'Generous 8.9 kWh battery providing genuine 175 km real-world city range',
+      'Dual-Channel ABS and 41mm telescopic front forks with preload-adjustable monoshock',
+      'Linux-powered MantisOS instrument cluster with turn-by-turn navigation'
+    ],
+    pros: [
+      'Extremely solid aerospace-grade aluminum chassis with zero rattles',
+      'Genuine 175 km real city range with punchy 93 Nm torque',
+      'Sophisticated Linux-based instrument cluster'
+    ],
+    cons: [
+      '₹3.60 Lakh premium ex-showroom price',
+      'Limited dealer footprint across Tier-2 Telangana towns'
+    ],
+    equivalentPetrolBenchmark: {
+      modelName: 'KTM 250 Duke / TVS Apache RTR 310',
+      engineCc: 249,
+      petrolBhp: 31.0,
+      petrolTorqueNm: 25.0,
+      petrolMileageKmpl: 32,
+      petrolExShowroom: 240000,
+      petrolOnRoadTG: 285000,
+      classComparison: '250cc Naked Streetfighter',
+      powerComparisonSummary: 'Mantis delivers 93 Nm instant torque vs 250 Duke\'s 25 Nm with zero vibration'
+    }
+  },
+
+  // --- Revolt RV BlazeX ---
+  {
+    id: 'revolt-rv-blazex',
+    name: 'Revolt RV BlazeX (3.24 kWh)',
+    brand: 'Revolt Motors',
+    tagline: 'Aggressive Urban Commuter with Fast Charging & 150 km Range',
+    category: 'motorcycle',
+    badges: ['Removable Battery', '150 km Range', '85 km/h', 'Under ₹1.2L'],
+    rating: 4.4,
+    reviewCount: 31,
+    launchYear: 2025,
+    madeInIndia: true,
+    idealFor: 'Daily city commuters wanting sporty street bike looks with a removable battery for apartment charging',
+    imageUrl: 'https://cdn.bikedekho.com/processedimages/revolt/rv-blazex/source/rv-blazex68f1f09d55467.jpg?model=revolt-rv-blazex&v=2026',
+    colorOptions: [
+      { name: 'Blaze Red', hex: '#ef4444' },
+      { name: 'Cosmic Grey', hex: '#374151' },
+      { name: 'Rebel White', hex: '#f3f4f6' }
+    ],
+    pricing: {
+      exShowroom: 114990,
+      pmEdriveSubsidy: 10000,
+      chargerIncluded: true,
+      chargerCost: 0,
+      insuranceEst: 5800,
+      handlingAndDocsEst: 1500
+    },
+    specs: {
+      batteryCapacityKwh: 3.24,
+      usableBatteryCapacityKwh: 3.0,
+      batteryChemistry: 'Removable LFP',
+      isRemovableBattery: true,
+      batteryCount: 1,
+      araiRangeKm: 150,
+      realWorldEcoRangeKm: 140,
+      realWorldCityRangeKm: 120,
+      realWorldHighwayRangeKm: 85,
+      topSpeedKmh: 85,
+      accel0To40Kmh: 3.9,
+      motorPeakPowerKw: 3.0,
+      motorRatedPowerKw: 1.8,
+      motorPeakTorqueNm: 54,
+      driveType: 'Belt',
+      chargingTime0To80: '3h 15m',
+      chargingTime0To100: '4h 15m',
+      fastChargingSupport: true,
+      fastChargingRate: 'Fast Charger 0-80% in 100 min',
+      bootSpaceLiters: 0,
+      ridingModes: ['Eco (45 km/h)', 'Normal (65 km/h)', 'Sports (85 km/h)'],
+      brakes: 'Front & Rear Disc Brakes with CBS',
+      brakingSafety: 'Combined Braking System (CBS)',
+      kerbWeightKg: 108,
+      groundClearanceMm: 180,
+      seatHeightMm: 800,
+      wheelSizeInches: 17,
+      touchscreen: false,
+      displaySizeInches: 4.5,
+      displayType: 'Digital LCD with MyRevolt App Sync',
+      connectivity: ['MyRevolt App', 'Geo-Fencing', 'Battery Swap Network', 'OTA Updates']
+    },
+    warranty: {
+      batteryYears: 5,
+      batteryKm: 75000,
+      vehicleYears: 3,
+      vehicleKm: 30000,
+      extendedAvailable: true
+    },
+    features: [
+      'Removable 3.24 kWh LFP battery pack easily charged in apartment homes',
+      'Smooth and quiet carbon-reinforced belt drive with zero chain lube maintenance',
+      'Sub-₹1.15 Lakh on-road Telangana pricing with 100% road tax exemption',
+      'Sturdy 180mm ground clearance for rough Telangana city roads'
+    ],
+    pros: [
+      'Removable battery ideal for high-rise apartment dwellers in Hyderabad',
+      'Sporty street styling with comfortable upright commuter ergonomics',
+      'Affordable maintenance with belt-drive system'
+    ],
+    cons: [
+      '85 km/h top speed limited for open expressways',
+      'No under-seat storage'
+    ],
+    equivalentPetrolBenchmark: {
+      modelName: 'Honda SP125 / Hero Glamour',
+      engineCc: 124,
+      petrolBhp: 10.7,
+      petrolTorqueNm: 10.9,
+      petrolMileageKmpl: 55,
+      petrolExShowroom: 90000,
+      petrolOnRoadTG: 110000,
+      classComparison: '125cc Premium Commuter Motorcycle',
+      powerComparisonSummary: 'BlazeX provides 54 Nm instant wheel torque vs SP125\'s 10.9 Nm with zero fuel expenses'
+    }
+  },
+
+  // --- TVS X (Performance Maxi-Scooter) ---
+  {
+    id: 'tvs-x-44',
+    name: 'TVS X (4.44 kWh Performance Maxi-Scooter)',
+    brand: 'TVS Motor',
+    tagline: 'Futuristic Maxi-Scooter with 10.25-inch NavPro HD Display & 105 km/h',
+    category: 'scooter',
+    badges: ['Maxi-Scooter', '10.25" HD Display', '105 km/h', '4.44 kWh'],
+    rating: 4.6,
+    reviewCount: 44,
+    launchYear: 2024,
+    madeInIndia: true,
+    idealFor: 'Enthusiasts and tech-savvy urban commuters desiring a futuristic, connected maxi-scooter with segment-leading displays',
+    imageUrl: 'https://cdn.bikedekho.com/processedimages/tvs/tvs-electric-scooter/source/tvs-electric-scooter68ce618bd4daf.jpg?model=tvs-x-44&v=2026',
+    colorOptions: [
+      { name: 'Hyper Silver & Red', hex: '#dc2626' },
+      { name: 'Cyber Stealth Black', hex: '#18181b' }
+    ],
+    pricing: {
+      exShowroom: 249990,
+      pmEdriveSubsidy: 0,
+      chargerIncluded: false,
+      chargerCost: 16275,
+      insuranceEst: 10800,
+      handlingAndDocsEst: 2000
+    },
+    specs: {
+      batteryCapacityKwh: 4.44,
+      usableBatteryCapacityKwh: 4.1,
+      batteryChemistry: 'Fixed NMC',
+      isRemovableBattery: false,
+      araiRangeKm: 140,
+      realWorldEcoRangeKm: 125,
+      realWorldCityRangeKm: 105,
+      realWorldHighwayRangeKm: 80,
+      topSpeedKmh: 105,
+      accel0To40Kmh: 2.6,
+      accel0To60Kmh: 4.5,
+      motorPeakPowerKw: 11.0,
+      motorRatedPowerKw: 7.0,
+      motorPeakTorqueNm: 40,
+      wheelTorqueNm: 220,
+      driveType: 'Belt',
+      chargingTime0To80: '3h 40m',
+      chargingTime0To100: '4h 30m',
+      fastChargingSupport: true,
+      fastChargingRate: 'SmartX Home Rapid Charger (0-50% in 50 min)',
+      bootSpaceLiters: 19,
+      ridingModes: ['Xtealth', 'Xtride', 'Xsonic'],
+      brakes: '220mm Front Disc with Single-Channel ABS, 195mm Rear Disc',
+      brakingSafety: 'Single-Channel ABS',
+      kerbWeightKg: 118,
+      groundClearanceMm: 175,
+      seatHeightMm: 770,
+      wheelSizeInches: 12,
+      touchscreen: true,
+      displaySizeInches: 10.25,
+      displayType: '10.25-inch HD Tilt-Adjustable Panoramic NavPro Screen',
+      connectivity: ['SmartXonnect 4G', 'NavPro Maps', 'Live Weather', 'Music & Call Controls', 'Cruise Control']
+    },
+    warranty: {
+      batteryYears: 3,
+      batteryKm: 50000,
+      vehicleYears: 3,
+      vehicleKm: 50000,
+      extendedAvailable: true
+    },
+    features: [
+      'Segment-first 10.25-inch HD panoramic tilt-adjustable touchscreen infotainment',
+      'Exoskeleton aluminum alloy spine frame providing outstanding handling agility',
+      'Cruise control, reverse assist, and regenerative braking with 3 selectable levels',
+      'TVS SmartXonnect live telemetry with geofencing and anti-theft immobilization'
+    ],
+    pros: [
+      'Mind-blowing 10.25-inch high-resolution tilt-adjustable display',
+      'Blistering 0-40 in 2.6s acceleration and stable 105 km/h top speed',
+      'Premium build quality with aluminum exoskeleton chassis'
+    ],
+    cons: [
+      'High ex-showroom price of ₹2.50 Lakh',
+      'Modest 19L boot space'
+    ],
+    equivalentPetrolBenchmark: {
+      modelName: 'Yamaha Aerox 155',
+      engineCc: 155,
+      petrolBhp: 15.0,
+      petrolTorqueNm: 13.9,
+      petrolMileageKmpl: 40,
+      petrolExShowroom: 148000,
+      petrolOnRoadTG: 180000,
+      classComparison: '155cc Performance Maxi-Scooter',
+      powerComparisonSummary: 'TVS X delivers instant 40 Nm motor torque and massive 10.25" screen vs Aerox\'s 13.9 Nm'
+    }
+  },
+
+  // --- BGauss C12i Max ---
+  {
+    id: 'bgauss-c12i-max',
+    name: 'BGauss C12i Max (3.2 kWh LFP Long Range)',
+    brand: 'BGauss',
+    tagline: 'Reliable All-Metal Family Electric Scooter with 135 km Range',
+    category: 'scooter',
+    badges: ['Full Metal Body', 'LFP Battery', '135 km Range', 'Waterproof IP67'],
+    rating: 4.5,
+    reviewCount: 36,
+    launchYear: 2024,
+    madeInIndia: true,
+    idealFor: 'Families wanting a rugged metal body electric scooter with safe LFP thermal chemistry for Telangana summers',
+    imageUrl: 'https://cdn.bikedekho.com/processedimages/bgauss/c12i-max/source/c12i-max6a0da949da693.jpg?model=bgauss-c12i-max&v=2026',
+    colorOptions: [
+      { name: 'Matte Blue', hex: '#1e3a8a' },
+      { name: 'Pearl White', hex: '#f8fafc' },
+      { name: 'Gunmetal Grey', hex: '#334155' }
+    ],
+    pricing: {
+      exShowroom: 126900,
+      pmEdriveSubsidy: 10000,
+      chargerIncluded: true,
+      chargerCost: 0,
+      insuranceEst: 6100,
+      handlingAndDocsEst: 1400
+    },
+    specs: {
+      batteryCapacityKwh: 3.2,
+      usableBatteryCapacityKwh: 3.0,
+      batteryChemistry: 'Fixed LFP',
+      isRemovableBattery: false,
+      araiRangeKm: 135,
+      realWorldEcoRangeKm: 120,
+      realWorldCityRangeKm: 105,
+      realWorldHighwayRangeKm: 80,
+      topSpeedKmh: 60,
+      accel0To40Kmh: 4.8,
+      motorPeakPowerKw: 2.5,
+      motorRatedPowerKw: 1.5,
+      motorPeakTorqueNm: 36,
+      driveType: 'Hub',
+      chargingTime0To80: '4h 00m',
+      chargingTime0To100: '5h 30m',
+      fastChargingSupport: false,
+      fastChargingRate: 'Standard 15A Socket',
+      bootSpaceLiters: 23,
+      ridingModes: ['Eco', 'Sport', 'Reverse'],
+      brakes: 'Front Disc, Rear Drum with CBS',
+      brakingSafety: 'Combi Brake System (CBS)',
+      kerbWeightKg: 107,
+      groundClearanceMm: 165,
+      seatHeightMm: 765,
+      wheelSizeInches: 12,
+      touchscreen: false,
+      displaySizeInches: 5.0,
+      displayType: 'Color LCD Digital Console',
+      connectivity: ['Bluetooth App', 'Battery Health Tracker', 'Distance-to-Empty', 'Service Reminder']
+    },
+    warranty: {
+      batteryYears: 5,
+      batteryKm: 75000,
+      vehicleYears: 3,
+      vehicleKm: 30000,
+      extendedAvailable: true
+    },
+    features: [
+      'Robust all-metal body panels designed for rugged city durability',
+      'Ultra-safe LFP battery chemistry with superior thermal tolerance for Deccan summers',
+      'Wide flat floorboard with generous dual-helmet storage hook',
+      'CBS braking system with front disc brake and reverse parking assist'
+    ],
+    pros: [
+      'Heavy-duty all-metal body construction with long durability',
+      'Thermally resilient LFP battery immune to summer thermal throttling',
+      'Comfortable family seat and easy 765mm seat height'
+    ],
+    cons: [
+      '60 km/h top speed tailored strictly for city limits',
+      'Basic monochrome LCD dash'
+    ],
+    equivalentPetrolBenchmark: {
+      modelName: 'TVS Jupiter 125',
+      engineCc: 124.8,
+      petrolBhp: 8.1,
+      petrolTorqueNm: 10.5,
+      petrolMileageKmpl: 50,
+      petrolExShowroom: 88000,
+      petrolOnRoadTG: 108000,
+      classComparison: '125cc All-Metal Family Commuter Scooter',
+      powerComparisonSummary: 'C12i Max delivers silent metal-body commuting with ₹0 road tax in Telangana'
+    }
+  },
+
+  // --- Bounce Infinity E.1+ ---
+  {
+    id: 'bounce-infinity-e1-plus',
+    name: 'Bounce Infinity E.1+ (2.5 kWh Swappable)',
+    brand: 'Bounce Infinity',
+    tagline: 'Swappable Battery Electric Scooter with Dual Charging Flexibility',
+    category: 'scooter',
+    badges: ['Swappable Battery', 'Sub-₹90K', '65 km/h', 'Dual Charging'],
+    rating: 4.2,
+    reviewCount: 29,
+    launchYear: 2024,
+    madeInIndia: true,
+    idealFor: 'Apartment tenants without basement sockets who want an affordable, swappable-battery scooter',
+    imageUrl: 'https://cdn.bikedekho.com/processedimages/bounce/e-scooter/source/e-scooter695f995f79bf5.jpg?model=bounce-infinity-e1-plus&v=2026',
+    colorOptions: [
+      { name: 'Sparkle Black', hex: '#09090b' },
+      { name: 'Comet Grey', hex: '#64748b' },
+      { name: 'Sporty Red', hex: '#ef4444' }
+    ],
+    pricing: {
+      exShowroom: 89999,
+      pmEdriveSubsidy: 10000,
+      chargerIncluded: true,
+      chargerCost: 0,
+      insuranceEst: 4800,
+      handlingAndDocsEst: 1200
+    },
+    specs: {
+      batteryCapacityKwh: 2.5,
+      usableBatteryCapacityKwh: 2.3,
+      batteryChemistry: 'Removable NMC',
+      isRemovableBattery: true,
+      batteryCount: 1,
+      araiRangeKm: 100,
+      realWorldEcoRangeKm: 95,
+      realWorldCityRangeKm: 85,
+      realWorldHighwayRangeKm: 60,
+      topSpeedKmh: 65,
+      accel0To40Kmh: 4.5,
+      motorPeakPowerKw: 2.2,
+      motorRatedPowerKw: 1.5,
+      motorPeakTorqueNm: 30,
+      driveType: 'Hub',
+      chargingTime0To80: '3h 30m',
+      chargingTime0To100: '4h 30m',
+      fastChargingSupport: false,
+      fastChargingRate: 'Removable Dock Charging (15A socket)',
+      bootSpaceLiters: 15,
+      ridingModes: ['Eco', 'Power', 'Drag Mode', 'Reverse Mode'],
+      brakes: 'Front & Rear Disc Brakes with EBS',
+      brakingSafety: 'Electronic Braking System (EBS)',
+      kerbWeightKg: 94,
+      groundClearanceMm: 155,
+      seatHeightMm: 780,
+      wheelSizeInches: 12,
+      touchscreen: false,
+      displaySizeInches: 4.5,
+      displayType: 'Digital Instrument Cluster',
+      connectivity: ['Bluetooth Mobile App', 'Tow Alert', 'Geofencing', 'Live Tracking']
+    },
+    warranty: {
+      batteryYears: 3,
+      batteryKm: 45000,
+      vehicleYears: 3,
+      vehicleKm: 30000,
+      extendedAvailable: true
+    },
+    features: [
+      'Portable removable battery that can be carried upstairs and charged like a smartphone',
+      'Unique Drag Mode that assists pushing the scooter if tyre gets punctured',
+      'Dual disc brakes (front and rear) for secure stopping control',
+      'Reverse parking assist and anti-theft smart key system'
+    ],
+    pros: [
+      'Very affordable sub-₹90,000 ex-showroom price',
+      'Lightweight removable battery perfect for high-floor flat owners',
+      'Dual disc brakes standard at this price point'
+    ],
+    cons: [
+      'Limited 12L boot space due to battery compartment',
+      '65 km/h top speed'
+    ],
+    equivalentPetrolBenchmark: {
+      modelName: 'Hero Pleasure Plus',
+      engineCc: 110.9,
+      petrolBhp: 8.0,
+      petrolTorqueNm: 8.7,
+      petrolMileageKmpl: 50,
+      petrolExShowroom: 72000,
+      petrolOnRoadTG: 88000,
+      classComparison: '110cc Lightweight City Commuter Scooter',
+      powerComparisonSummary: 'E.1+ offers zero emissions and portable battery charging with ₹0 road tax in Telangana'
+    }
+  },
+
+  
+  // --- Ola Cruiser Concept ---
+  {
+    id: 'ola-cruiser-concept',
+    name: 'Ola Cruiser (Electric Power Cruiser)',
+    brand: 'Ola Electric',
+    tagline: 'Futuristic Electric Long-Haul Power Cruiser with 500 km Range',
+    category: 'motorcycle',
+    badges: ['Power Cruiser', '500 km Range', '16 kWh Battery', '155 km/h'],
+    rating: 4.8,
+    reviewCount: 42,
+    launchYear: 2025,
+    madeInIndia: true,
+    idealFor: 'Highway cruisers, long-distance touring enthusiasts, and riders wanting relaxed foot-forward ergonomics',
+    imageUrl: 'https://cdn.bikedekho.com/processedimages/ola-electric/ola-cruiser/source/ola-cruiser6981e723da000.jpg?model=ola-cruiser-concept&v=2026',
+    colorOptions: [
+      { name: 'Titanium Matte Silver', hex: '#64748b' },
+      { name: 'Obsidian Midnight Black', hex: '#0f172a' }
+    ],
+    pricing: {
+      exShowroom: 269999,
+      pmEdriveSubsidy: 0,
+      chargerIncluded: true,
+      chargerCost: 0,
+      insuranceEst: 11800,
+      handlingAndDocsEst: 1800
+    },
+    specs: {
+      batteryCapacityKwh: 16.0,
+      usableBatteryCapacityKwh: 15.0,
+      batteryChemistry: 'Fixed NMC',
+      isRemovableBattery: false,
+      araiRangeKm: 500,
+      realWorldEcoRangeKm: 420,
+      realWorldCityRangeKm: 360,
+      realWorldHighwayRangeKm: 270,
+      topSpeedKmh: 155,
+      accel0To40Kmh: 2.3,
+      accel0To60Kmh: 3.4,
+      motorPeakPowerKw: 35.0,
+      motorRatedPowerKw: 18.0,
+      motorPeakTorqueNm: 90,
+      wheelTorqueNm: 600,
+      driveType: 'Belt',
+      chargingTime0To80: '5h 00m',
+      chargingTime0To100: '7h 00m',
+      fastChargingSupport: true,
+      fastChargingRate: 'Ola Hypercharger (15 min for 100 km)',
+      bootSpaceLiters: 15,
+      ridingModes: ['Eco', 'Normal', 'Sports', 'Cruise Mode'],
+      brakes: 'Dual 320mm Front Discs, 240mm Rear Disc with Dual-Channel ABS',
+      brakingSafety: 'Dual-Channel ABS',
+      kerbWeightKg: 195,
+      groundClearanceMm: 165,
+      seatHeightMm: 750,
+      wheelSizeInches: 18,
+      touchscreen: true,
+      displaySizeInches: 7.0,
+      displayType: '7.0-inch 1080p Touchscreen MoveOS 5',
+      connectivity: ['MoveOS 5', 'Adaptive Cruise Control', 'Proximity Unlock', 'Built-in Navigation', 'Party Mode']
+    },
+    warranty: {
+      batteryYears: 8,
+      batteryKm: 80000,
+      vehicleYears: 3,
+      vehicleKm: 30000,
+      extendedAvailable: true
+    },
+    features: [
+      'Low 750mm seat height with forward-set footpegs for effortless Hyderabad-to-Warangal highway touring',
+      'Massive 16 kWh battery pack providing 360 km real-world city range',
+      'Quiet carbon belt-drive system eliminating chain maintenance',
+      'Adaptive cruise control and full MoveOS connected ecosystem'
+    ],
+    pros: [
+      'Unrivaled 500 km range capability for inter-district Telangana touring',
+      'Relaxed low-slung cruiser posture suitable for all rider heights',
+      'Huge 35 kW peak motor output with instant roll-on torque'
+    ],
+    cons: [
+      'Heavier 195 kg curb weight in tight bumper-to-bumper city traffic',
+      'Long wheelbase requires wider turning radius'
+    ],
+    equivalentPetrolBenchmark: {
+      modelName: 'Royal Enfield Super Meteor 650',
+      engineCc: 648,
+      petrolBhp: 47.0,
+      petrolTorqueNm: 52.3,
+      petrolMileageKmpl: 24,
+      petrolExShowroom: 364000,
+      petrolOnRoadTG: 430000,
+      classComparison: '650cc Twin-Cylinder Power Cruiser',
+      powerComparisonSummary: 'Ola Cruiser delivers 90 Nm motor torque with ₹0 road tax in Telangana'
+    }
+  },
+
+  // --- Ola Diamondhead (Electric Supersport Flagship) ---
+  {
+    id: 'ola-diamondhead',
+    name: 'Ola Diamondhead (Electric Supersport Flagship)',
+    brand: 'Ola Electric',
+    tagline: 'Aerodynamic Halo Superbike with Diamond-Cut Monocoque & 160 km/h',
+    category: 'motorcycle',
+    badges: ['Halo Superbike', '160 km/h', 'Hub-Center Steering', '16 kWh'],
+    rating: 4.9,
+    reviewCount: 22,
+    launchYear: 2025,
+    madeInIndia: true,
+    idealFor: 'Supersport track riders and avant-garde design collectors desiring a futuristic diamond-cut electric superbike',
+    imageUrl: 'https://cdn.bikedekho.com/processedimages/ola-electric/ola-diamondhead/source/ola-diamondhead6989d506d602c.jpg?model=ola-diamondhead&v=2026',
+    colorOptions: [
+      { name: 'Diamond Silver Monolith', hex: '#e2e8f0' },
+      { name: 'Stealth Matte Black', hex: '#0a0a0a' }
+    ],
+    pricing: {
+      exShowroom: 499999,
+      pmEdriveSubsidy: 0,
+      chargerIncluded: true,
+      chargerCost: 0,
+      insuranceEst: 18500,
+      handlingAndDocsEst: 2500
+    },
+    specs: {
+      batteryCapacityKwh: 16.0,
+      usableBatteryCapacityKwh: 15.2,
+      batteryChemistry: 'Fixed NMC',
+      isRemovableBattery: false,
+      araiRangeKm: 450,
+      realWorldEcoRangeKm: 380,
+      realWorldCityRangeKm: 320,
+      realWorldHighwayRangeKm: 230,
+      topSpeedKmh: 160,
+      accel0To40Kmh: 1.8,
+      accel0To60Kmh: 2.6,
+      motorPeakPowerKw: 52.0,
+      motorRatedPowerKw: 25.0,
+      motorPeakTorqueNm: 105,
+      wheelTorqueNm: 750,
+      driveType: 'Belt',
+      chargingTime0To80: '4h 30m',
+      chargingTime0To100: '6h 00m',
+      fastChargingSupport: true,
+      fastChargingRate: 'Hypercharger 15 kW (0-80% in 35 min)',
+      bootSpaceLiters: 0,
+      ridingModes: ['Eco', 'Normal', 'Sport', 'Hyper Track'],
+      brakes: 'Dual 320mm Front Radial Discs, 240mm Rear Disc with Cornering ABS',
+      brakingSafety: 'Cornering ABS & Traction Control',
+      kerbWeightKg: 188,
+      groundClearanceMm: 155,
+      seatHeightMm: 820,
+      wheelSizeInches: 17,
+      touchscreen: true,
+      displaySizeInches: 7.0,
+      displayType: 'Concealed Retractable OLED Display',
+      connectivity: ['MoveOS 5 Racing', 'Cornering Traction Control', 'Launch Control', 'Active Thermal Telemetry']
+    },
+    warranty: {
+      batteryYears: 8,
+      batteryKm: 80000,
+      vehicleYears: 3,
+      vehicleKm: 30000,
+      extendedAvailable: true
+    },
+    features: [
+      'Revolutionary hub-center steering mechanism separating braking dive from steering geometry',
+      'Aerodynamic diamond-cut monocoque enclosing the entire front fascia and retractable display',
+      '52 kW (70 bhp) electric powertrain reaching 160 km/h with sub-2.0s 0-40 acceleration',
+      'Cornering ABS and multi-level dynamic traction control'
+    ],
+    pros: [
+      'Stunning concept-to-production diamond-cut design',
+      '70 bhp peak power with fierce 105 Nm instant torque',
+      'Cornering ABS and advanced hub-center front suspension'
+    ],
+    cons: [
+      'Aggressive supersport posture suited for track and fast canyon runs',
+      '₹5.00 Lakh price bracket'
+    ],
+    equivalentPetrolBenchmark: {
+      modelName: 'Yamaha YZF-R7 / Kawasaki Ninja 650',
+      engineCc: 689,
+      petrolBhp: 73.4,
+      petrolTorqueNm: 67.0,
+      petrolMileageKmpl: 22,
+      petrolExShowroom: 712000,
+      petrolOnRoadTG: 835000,
+      classComparison: '700cc Middleweight Supersport',
+      powerComparisonSummary: 'Diamondhead matches R7 power while delivering 105 Nm instant torque at ₹0 road tax in Telangana'
+    }
+  },
+
+  // --- Ola Adventure Motorcycle ---
+  {
+    id: 'ola-adventure',
+    name: 'Ola Adventure (Electric Dual-Sport ADV)',
+    brand: 'Ola Electric',
+    tagline: 'Rugged Long-Travel Adventure Motorcycle with 220mm Ground Clearance',
+    category: 'motorcycle',
+    badges: ['ADV Dual-Sport', '220mm Clearance', '21" Spoke Wheel', '380 km Range'],
+    rating: 4.8,
+    reviewCount: 35,
+    launchYear: 2025,
+    madeInIndia: true,
+    idealFor: 'Off-road explorers, trail riders, and adventure touring enthusiasts navigating unpaved roads and forest corridors',
+    imageUrl: 'https://cdn.bikedekho.com/processedimages/ola-electric/ola-electric-bike/source/ola-electric-bike68da2a3905058.jpg?model=ola-adventure&v=2026',
+    colorOptions: [
+      { name: 'Kalahari Safari Sand', hex: '#d97706' },
+      { name: 'Forest Green Matte', hex: '#15803d' }
+    ],
+    pricing: {
+      exShowroom: 249999,
+      pmEdriveSubsidy: 0,
+      chargerIncluded: true,
+      chargerCost: 0,
+      insuranceEst: 11200,
+      handlingAndDocsEst: 1800
+    },
+    specs: {
+      batteryCapacityKwh: 12.0,
+      usableBatteryCapacityKwh: 11.4,
+      batteryChemistry: 'Fixed NMC',
+      isRemovableBattery: false,
+      araiRangeKm: 380,
+      realWorldEcoRangeKm: 320,
+      realWorldCityRangeKm: 270,
+      realWorldHighwayRangeKm: 200,
+      topSpeedKmh: 140,
+      accel0To40Kmh: 2.6,
+      accel0To60Kmh: 3.7,
+      motorPeakPowerKw: 30.0,
+      motorRatedPowerKw: 15.0,
+      motorPeakTorqueNm: 85,
+      wheelTorqueNm: 560,
+      driveType: 'Chain',
+      chargingTime0To80: '4h 00m',
+      chargingTime0To100: '5h 30m',
+      fastChargingSupport: true,
+      fastChargingRate: 'Hypercharger (15 min for 100 km)',
+      bootSpaceLiters: 10,
+      ridingModes: ['Eco', 'Trail', 'Sport', 'Off-Road Sand/Mud'],
+      brakes: 'Front & Rear Discs with Switchable Off-Road ABS',
+      brakingSafety: 'Dual-Channel ABS with Off-Road Mode',
+      kerbWeightKg: 185,
+      groundClearanceMm: 220,
+      seatHeightMm: 840,
+      wheelSizeInches: 21,
+      wheelSizeFront: '90/90-21 Spoke',
+      wheelSizeRear: '140/80-18 Spoke',
+      touchscreen: true,
+      displaySizeInches: 7.0,
+      displayType: '7.0-inch High-Brightness Outdoor Touchscreen',
+      connectivity: ['Topo Maps GPS', 'Trail Tracking', 'MoveOS 5 Outdoor', 'SOS Beacon']
+    },
+    warranty: {
+      batteryYears: 8,
+      batteryKm: 80000,
+      vehicleYears: 3,
+      vehicleKm: 30000,
+      extendedAvailable: true
+    },
+    features: [
+      '21-inch front and 18-inch rear wire-spoked wheels with block-pattern dual-sport tyres',
+      'Commanding 220mm ground clearance for extreme speed-breakers, rocks, and water wading',
+      '30 kW peak electric motor delivering 85 Nm torque for steep hill climbs',
+      'Switchable rear ABS for controlled rear-wheel slide on dirt trails'
+    ],
+    pros: [
+      'Outstanding 220mm ground clearance and 21" front spoke wheel',
+      'Genuine 270 km real city range with 12 kWh battery',
+      'Smooth, instant low-end electric torque for off-road obstacles'
+    ],
+    cons: [
+      'Tall 840mm saddle height requires taller rider inseam',
+      'Chain drive requires periodic cleaning on dusty trails'
+    ],
+    equivalentPetrolBenchmark: {
+      modelName: 'Royal Enfield Himalayan 450',
+      engineCc: 452,
+      petrolBhp: 40.0,
+      petrolTorqueNm: 40.0,
+      petrolMileageKmpl: 30,
+      petrolExShowroom: 285000,
+      petrolOnRoadTG: 340000,
+      classComparison: '450cc Dual-Sport Adventure Motorcycle',
+      powerComparisonSummary: 'Ola Adventure matches Himalayan 450 with 85 Nm instant torque and ₹0 road tax in Telangana'
+    }
+  },
+
+  // --- Komaki Venice Classic ---
+  {
+    id: 'komaki-venice-classic',
+    name: 'Komaki Venice Classic (3.0 kWh Retro Cruiser)',
+    brand: 'Komaki Electric',
+    tagline: 'Italian Vintage Retro Electric Scooter with Pillion Backrest & 120 km Range',
+    category: 'scooter',
+    badges: ['Vintage Retro', 'Removable LFP', '120 km Range', 'Pillion Backrest'],
+    rating: 4.3,
+    reviewCount: 30,
+    launchYear: 2024,
+    madeInIndia: true,
+    idealFor: 'Commuters and senior family members wanting timeless retro curves, pillion backrest support, and reliable LFP chemistry',
+    imageUrl: 'https://cdn.bikedekho.com/processedimages/komaki/venice/source/venice6953894b5f992.jpg?model=komaki-venice-classic&v=2026',
+    colorOptions: [
+      { name: 'Vintage Mint Green', hex: '#86efac' },
+      { name: 'Classic Cream White', hex: '#fef3c7' },
+      { name: 'Ruby Metallic Wine', hex: '#991b1b' }
+    ],
+    pricing: {
+      exShowroom: 119999,
+      pmEdriveSubsidy: 10000,
+      chargerIncluded: true,
+      chargerCost: 0,
+      insuranceEst: 5900,
+      handlingAndDocsEst: 1400
+    },
+    specs: {
+      batteryCapacityKwh: 3.0,
+      usableBatteryCapacityKwh: 2.8,
+      batteryChemistry: 'Removable LFP',
+      isRemovableBattery: true,
+      batteryCount: 1,
+      araiRangeKm: 120,
+      realWorldEcoRangeKm: 110,
+      realWorldCityRangeKm: 95,
+      realWorldHighwayRangeKm: 70,
+      topSpeedKmh: 70,
+      accel0To40Kmh: 4.6,
+      motorPeakPowerKw: 3.0,
+      motorRatedPowerKw: 1.8,
+      motorPeakTorqueNm: 35,
+      driveType: 'Hub',
+      chargingTime0To80: '3h 30m',
+      chargingTime0To100: '4h 30m',
+      fastChargingSupport: false,
+      fastChargingRate: 'Standard 15A Socket',
+      bootSpaceLiters: 18,
+      ridingModes: ['Eco', 'Comfort', 'Sport', 'Turbo Boost', 'Reverse'],
+      brakes: 'Front & Rear Dual Disc Brakes with CBS',
+      brakingSafety: 'Combi Brake System (CBS)',
+      kerbWeightKg: 98,
+      groundClearanceMm: 160,
+      seatHeightMm: 770,
+      wheelSizeInches: 12,
+      touchscreen: false,
+      displaySizeInches: 4.5,
+      displayType: 'Color Digital Display with Bluetooth Sound System',
+      connectivity: ['Bluetooth Sound System', 'FM Radio', 'USB Charging Port', 'Anti-Theft Alarm']
+    },
+    warranty: {
+      batteryYears: 3,
+      batteryKm: 50000,
+      vehicleYears: 3,
+      vehicleKm: 30000,
+      extendedAvailable: true
+    },
+    features: [
+      'Italian classic retro curved silhouette with integrated chrome mirrors and cushioned pillion backrest',
+      'Removable 3.0 kWh LFP battery suitable for home and apartment charging',
+      'Dual disc brakes (front and rear) with CBS for dependable stopping safety',
+      'Built-in Bluetooth music speakers and FM radio receiver for leisure rides'
+    ],
+    pros: [
+      'Charming retro Italian aesthetic with comfortable backrest for pillion',
+      'Removable LFP battery safe for hot Telangana weather',
+      'Dual disc brakes and built-in music entertainment system'
+    ],
+    cons: [
+      '70 km/h top speed',
+      '18L boot space'
+    ],
+    equivalentPetrolBenchmark: {
+      modelName: 'Vespa ZX 125',
+      engineCc: 124.4,
+      petrolBhp: 9.9,
+      petrolTorqueNm: 9.6,
+      petrolMileageKmpl: 45,
+      petrolExShowroom: 118000,
+      petrolOnRoadTG: 142000,
+      classComparison: '125cc Retro Italian Lifestyle Scooter',
+      powerComparisonSummary: 'Venice Classic matches Vespa retro charm with zero petrol bills and ₹0 road tax in Telangana'
+    }
+  },
+
+  // --- Kabira Mobility KM5000 (Highway Cruiser) ---
+  {
+    id: 'kabira-km5000-cruiser',
+    name: 'Kabira Mobility KM5000 (Electric Highway Cruiser)',
+    brand: 'Kabira Mobility',
+    tagline: 'High-Speed Electric Cruiser with Single-Sided Swingarm & 188 km/h',
+    category: 'motorcycle',
+    badges: ['188 km/h Cruiser', '11.6 kWh LFP', 'Single-Sided Swingarm', '344 km Range'],
+    rating: 4.7,
+    reviewCount: 18,
+    launchYear: 2025,
+    madeInIndia: true,
+    idealFor: 'Long-distance highway riders and cruiser connoisseurs demanding high top speeds and single-sided swingarm aesthetics',
+    imageUrl: 'https://cdn.bikedekho.com/processedimages/kabira-mobility/km-5000/source/km-50006989d21c74cde.jpg?model=kabira-km5000-cruiser&v=2026',
+    colorOptions: [
+      { name: 'Midnight Black Chrome', hex: '#1c1917' },
+      { name: 'Cobalt Blue Metallic', hex: '#1d4ed8' }
+    ],
+    pricing: {
+      exShowroom: 315000,
+      pmEdriveSubsidy: 0,
+      chargerIncluded: true,
+      chargerCost: 0,
+      insuranceEst: 13500,
+      handlingAndDocsEst: 2000
+    },
+    specs: {
+      batteryCapacityKwh: 11.6,
+      usableBatteryCapacityKwh: 11.0,
+      batteryChemistry: 'Fixed LFP',
+      isRemovableBattery: false,
+      araiRangeKm: 344,
+      realWorldEcoRangeKm: 300,
+      realWorldCityRangeKm: 250,
+      realWorldHighwayRangeKm: 185,
+      topSpeedKmh: 188,
+      accel0To40Kmh: 2.1,
+      accel0To60Kmh: 3.2,
+      motorPeakPowerKw: 20.0,
+      motorRatedPowerKw: 12.0,
+      motorPeakTorqueNm: 75,
+      wheelTorqueNm: 520,
+      driveType: 'Belt',
+      chargingTime0To80: '3h 30m',
+      chargingTime0To100: '4h 30m',
+      fastChargingSupport: true,
+      fastChargingRate: 'CCS2 Fast Charging (0-80% in 50 min)',
+      bootSpaceLiters: 12,
+      ridingModes: ['Eco', 'City', 'Sports', 'Hyper Speed'],
+      brakes: 'Dual Front Discs with ABS, Single Rear Disc',
+      brakingSafety: 'Dual-Channel ABS',
+      kerbWeightKg: 172,
+      groundClearanceMm: 170,
+      seatHeightMm: 780,
+      wheelSizeInches: 17,
+      touchscreen: true,
+      displaySizeInches: 7.0,
+      displayType: '7.0-inch Touchscreen Dash with Smart Connectivity',
+      connectivity: ['CCS2 Fast Charge Support', 'TPMS (Tyre Pressure Monitoring)', 'Turn-by-Turn GPS', 'Anti-Theft']
+    },
+    warranty: {
+      batteryYears: 5,
+      batteryKm: 100000,
+      vehicleYears: 3,
+      vehicleKm: 30000,
+      extendedAvailable: true
+    },
+    features: [
+      'Exquisite single-sided rear swingarm revealing the polished alloy wheel hub',
+      'Massive 11.6 kWh LFP battery pack with exceptional 344 km range capacity',
+      'Blistering 188 km/h top speed engineered for open highway expressways',
+      'Integrated Tyre Pressure Monitoring System (TPMS) and standard CCS2 charging'
+    ],
+    pros: [
+      'Fastest electric cruiser in India with 188 km/h top speed',
+      'Single-sided swingarm gives breathtaking custom motorcycle presence',
+      'Large 11.6 kWh LFP battery with 250 km real-world city range'
+    ],
+    cons: [
+      '₹3.15 Lakh ex-showroom price',
+      'Specialized dealer service network'
+    ],
+    equivalentPetrolBenchmark: {
+      modelName: 'Kawasaki Vulcan S',
+      engineCc: 649,
+      petrolBhp: 61.0,
+      petrolTorqueNm: 62.4,
+      petrolMileageKmpl: 22,
+      petrolExShowroom: 710000,
+      petrolOnRoadTG: 830000,
+      classComparison: '650cc Sport Cruiser',
+      powerComparisonSummary: 'KM5000 matches 650cc performance with 188 km/h speed at ₹0 road tax in Telangana'
+    }
+  },
+
+  // --- Bajaj Chetak 3202 (Blue Edition) ---
+  {
+    id: 'bajaj-chetak-3202',
+    name: 'Bajaj Chetak 3202 (3.2 kWh Blue Edition)',
+    brand: 'Bajaj Auto',
+    tagline: 'Modernized Classic with 3.2 kWh Battery & 137 km Range',
+    category: 'scooter',
+    badges: ['Full Metal Body', '3.2 kWh Battery', '137 km Range', 'Sub-₹1.2L'],
+    rating: 4.6,
+    reviewCount: 52,
+    launchYear: 2024,
+    madeInIndia: true,
+    idealFor: 'Riders looking for genuine Bajaj full metal body reliability with upgraded 3.2 kWh range at an affordable price',
+    imageUrl: 'https://cdn.bikedekho.com/processedimages/bajaj/chetak-c2501/source/chetak-c25016971bd5606598.jpg?model=bajaj-chetak-3202&v=2026',
+    colorOptions: [
+      { name: 'Brooklyn Black', hex: '#0f172a' },
+      { name: 'Indigo Metallic', hex: '#1e3a8a' },
+      { name: 'Cyber White', hex: '#f8fafc' }
+    ],
+    pricing: {
+      exShowroom: 115018,
+      pmEdriveSubsidy: 10000,
+      chargerIncluded: true,
+      chargerCost: 0,
+      insuranceEst: 5800,
+      handlingAndDocsEst: 1400
+    },
+    specs: {
+      batteryCapacityKwh: 3.2,
+      usableBatteryCapacityKwh: 3.0,
+      batteryChemistry: 'Fixed NMC',
+      isRemovableBattery: false,
+      araiRangeKm: 137,
+      realWorldEcoRangeKm: 125,
+      realWorldCityRangeKm: 115,
+      realWorldHighwayRangeKm: 85,
+      topSpeedKmh: 73,
+      accel0To40Kmh: 4.0,
+      motorPeakPowerKw: 4.0,
+      motorRatedPowerKw: 2.8,
+      motorPeakTorqueNm: 20,
+      driveType: 'Hub',
+      chargingTime0To80: '3h 45m',
+      chargingTime0To100: '4h 45m',
+      fastChargingSupport: false,
+      fastChargingRate: 'Offboard Charger (15A Socket)',
+      bootSpaceLiters: 18,
+      ridingModes: ['Eco', 'Sports', 'Reverse'],
+      brakes: 'Front Disc, Rear Drum with CBS',
+      brakingSafety: 'Combined Braking System (CBS)',
+      kerbWeightKg: 119,
+      groundClearanceMm: 160,
+      seatHeightMm: 760,
+      wheelSizeInches: 12,
+      touchscreen: false,
+      displaySizeInches: 4.5,
+      displayType: 'Color LCD Digital Console',
+      connectivity: ['My Chetak App', 'Turn-by-turn Navigation', 'Geo-fencing', 'OTA Updates']
+    },
+    warranty: {
+      batteryYears: 3,
+      batteryKm: 50000,
+      vehicleYears: 3,
+      vehicleKm: 50000,
+      extendedAvailable: true
+    },
+    features: [
+      'Full pressed-steel sheet metal body providing superior impact safety and timeless durability',
+      'Upgraded 3.2 kWh NMC battery pack delivering 115 km real-world city range',
+      'IP67 water-resistant electrical architecture for monsoon resilience in Hyderabad',
+      'Reverse parking assist and smooth hill-hold assist'
+    ],
+    pros: [
+      'Legendary Bajaj sheet-metal construction with superb paint finish',
+      'Generous 115 km real city range with upgraded 3.2 kWh pack',
+      'Sub-₹1.15 Lakh attractive pricing with ₹0 road tax in Telangana'
+    ],
+    cons: [
+      '73 km/h top speed',
+      'Modest 18L under-seat storage'
+    ],
+    equivalentPetrolBenchmark: {
+      modelName: 'Suzuki Access 125',
+      engineCc: 124,
+      petrolBhp: 8.7,
+      petrolTorqueNm: 10.0,
+      petrolMileageKmpl: 48,
+      petrolExShowroom: 84000,
+      petrolOnRoadTG: 103000,
+      classComparison: '125cc Metal Body Family Scooter',
+      powerComparisonSummary: 'Chetak 3202 offers full sheet metal durability with zero fuel costs in Telangana'
+    }
+  },
+
   // ⛽ PETROL BASELINE (Honda Activa 6G)
   // ==========================================
   {

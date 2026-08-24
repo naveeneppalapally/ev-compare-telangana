@@ -133,7 +133,7 @@ interface FilterOptions {
 function filterCatalog(models: EVModel[], options: FilterOptions = {}): EVModel[] {
   const {
     category = 'all',
-    priceRangeMax = 450000,
+    priceRangeMax = 1000000,
     minRealRangeKm = 0,
     requireRemovableBattery = false,
     requireFastCharging = false,

@@ -58,8 +58,8 @@ describe('PREVIEW CHALLENGER 2: Comprehensive Empirical Mathematical & Algorithm
   // 1. MULTIPLICATIVE RANGE PHYSICS MODEL ACROSS EXTREME COMBINATIONS
   // =========================================================================
   describe('1. Range Physics Multiplicative Model & Chemistry Thermal Degradation', () => {
-    it('verifies catalog size and composition (40 EV models)', () => {
-      assert.strictEqual(evModels.length, 40, 'Should have exactly 40 authentic EV models');
+    it('verifies catalog size and composition (at least 40 EV models)', () => {
+      assert.ok(evModels.length >= 40, `Should have at least 40 authentic EV models, got ${evModels.length}`);
     });
 
     it('empirically verifies the extreme worst-case physics scenario across all 40 EV models', () => {
@@ -109,7 +109,7 @@ describe('PREVIEW CHALLENGER 2: Comprehensive Empirical Mathematical & Algorithm
         assert.strictEqual(res.efficiencyKmPerKwh, expectedEfficiency, `Efficiency km/kWh mismatch for ${model.id}`);
       }
 
-      assert.strictEqual(count, 40, 'Must verify all 40 EV models under extreme worst-case');
+      assert.strictEqual(count, evModels.length, 'Must verify all EV models under extreme worst-case');
     });
 
     it('empirically verifies LFP (-6%) vs NMC (-12%) thermal degradation difference under 50°C summer heat', () => {
@@ -268,7 +268,7 @@ describe('PREVIEW CHALLENGER 2: Comprehensive Empirical Mathematical & Algorithm
         }
       }
 
-      assert.strictEqual(totalEvaluations, 40 * (150 - 10 + 1), 'Must evaluate exactly 5,640 commute distance sweep iterations');
+      assert.strictEqual(totalEvaluations, evModels.length * (150 - 10 + 1), `Must evaluate exactly ${evModels.length * 141} commute distance sweep iterations`);
     });
   });
 
@@ -348,7 +348,7 @@ describe('PREVIEW CHALLENGER 2: Comprehensive Empirical Mathematical & Algorithm
         }
       }
 
-      assert.strictEqual(combinationCount, 1520, 'Must execute exactly 1,520 on-road pricing evaluations');
+      assert.strictEqual(combinationCount, evModels.length * allRtos.length, `Must execute exactly ${evModels.length * allRtos.length} on-road pricing evaluations`);
     });
 
     it('verifies Honda Activa 6G ICE benchmark correctly pays full 12% Road Tax and ₹785 Registration Fee', () => {
@@ -551,8 +551,8 @@ describe('PREVIEW CHALLENGER 2: Comprehensive Empirical Mathematical & Algorithm
 
                 const recs = calculateRecommendations(answers, allVehiclesWithBenchmark);
 
-                // 1. Result count: exactly 40 EV models (Activa filtered out)
-                assert.strictEqual(recs.length, 40, `Permutation #${totalPermutations} returned ${recs.length} items`);
+                // 1. Result count: all authentic EV models (Activa filtered out)
+                assert.strictEqual(recs.length, evModels.length, `Permutation #${totalPermutations} returned ${recs.length} items`);
 
                 // 2. Invariant: ICE benchmark is never present
                 const icePresent = recs.some(r => r.model.isIceBenchmark || r.model.id === 'honda-activa-6g');

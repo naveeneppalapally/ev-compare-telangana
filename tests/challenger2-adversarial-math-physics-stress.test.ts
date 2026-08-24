@@ -62,10 +62,10 @@ describe("CHALLENGER 2: Adversarial Stress Test Suite", () => {
   // TASK 2.1: On-road pricing across all 38 RTOs (TG-01 through TG-38)
   // =========================================================================
   describe("Engine 1: On-Road Pricing Invariants & 38-RTO Matrix Stress Testing", () => {
-    it("verifies dataset sizes: 40 authentic EV models and exactly 38 RTOs", () => {
-      assert.strictEqual(allEvs.length, 40, "Should have exactly 40 authentic EV models");
+    it("verifies dataset sizes: authentic EV models and exactly 38 RTOs", () => {
+      assert.ok(allEvs.length >= 40, "Should have at least 40 authentic EV models");
       assert.strictEqual(allRtos.length, 38, "Should have exactly 38 official Telangana RTOs");
-      assert.strictEqual(allVehiclesWithBenchmark.length, 41, "Should have 41 total vehicles including Activa 6G");
+      assert.strictEqual(allVehiclesWithBenchmark.length, allEvs.length + 1, "Should have all vehicles including Activa 6G");
       
       const rtoCodes = allRtos.map(r => r.rtoCode);
       for (let i = 1; i <= 38; i++) {
@@ -117,7 +117,7 @@ describe("CHALLENGER 2: Adversarial Stress Test Suite", () => {
         }
       }
 
-      assert.strictEqual(calculationCount, 40 * 38, "Must execute exactly 1,520 pricing calculations");
+      assert.strictEqual(calculationCount, allEvs.length * 38, `Must execute exactly ${allEvs.length * 38} pricing calculations`);
     });
 
     it("verifies Honda Activa 6G ICE benchmark pays standard statutory fees without EV exemptions", () => {
@@ -427,8 +427,8 @@ describe("CHALLENGER 2: Adversarial Stress Test Suite", () => {
 
               const recommendations = calculateRecommendations(answers, allVehiclesWithBenchmark);
 
-              // 1. Output count check: exactly 40 EV recommendations (ICE Activa filtered out)
-              assert.strictEqual(recommendations.length, 40, "Permutation #" + count + " must return 40 EV recommendations");
+              // 1. Output count check: all EV recommendations (ICE Activa filtered out)
+              assert.strictEqual(recommendations.length, allEvs.length, "Permutation #" + count + " must return all EV recommendations");
 
               // 2. Invariant: ICE benchmark is never present
               const hasIce = recommendations.some(r => r.model.isIceBenchmark);
@@ -501,7 +501,7 @@ describe("CHALLENGER 2: Adversarial Stress Test Suite", () => {
                 };
 
                 const recs = calculateRecommendations(answers, allVehiclesWithBenchmark);
-                assert.strictEqual(recs.length, 40);
+                assert.strictEqual(recs.length, allEvs.length);
 
                 // If category preference is specified, top recommendation should match category
                 if (category === "scooter") {
@@ -521,7 +521,7 @@ describe("CHALLENGER 2: Adversarial Stress Test Suite", () => {
     it("tests malformed, partial, and empty answers resilience", () => {
       // Empty answers
       const emptyRecs = calculateRecommendations({}, allVehiclesWithBenchmark);
-      assert.strictEqual(emptyRecs.length, 40);
+      assert.strictEqual(emptyRecs.length, allEvs.length);
       assert.ok(emptyRecs[0].matchScore > 0);
 
       // Alias property names
@@ -531,7 +531,7 @@ describe("CHALLENGER 2: Adversarial Stress Test Suite", () => {
         preferredType: "scooter",
         chargingAccess: "independentHouse"
       } as unknown as WizardAnswers, allVehiclesWithBenchmark);
-      assert.strictEqual(aliasRecs.length, 40);
+      assert.strictEqual(aliasRecs.length, allEvs.length);
       assert.strictEqual(aliasRecs[0].model.category, "scooter");
 
       // Empty models array

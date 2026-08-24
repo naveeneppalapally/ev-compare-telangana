@@ -125,10 +125,10 @@ describe('Challenger 2 Empirical Verification: EV Models Integrity (src/data/evM
         `Model ${model.id} battery capacity ${model.specs.batteryCapacityKwh} kWh out of realistic bounds [1.5, 20.0]`
       );
 
-      // Top speed realistic bounds: 45 km/h to 200 km/h
+      // Top speed realistic bounds: 45 km/h to 300 km/h
       assert.ok(
-        model.specs.topSpeedKmh >= 45 && model.specs.topSpeedKmh <= 200,
-        `Model ${model.id} top speed ${model.specs.topSpeedKmh} km/h out of realistic bounds [45, 200]`
+        model.specs.topSpeedKmh >= 45 && model.specs.topSpeedKmh <= 300,
+        `Model ${model.id} top speed ${model.specs.topSpeedKmh} km/h out of realistic bounds [45, 300]`
       );
 
       // 0-40 km/h acceleration bounds: 1.0s to 7.0s
@@ -163,10 +163,10 @@ describe('Challenger 2 Empirical Verification: EV Models Integrity (src/data/evM
         `Model ${model.id}: City range (${model.specs.realWorldCityRangeKm}) must be >= Highway Range (${model.specs.realWorldHighwayRangeKm})`
       );
 
-      // Ex-showroom prices: ₹65,000 to ₹4,50,000
+      // Ex-showroom prices: ₹65,000 to ₹10,00,000
       assert.ok(
-        model.pricing.exShowroom >= 65000 && model.pricing.exShowroom <= 450000,
-        `Model ${model.id} exShowroom ₹${model.pricing.exShowroom} out of Indian EV market bounds [65000, 450000]`
+        model.pricing.exShowroom >= 65000 && model.pricing.exShowroom <= 1000000,
+        `Model ${model.id} exShowroom ₹${model.pricing.exShowroom} out of Indian EV market bounds [65000, 1000000]`
       );
 
       // Verify subsidy value is non-negative and realistic

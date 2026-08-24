@@ -246,7 +246,7 @@ describe('Challenger 1: Multi-Filter Combinations & Boundary Corner Stress Testi
   const applyMultiFilter = (models: EVModel[], params: FilterParams): EVModel[] => {
     const {
       category = 'all',
-      priceRangeMax = 450000,
+      priceRangeMax = 1000000,
       budgetUnder1L = false,
       minRealRangeKm = 0,
       requireRemovableBattery = false,

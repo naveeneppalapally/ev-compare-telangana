@@ -573,8 +573,8 @@ describe('M3 Challenger 1: 5-Year TCO Lifecycle Mathematical Verification', () =
       // TCO savings must be finite
       assert.ok(Number.isFinite(tco.netTCOSavings));
 
-      // For commuter EVs (< ₹2.2L), 5-year TCO savings are positive against Activa 6G
-      const isHighEndSuperbike = ['ultraviolette-f77-mach2', 'ultraviolette-f77-mach2-original', 'ola-roadster-pro-16', 'raptee-hv-t30'].includes(model.id);
+      // For commuter EVs (< ₹2.4L), 5-year TCO savings are positive against Activa 6G
+      const isHighEndSuperbike = model.pricing.exShowroom >= 240000;
       if (!isHighEndSuperbike) {
         assert.ok(tco.netTCOSavings > 0, `Expected positive 5-year TCO savings for ${model.name}, got ${tco.netTCOSavings}`);
       } else {
