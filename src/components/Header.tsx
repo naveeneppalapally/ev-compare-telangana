@@ -25,6 +25,7 @@ export const Header: React.FC = () => {
     openTariffModal,
     openLoanModal,
     openTaxInspectorModal,
+    openTechModal,
     selectedRtoCode,
     setRtoCode,
     petrolPrice
@@ -110,14 +111,24 @@ export const Header: React.FC = () => {
             </select>
           </div>
 
-          {/* Charging Hubs Directory */}
+          {/* Charging Hubs & Highway Route Planner */}
           <button
             onClick={openChargingModal}
-            className="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold text-neutral-700 hover:text-neutral-950 hover:bg-neutral-100 border border-neutral-200 transition cursor-pointer"
-            title="Fast Charging Station Directory in Telangana"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-neutral-700 hover:text-neutral-950 hover:bg-neutral-100 border border-neutral-200 transition cursor-pointer"
+            title="50+ Fast Charging Stations & 5 Highway Corridors in Telangana"
           >
-            <Zap className="w-3.5 h-3.5 text-neutral-900" />
-            <span>Fast Chargers</span>
+            <Zap className="w-3.5 h-3.5 text-emerald-600" />
+            <span>⚡ Charging & Routes</span>
+          </button>
+
+          {/* EV Tech Guide & Glossary */}
+          <button
+            onClick={() => openTechModal()}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-neutral-700 hover:text-neutral-950 hover:bg-neutral-100 border border-neutral-200 transition cursor-pointer"
+            title="EV Technology Guide: On-board chargers, LFP vs NMC, liquid cooling & gearboxes"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-cyan-600" />
+            <span>🔬 EV Tech Guide</span>
           </button>
 
           {/* Green Loan Simulator */}
@@ -231,7 +242,17 @@ export const Header: React.FC = () => {
               }}
               className="p-2.5 rounded-xl bg-neutral-50 border border-neutral-200 text-left text-xs font-bold text-neutral-800"
             >
-              ⚡ Fast Charging Hubs
+              ⚡ Charging & Routes
+            </button>
+
+            <button
+              onClick={() => {
+                openTechModal();
+                setMobileMenuOpen(false);
+              }}
+              className="p-2.5 rounded-xl bg-neutral-50 border border-neutral-200 text-left text-xs font-bold text-neutral-800"
+            >
+              🔬 EV Tech Guide
             </button>
 
             <button

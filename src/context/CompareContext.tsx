@@ -124,6 +124,17 @@ export interface CompareContextType {
   isTaxInspectorModalOpen: boolean;
   openTaxInspectorModal: () => void;
   closeTaxInspectorModal: () => void;
+
+  // EV Tech Guide & Highway Route Planner
+  isTechModalOpen: boolean;
+  activeTechTopicId: string | null;
+  openTechModal: (topicId?: string) => void;
+  closeTechModal: () => void;
+
+  routePlannerVehicleId: string | null;
+  routePlannerCorridorId: string | null;
+  openRoutePlanner: (vehicleId?: string, corridorId?: string) => void;
+  closeRoutePlanner: () => void;
 }
 
 const CompareContext = createContext<CompareContextType | undefined>(undefined);
@@ -188,11 +199,17 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [isSavingsModalOpen, setIsSavingsModalOpen] = useState<boolean>(false);
   const [isWizardOpen, setIsWizardOpen] = useState<boolean>(false);
 
-  // New Modals
   const [isChargingModalOpen, setIsChargingModalOpen] = useState<boolean>(false);
   const [isTariffModalOpen, setIsTariffModalOpen] = useState<boolean>(false);
   const [isLoanModalOpen, setIsLoanModalOpen] = useState<boolean>(false);
   const [isTaxInspectorModalOpen, setIsTaxInspectorModalOpen] = useState<boolean>(false);
+
+  // EV Tech Guide & Highway Route Planner
+  const [isTechModalOpen, setIsTechModalOpen] = useState<boolean>(false);
+  const [activeTechTopicId, setActiveTechTopicId] = useState<string | null>(null);
+
+  const [routePlannerVehicleId, setRoutePlannerVehicleId] = useState<string | null>(null);
+  const [routePlannerCorridorId, setRoutePlannerCorridorId] = useState<string | null>(null);
 
   const activeDetailModalModel = useMemo(
     () => (activeDetailModelId ? getEVModelById(activeDetailModelId) || null : null),
@@ -349,6 +366,19 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const openTaxInspectorModal = () => setIsTaxInspectorModalOpen(true);
   const closeTaxInspectorModal = () => setIsTaxInspectorModalOpen(false);
+
+  const openTechModal = (topicId?: string) => {
+    if (topicId) setActiveTechTopicId(topicId);
+    setIsTechModalOpen(true);
+  };
+  const closeTechModal = () => setIsTechModalOpen(false);
+
+  const openRoutePlanner = (vehicleId?: string, corridorId?: string) => {
+    if (vehicleId) setRoutePlannerVehicleId(vehicleId);
+    if (corridorId) setRoutePlannerCorridorId(corridorId);
+    setIsChargingModalOpen(true);
+  };
+  const closeRoutePlanner = () => setIsChargingModalOpen(false);
 
   const resetFilters = () => {
     setSearchQuery('');
@@ -525,7 +555,15 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
     closeLoanModal,
     isTaxInspectorModalOpen,
     openTaxInspectorModal,
-    closeTaxInspectorModal
+    closeTaxInspectorModal,
+    isTechModalOpen,
+    activeTechTopicId,
+    openTechModal,
+    closeTechModal,
+    routePlannerVehicleId,
+    routePlannerCorridorId,
+    openRoutePlanner,
+    closeRoutePlanner
   };
 
   return <CompareContext.Provider value={value}>{children}</CompareContext.Provider>;

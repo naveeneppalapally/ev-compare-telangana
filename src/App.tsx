@@ -12,7 +12,8 @@ import { VehicleDetailModal } from './components/VehicleDetailModal';
 import { RangeSimulatorModal } from './components/RangeSimulatorModal';
 import { SavingsCalculatorModal } from './components/SavingsCalculatorModal';
 import { SmartWizardModal } from './components/SmartWizardModal';
-import { ChargingStationModal } from './components/ChargingStationModal';
+import { ChargingRoutePlannerModal } from './components/ChargingRoutePlannerModal';
+import { EVTechExplorerModal } from './components/EVTechExplorerModal';
 import { TSSPDCLTariffModal } from './components/TSSPDCLTariffModal';
 import { GreenLoanCalculatorModal } from './components/GreenLoanCalculatorModal';
 import { TelanganaTaxInspectorModal } from './components/TelanganaTaxInspectorModal';
@@ -23,6 +24,12 @@ const AppContent: React.FC = () => {
     catalogViewMode,
     isChargingModalOpen,
     closeChargingModal,
+    routePlannerVehicleId,
+    routePlannerCorridorId,
+    isTechModalOpen,
+    activeTechTopicId,
+    closeTechModal,
+    openDetail,
     isTariffModalOpen,
     closeTariffModal,
     isLoanModalOpen,
@@ -68,10 +75,18 @@ const AppContent: React.FC = () => {
       <SavingsCalculatorModal />
       <SmartWizardModal />
 
-      {/* New Telangana Decision Tool Modals */}
-      <ChargingStationModal
+      {/* Telangana Decision & Technology Tool Modals */}
+      <ChargingRoutePlannerModal
         isOpen={isChargingModalOpen}
         onClose={closeChargingModal}
+        initialVehicleId={routePlannerVehicleId}
+        initialCorridorId={routePlannerCorridorId}
+      />
+      <EVTechExplorerModal
+        isOpen={isTechModalOpen}
+        onClose={closeTechModal}
+        initialTopicId={activeTechTopicId}
+        onSelectVehicle={openDetail}
       />
       <TSSPDCLTariffModal
         isOpen={isTariffModalOpen}

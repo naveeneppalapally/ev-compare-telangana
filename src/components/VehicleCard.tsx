@@ -3,6 +3,7 @@ import type { EVModel } from '../types/ev';
 import { useCompare } from '../context/CompareContext';
 import { calculateTelanganaOnRoadPrice, formatINR } from '../utils/priceCalculator';
 import { VehicleImage } from './VehicleImage';
+import { TechTooltip } from './TechTooltip';
 import { 
   Battery, 
   Timer, 
@@ -14,7 +15,8 @@ import {
   ChevronRight,
   Zap,
   Gauge,
-  CircleDollarSign
+  CircleDollarSign,
+  Navigation
 } from 'lucide-react';
 
 interface VehicleCardProps {
@@ -27,6 +29,8 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ model }) => {
     isCompared,
     openDetail,
     openPriceModal,
+    openTechModal,
+    openRoutePlanner,
     selectedRtoCode,
     selectedDistrict
   } = useCompare();
@@ -239,8 +243,79 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ model }) => {
         </div>
       </div>
 
+      {/* 5.5. Contextual Technology Highlights */}
+      {!model.isIceBenchmark && (
+        <div className="px-4 mb-2 flex flex-wrap gap-1.5 items-center">
+          {/* Battery Chemistry */}
+          {model.specs.batteryChemistry?.toUpperCase().includes('LFP') && (
+            <TechTooltip
+              topicId="tech-lfp-vs-nmc"
+              label="🛡️ LFP Summer Safe"
+              onOpenTopicModal={openTechModal}
+            />
+          )}
+          {model.specs.batteryChemistry?.toUpperCase().includes('NMC') && (
+            <TechTooltip
+              topicId="tech-lfp-vs-nmc"
+              label="⚡ NMC High-Density"
+              onOpenTopicModal={openTechModal}
+            />
+          )}
+
+          {/* Onboard vs Fast Charging */}
+          {['matter-aera-5000-plus'].includes(model.id) && (
+            <TechTooltip
+              topicId="tech-onboard-charger"
+              label="🔌 Built-in Onboard 5A"
+              onOpenTopicModal={openTechModal}
+            />
+          )}
+          {model.specs.fastChargingSupport && (
+            <TechTooltip
+              topicId="tech-ccs2-fast-charging"
+              label="⚡ Fast-Charge"
+              onOpenTopicModal={openTechModal}
+            />
+          )}
+
+          {/* Liquid Cooling */}
+          {['matter-aera-5000-plus'].includes(model.id) && (
+            <TechTooltip
+              topicId="tech-liquid-cooling"
+              label="❄️ Liquid Cooled"
+              onOpenTopicModal={openTechModal}
+            />
+          )}
+
+          {/* Motor / Drivetrain */}
+          {model.specs.driveType === 'Belt' && (
+            <TechTooltip
+              topicId="tech-mid-drive-vs-hub"
+              label="⚙️ Carbon Belt Drive"
+              onOpenTopicModal={openTechModal}
+            />
+          )}
+          {['matter-aera-5000-plus'].includes(model.id) && (
+            <TechTooltip
+              topicId="tech-manual-gearbox-ev"
+              label="🕹️ 4-Speed Gearbox"
+              onOpenTopicModal={openTechModal}
+            />
+          )}
+
+          {/* ABS */}
+          {model.specs.brakingSafety?.toLowerCase().includes('abs') && (
+            <TechTooltip
+              topicId="tech-dual-channel-abs"
+              label="🛑 ABS Braking"
+              onOpenTopicModal={openTechModal}
+            />
+          )}
+        </div>
+      )}
+
       {/* 7. Telangana On-Road Price Box */}
-      <div className="mt-3 mx-4 p-3 rounded-xl bg-neutral-50 border border-neutral-200">
+      <div className="mt-1 mx-4 p-3 rounded-xl bg-neutral-50 border border-neutral-200">
         <div className="flex items-center justify-between">
           <span className="text-[11px] text-neutral-600 font-semibold">Telangana Net On-Road:</span>
           <span className="inline-flex items-center gap-1 text-[10px] font-bold text-neutral-800 bg-neutral-200/80 px-2 py-0.5 rounded-md">
@@ -270,22 +345,35 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ model }) => {
       </div>
 
       {/* 8. Card Action CTAs */}
-      <div className="p-4 pt-3 mt-auto grid grid-cols-2 gap-2">
-        <button
-          onClick={() => openDetail(model.id)}
-          className="flex items-center justify-center gap-1 py-2 px-2 rounded-xl bg-white hover:bg-neutral-100 text-neutral-800 border border-neutral-300 text-xs font-bold transition cursor-pointer"
-        >
-          <Info className="w-3.5 h-3.5 text-neutral-600" />
-          <span>Full Specs</span>
-        </button>
+      <div className="p-4 pt-3 mt-auto space-y-2">
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            onClick={() => openDetail(model.id)}
+            className="flex items-center justify-center gap-1 py-2 px-2 rounded-xl bg-white hover:bg-neutral-100 text-neutral-800 border border-neutral-300 text-xs font-bold transition cursor-pointer"
+          >
+            <Info className="w-3.5 h-3.5 text-neutral-600" />
+            <span>Full Specs</span>
+          </button>
 
-        <button
-          onClick={() => openPriceModal(model.id)}
-          className="flex items-center justify-center gap-1 py-2 px-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition cursor-pointer"
-        >
-          <Zap className="w-3.5 h-3.5 text-white" />
-          <span>Price Details</span>
-        </button>
+          <button
+            onClick={() => openPriceModal(model.id)}
+            className="flex items-center justify-center gap-1 py-2 px-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition cursor-pointer"
+          >
+            <Zap className="w-3.5 h-3.5 text-white" />
+            <span>Price Details</span>
+          </button>
+        </div>
+
+        {!model.isIceBenchmark && (
+          <button
+            onClick={() => openRoutePlanner(model.id)}
+            className="w-full flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-semibold transition cursor-pointer"
+            title="Plan highway route across Telangana with this vehicle"
+          >
+            <Navigation className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Plan Highway Route ({model.specs.realWorldHighwayRangeKm} km Hwy)</span>
+          </button>
+        )}
       </div>
     </div>
   );

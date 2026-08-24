@@ -33,6 +33,8 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
     addToCompare,
     removeFromCompare,
     isCompared,
+    openTechModal,
+    openRoutePlanner,
     selectedDistrict,
     selectedRtoCode
   } = useCompare();
@@ -381,6 +383,47 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                 </div>
               </div>
 
+              <div className="p-4 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900/60 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-emerald-800 dark:text-emerald-300 uppercase font-bold text-xs flex items-center gap-1.5">
+                    <Zap className="w-3.5 h-3.5" />
+                    <span>🔬 Engineering Architecture Deep-Dive</span>
+                  </span>
+                  <button
+                    onClick={() => {
+                      openTechModal();
+                      handleClose();
+                    }}
+                    className="text-xs font-bold text-emerald-700 hover:underline cursor-pointer"
+                  >
+                    Open EV Tech Guide ➔
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-xs">
+                  <div className="p-2.5 rounded-xl bg-white border border-neutral-200">
+                    <span className="text-[10px] text-neutral-400 font-bold uppercase block">Battery Chemistry</span>
+                    <span className="font-bold text-neutral-900">{model.specs.batteryChemistry}</span>
+                    <p className="text-[11px] text-neutral-500 mt-0.5">
+                      {model.specs.batteryChemistry?.toUpperCase().includes('LFP')
+                        ? 'Thermal runaway safe for 45°C Telangana summers with 2,000+ cycle life.'
+                        : 'High volumetric energy density delivering longer range in a compact pack.'}
+                    </p>
+                  </div>
+
+                  <div className="p-2.5 rounded-xl bg-white border border-neutral-200">
+                    <span className="text-[10px] text-neutral-400 font-bold uppercase block">Drivetrain &amp; Motor</span>
+                    <span className="font-bold text-neutral-900">
+                      {model.specs.driveType ? `${model.specs.driveType} Drive` : 'Direct Drive'} • {model.specs.motorRatedPowerKw} kW Rated
+                    </span>
+                    <p className="text-[11px] text-neutral-500 mt-0.5">
+                      {model.specs.driveType === 'Belt'
+                        ? 'Carbon-reinforced synchronous belt requiring zero chain lube or messy oiling.'
+                        : 'High-torque direct power delivery tuned for instant throttle response.'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200">
                 <span className="text-neutral-500 uppercase font-bold block mb-2">Key Manufacturer Highlights</span>
                 <ul className="space-y-1.5">
@@ -433,7 +476,7 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
 
         {/* Footer CTAs */}
         <div className="p-4 sm:px-6 border-t border-neutral-200 bg-neutral-50/90 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={() => {
                 setActivePriceModalModel(model);
@@ -453,6 +496,17 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
             >
               Range Simulator
             </button>
+            {!model.isIceBenchmark && (
+              <button
+                onClick={() => {
+                  openRoutePlanner(model.id);
+                  handleClose();
+                }}
+                className="px-3.5 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-bold transition cursor-pointer"
+              >
+                ⚡ Highway Route Simulation
+              </button>
+            )}
           </div>
 
           <button
