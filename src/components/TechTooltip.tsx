@@ -32,15 +32,15 @@ export const TechTooltip: React.FC<TechTooltipProps> = ({
   const getIcon = () => {
     switch (topic.pillar) {
       case 'charging_ports':
-        return <PlugZap className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />;
+        return <PlugZap className="w-3 h-3 text-neutral-700" />;
       case 'battery_thermal':
-        return <ShieldCheck className="w-3 h-3 text-cyan-600 dark:text-cyan-400" />;
+        return <ShieldCheck className="w-3 h-3 text-neutral-700" />;
       case 'motor_drivetrain':
-        return <Cpu className="w-3 h-3 text-amber-600 dark:text-amber-400" />;
+        return <Cpu className="w-3 h-3 text-neutral-700" />;
       case 'safety_regen':
-        return <Zap className="w-3 h-3 text-blue-600 dark:text-blue-400" />;
+        return <Zap className="w-3 h-3 text-neutral-700" />;
       default:
-        return <Info className="w-3 h-3 text-slate-500" />;
+        return <Info className="w-3 h-3 text-neutral-500" />;
     }
   };
 
@@ -50,7 +50,7 @@ export const TechTooltip: React.FC<TechTooltipProps> = ({
         type="button"
         onClick={handleClick}
         title={`Learn about ${topic.title}`}
-        className={`inline-flex items-center justify-center p-1 rounded-full bg-slate-100 hover:bg-emerald-50 dark:bg-slate-800 dark:hover:bg-emerald-950/40 text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors border border-slate-200 dark:border-slate-700 ${className}`}
+        className={`inline-flex items-center justify-center p-1 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-700 hover:text-neutral-900 transition border border-neutral-200 ${className}`}
       >
         {getIcon()}
       </button>
@@ -62,11 +62,11 @@ export const TechTooltip: React.FC<TechTooltipProps> = ({
       type="button"
       onClick={handleClick}
       title={`Click to read engineering guide: ${topic.title}`}
-      className={`inline-flex items-center gap-1.5 px-2 py-0.5 text-[11px] font-medium rounded-md bg-slate-100/90 hover:bg-emerald-50 dark:bg-slate-800/80 dark:hover:bg-emerald-950/40 text-slate-700 dark:text-slate-200 hover:text-emerald-700 dark:hover:text-emerald-300 border border-slate-200/80 dark:border-slate-700/80 hover:border-emerald-300 dark:hover:border-emerald-700/60 transition-all cursor-pointer group shadow-xs ${className}`}
+      className={`inline-flex items-center gap-1.5 px-2 py-0.5 text-[10px] font-semibold rounded-md bg-neutral-100 hover:bg-neutral-200 text-neutral-800 border border-neutral-200 hover:border-neutral-300 transition cursor-pointer group shadow-2xs ${className}`}
     >
       {getIcon()}
       <span>{displayLabel}</span>
-      <Info className="w-2.5 h-2.5 opacity-60 group-hover:opacity-100 transition-opacity ml-0.5 text-emerald-600 dark:text-emerald-400" />
+      <Info className="w-2.5 h-2.5 opacity-40 group-hover:opacity-100 transition-opacity ml-0.5 text-neutral-500" />
     </button>
   );
 };

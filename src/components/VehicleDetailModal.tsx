@@ -383,9 +383,9 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900/60 space-y-2">
+              <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-emerald-800 dark:text-emerald-300 uppercase font-bold text-xs flex items-center gap-1.5">
+                  <span className="text-neutral-900 uppercase font-bold text-xs flex items-center gap-1.5">
                     <Zap className="w-3.5 h-3.5" />
                     <span>🔬 Engineering Architecture Deep-Dive</span>
                   </span>
@@ -394,7 +394,7 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                       openTechModal();
                       handleClose();
                     }}
-                    className="text-xs font-bold text-emerald-700 hover:underline cursor-pointer"
+                    className="text-xs font-bold text-neutral-900 hover:underline cursor-pointer"
                   >
                     Open EV Tech Guide ➔
                   </button>
@@ -502,7 +502,7 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                   openRoutePlanner(model.id);
                   handleClose();
                 }}
-                className="px-3.5 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-bold transition cursor-pointer"
+                className="px-3.5 py-1.5 rounded-full bg-white hover:bg-neutral-100 text-neutral-800 border border-neutral-300 text-xs font-bold transition cursor-pointer"
               >
                 ⚡ Highway Route Simulation
               </button>

@@ -367,10 +367,10 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ model }) => {
         {!model.isIceBenchmark && (
           <button
             onClick={() => openRoutePlanner(model.id)}
-            className="w-full flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-semibold transition cursor-pointer"
+            className="w-full flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-xl bg-neutral-100 hover:bg-neutral-200/80 text-neutral-800 border border-neutral-200 text-xs font-semibold transition cursor-pointer"
             title="Plan highway route across Telangana with this vehicle"
           >
-            <Navigation className="w-3.5 h-3.5 text-emerald-600" />
+            <Navigation className="w-3.5 h-3.5 text-neutral-700" />
             <span>Plan Highway Route ({model.specs.realWorldHighwayRangeKm} km Hwy)</span>
           </button>
         )}
