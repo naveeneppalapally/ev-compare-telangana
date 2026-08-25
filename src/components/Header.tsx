@@ -201,6 +201,7 @@ export const Header: React.FC = () => {
               className="p-2 rounded-full bg-paper text-ink hover:bg-quartzite/60 transition cursor-pointer"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -210,7 +211,8 @@ export const Header: React.FC = () => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-quartzite bg-white px-4 py-4 space-y-3 animate-fadeIn">
+        <div id="mobile-menu"
+        className="lg:hidden border-t border-quartzite bg-white px-4 py-4 space-y-3 animate-fadeIn">
           <div>
             <label htmlFor="mobile-rto-select" className="block text-[10px] font-semibold uppercase tracking-wider text-stone-500 mb-1">
               Select Telangana District / RTO

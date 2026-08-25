@@ -73,7 +73,7 @@ export async function shareComparison(
   const text =
     `EV Compare TG — ${models.map(m => m.brand + ' ' + m.name.split('(')[0].trim()).join(' vs ')}\n` +
     models.map(m => `• ${m.name}: ${formatINR(calculateTelanganaOnRoadPrice(m, rtoCode).totalTelanganaOnRoadPrice)} on-road`).join('\n') +
-    `\n₹0 road tax across Telangana → https://ev-compare-telangana.vercel.app/#compare=${models.map(m => m.id).join(',')}`;
+    `\n₹0 road tax across Telangana → ${typeof window !== 'undefined' ? window.location.origin : 'https://ev-compare-telangana.vercel.app'}/#compare=${models.map(m => m.id).join(',')}`;
 
   const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/png'));
 

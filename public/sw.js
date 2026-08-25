@@ -1,5 +1,6 @@
 /* EV Compare Telangana service worker */
 const VERSION = 'ev-tg-v1';
+const BUILD_ID = '2026-08-25'; // bump on deploy to force cache refresh
 const CORE_CACHE = `${VERSION}-core`;
 const ASSET_CACHE = `${VERSION}-assets`;
 

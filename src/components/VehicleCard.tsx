@@ -5,6 +5,7 @@ import { calculateTelanganaOnRoadPrice, formatINR } from '../utils/priceCalculat
 import { VehicleImage } from './VehicleImage';
 import { TechTooltip } from './TechTooltip';
 import { explainFeature } from '../data/featureKnowledge';
+import { EMI_ANNUAL_RATE, EMI_DOWN_PAYMENT_RATIO, EMI_TENURE_MONTHS } from '../data/catalogMeta';
 import { 
   Battery, 
   Timer, 
@@ -39,9 +40,9 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ model }) => {
   const pricingBreakdown = calculateTelanganaOnRoadPrice(model, selectedRtoCode);
 
   // Approximate 36-month EMI with 15% down payment at 9.5% interest
-  const loanPrincipal = pricingBreakdown.totalTelanganaOnRoadPrice * 0.85;
-  const monthlyRate = 0.095 / 12;
-  const tenureMonths = 36;
+  const loanPrincipal = pricingBreakdown.totalTelanganaOnRoadPrice * (1 - EMI_DOWN_PAYMENT_RATIO);
+  const monthlyRate = EMI_ANNUAL_RATE / 12;
+  const tenureMonths = EMI_TENURE_MONTHS;
   const approxMonthlyEmi = Math.round(
     (loanPrincipal * monthlyRate * Math.pow(1 + monthlyRate, tenureMonths)) /
     (Math.pow(1 + monthlyRate, tenureMonths) - 1)

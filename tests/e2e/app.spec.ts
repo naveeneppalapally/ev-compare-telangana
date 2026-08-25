@@ -10,7 +10,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('hero renders headline and search', async ({ page }) => {
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Compare Electric Bikes');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(/Compare Electric Bikes/i);
   await expect(page.getByPlaceholder('Search models or brands…')).toBeVisible();
 });
 

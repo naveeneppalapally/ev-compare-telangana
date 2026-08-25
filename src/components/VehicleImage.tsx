@@ -65,16 +65,17 @@ export const VehicleImage: React.FC<VehicleImageProps> = ({
   // 2. Local downloaded high-res photo: `/images/vehicles/${model.id}.jpg`
   // 3. Direct verified OEM CDN URL: `model.imageUrl`
   // 4. Crisp SVG silhouette blueprint
-  let imageSource = `/images/vehicles/${model.id}.jpg`;
+  // Colour-aware ladder: colour → generic → CDN → silhouette. When no colour is selected skip the colour step.
+  let imageSource: string;
   if (colorName) {
-    imageSource = `/images/vehicles/${model.id}-${slugifyColour(colorName)}.jpg`;
-  }
-  if (errorCount === 1) {
-    imageSource = `/images/vehicles/${model.id}.jpg`;
-  } else if (errorCount === 2) {
-    imageSource = model.imageUrl || fallbackSvg;
-  } else if (errorCount >= 3) {
-    imageSource = fallbackSvg;
+    if (errorCount === 0) imageSource = `/images/vehicles/${model.id}-${slugifyColour(colorName)}.jpg`;
+    else if (errorCount === 1) imageSource = `/images/vehicles/${model.id}.jpg`;
+    else if (errorCount === 2) imageSource = model.imageUrl || fallbackSvg;
+    else imageSource = fallbackSvg;
+  } else {
+    if (errorCount === 0) imageSource = `/images/vehicles/${model.id}.jpg`;
+    else if (errorCount === 1) imageSource = model.imageUrl || fallbackSvg;
+    else imageSource = fallbackSvg;
   }
 
   const aspectClass =

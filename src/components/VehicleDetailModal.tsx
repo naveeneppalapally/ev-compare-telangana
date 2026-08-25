@@ -56,6 +56,8 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   const [isCopied, setIsCopied] = useState(false);
   const [isLeadOpen, setIsLeadOpen] = useState(false);
+  const prevTitleRef = React.useRef<string | null>(null);
+  const prevCanonicalRef = React.useRef<string | null>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -71,18 +73,29 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
     };
   }, [isOpen, handleClose]);
 
-  // Keep share/crawl metadata in sync with the open vehicle
+  // Keep share/crawl metadata in sync with the open vehicle (ref tracks original, not intermediate A→B)
   useEffect(() => {
     if (!isOpen || !model) return;
     trackEvent('view_model', { model: model.id });
-    const prevTitle = document.title;
-    document.title = `${model.brand} ${model.name} On-Road Price Hyderabad — EV Compare TG`;
+    if (prevTitleRef.current === null) prevTitleRef.current = document.title;
     const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-    const prevHref = canonical?.href;
+    if (prevCanonicalRef.current === null) prevCanonicalRef.current = canonical?.href ?? null;
+    document.title = `${model.brand} ${model.name} On-Road Price Hyderabad — EV Compare TG`;
     if (canonical) canonical.href = `${window.location.origin}/bikes/${model.id}/`;
     return () => {
-      document.title = prevTitle;
-      if (canonical && prevHref) canonical.href = prevHref;
+      // Only restore when fully closing, not switching A→B
+      // Defer check to next tick to see if another model opened
+      setTimeout(() => {
+        const stillOpen = document.querySelector('[role="dialog"]');
+        if (!stillOpen && prevTitleRef.current !== null) {
+          document.title = prevTitleRef.current;
+          prevTitleRef.current = null;
+        }
+        if (!stillOpen && prevCanonicalRef.current !== null && canonical) {
+          canonical.href = prevCanonicalRef.current;
+          prevCanonicalRef.current = null;
+        }
+      }, 0);
     };
   }, [isOpen, model]);
 

@@ -42,9 +42,11 @@ export function calculateHighwayRoutePlan(
     avgCruisingSpeedKmh = 75;
   }
 
-  // Base highway range
-  const baseRange = model.specs.realWorldHighwayRangeKm || Math.round(model.specs.realWorldCityRangeKm * styleMultiplier);
-  const effectiveHighwayRangeKm = Math.max(25, Math.round(baseRange * (styleMultiplier / 0.75)));
+  // Base highway range — realWorldHighwayRangeKm is already riding-style aware; only scale city fallback.
+  const hasHighwayRange = typeof model.specs.realWorldHighwayRangeKm === 'number' && model.specs.realWorldHighwayRangeKm > 0;
+  const effectiveHighwayRangeKm = hasHighwayRange
+    ? Math.max(25, model.specs.realWorldHighwayRangeKm)
+    : Math.max(25, Math.round(model.specs.realWorldCityRangeKm * styleMultiplier));
   const batteryCapacityKwh = model.specs.batteryCapacityKwh || 3.0;
 
   // Energy consumption Wh per km on highway

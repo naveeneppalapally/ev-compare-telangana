@@ -7,6 +7,7 @@ import { TELANGANA_DISTRICTS,
   getDistrictById
 } from '../data/telanganaRtoData';
 import { calculateTelanganaOnRoadPrice } from '../utils/priceCalculator';
+import { MAX_CATALOG_PRICE } from '../data/catalogMeta';
 import { parseHash, buildHash } from '../utils/urlState';
 import type { DeepLinkModal } from '../utils/urlState';
 
@@ -15,7 +16,7 @@ const DEFAULT_COMPARE_IDS = ['ather-rizta-z-37', 'ola-s1-pro-gen2', 'tvs-iqube-s
 
 // Covers the entire catalog so no bike is hidden by default; recomputed exactly
 // once the lazy-loaded catalog arrives.
-const INITIAL_MAX_ON_ROAD_PRICE = 850000;
+const INITIAL_MAX_ON_ROAD_PRICE = MAX_CATALOG_PRICE;
 
 const PREFS_KEY = 'ev_tg_prefs_v1';
 const FILTERS_KEY = 'ev_tg_filters_v1';
@@ -89,7 +90,9 @@ export interface CompareContextType {
   removeFromCompare: (id: string) => void;
   removeCompare: (id: string) => void;
   clearCompare: () => void;
+  setCompareIds: (ids: string[]) => void;
   isCompared: (id: string) => boolean;
+  compareLimitToast: string | null;
   compareBrandLineup: (brandName: string) => void;
   compareBudgetTier: (tierKey: string) => void;
 
@@ -238,6 +241,7 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const [selectedCompareIds, setSelectedCompareIds] = useState<string[]>(getInitialCompareIds);
   const [diffOnly, setDiffOnly] = useState<boolean>(false);
+  const [compareLimitToast, setCompareLimitToast] = useState<string | null>(null);
   const [catalogViewMode, setCatalogViewMode] = useState<CatalogViewMode>(() =>
     storedFilters.view && VIEW_MODES.has(storedFilters.view)
       ? (storedFilters.view as CatalogViewMode)
@@ -345,7 +349,13 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
       const valid = prev.filter(id => models.some(m => m.id === id)).slice(0, MAX_COMPARE_LIMIT);
       return valid.length > 0 ? valid : [];
     });
-  }, [models]);
+    // Self-heal invalid deep-link modal ids (e.g. /#m=detail&v=evil)
+    const validIds = new Set(models.map(m => m.id));
+    if (activeDetailModelId && !validIds.has(activeDetailModelId)) setActiveDetailModelId(null);
+    if (activePriceModalModelId && !validIds.has(activePriceModalModelId)) setActivePriceModalModelId(null);
+    if (activeSimulatorModelId && !validIds.has(activeSimulatorModelId)) setActiveSimulatorModelId(null);
+    if (routePlannerVehicleId && !validIds.has(routePlannerVehicleId)) setRoutePlannerVehicleId(null);
+  }, [models, activeDetailModelId, activePriceModalModelId, activeSimulatorModelId, routePlannerVehicleId]);
 
   useEffect(() => {
     if (models.length === 0) return;
@@ -388,7 +398,9 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
         next = prev.filter(item => item !== id);
       } else {
         if (prev.length >= MAX_COMPARE_LIMIT) {
-          next = [...prev.slice(1), id];
+          setCompareLimitToast('Compare tray is full (max 4) — remove one first');
+          setTimeout(() => setCompareLimitToast(null), 3000);
+          return prev;
         } else {
           next = [...prev, id];
         }
@@ -405,7 +417,9 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
       if (prev.includes(id)) return prev;
       let next: string[];
       if (prev.length >= MAX_COMPARE_LIMIT) {
-        next = [...prev.slice(1), id];
+        setCompareLimitToast('Compare tray is full (max 4) — remove one first');
+        setTimeout(() => setCompareLimitToast(null), 3000);
+        return prev;
       } else {
         next = [...prev, id];
       }
@@ -424,6 +438,12 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
       } catch (e) {}
       return next;
     });
+  };
+
+  const setCompareIds = (ids: string[]) => {
+    const valid = ids.filter(id => models.some(m => m.id === id)).slice(0, MAX_COMPARE_LIMIT);
+    setSelectedCompareIds(valid);
+    try { localStorage.setItem('ev_compare_ids', JSON.stringify(valid)); } catch (e) {}
   };
 
   const clearCompare = () => {
@@ -664,6 +684,8 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const priceById = useMemo(() => new Map(models.map(m => [m.id, calculateTelanganaOnRoadPrice(m, selectedRtoCode).totalTelanganaOnRoadPrice] as const)), [models, selectedRtoCode]);
+
   const filteredModels = useMemo(() => {
     return models.filter((model) => {
       if (model.isIceBenchmark) return false;
@@ -684,12 +706,12 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
         return false;
       }
 
-      const priceResult = calculateTelanganaOnRoadPrice(model, selectedRtoCode);
-      if (priceResult.totalTelanganaOnRoadPrice > priceRangeMax) {
+      const cachedPrice = priceById.get(model.id) ?? calculateTelanganaOnRoadPrice(model, selectedRtoCode).totalTelanganaOnRoadPrice;
+      if (cachedPrice > priceRangeMax) {
         return false;
       }
 
-      if (budgetUnder1L && priceResult.totalTelanganaOnRoadPrice > 100000) {
+      if (budgetUnder1L && cachedPrice > 100000) {
         return false;
       }
 
@@ -734,7 +756,7 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
     minBootSpaceLiters,
     activeFilterBadge,
     sortBy,
-    selectedRtoCode
+    priceById
   ]);
 
   const value: CompareContextType = {
@@ -752,6 +774,8 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
     removeFromCompare,
     removeCompare: removeFromCompare,
     clearCompare,
+    setCompareIds,
+    compareLimitToast,
     isCompared,
     compareBrandLineup,
     compareBudgetTier,

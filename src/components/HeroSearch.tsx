@@ -47,13 +47,10 @@ export const HeroSearch: React.FC = () => {
   } = useCompare();
 
   const [localSearch, setLocalSearch] = useState(searchQuery);
-  const [prevSearchQuery, setPrevSearchQuery] = useState(searchQuery);
 
-  // Sync external search reset during render
-  if (prevSearchQuery !== searchQuery) {
-    setPrevSearchQuery(searchQuery);
+  useEffect(() => {
     setLocalSearch(searchQuery);
-  }
+  }, [searchQuery]);
 
   // 250ms Debounce on Search Query
   useEffect(() => {

@@ -136,10 +136,10 @@ export function calculateTelanganaOnRoadPrice(
   const hsrpPlateFee = 400; // Laser HSRP fitment fee
 
   // 4. Charger & Handling
-  const handlingCharges = Number(model.pricing.handlingAndDocsEst) || 1500;
+  const handlingCharges = Number(model.pricing.handlingAndDocsEst ?? 1500);
   let chargerCost = 0;
   if (!model.pricing.chargerIncluded && options.includeCharger !== false) {
-    chargerCost = Number(model.pricing.chargerCost) || 0;
+    chargerCost = Number(model.pricing.chargerCost ?? 0);
   }
 
   const extendedWarrantyCost = options.includeExtendedWarranty ? 3000 : 0;

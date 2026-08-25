@@ -10,6 +10,8 @@ import {
   ArrowUpDown
 } from 'lucide-react';
 
+import { MAX_CATALOG_PRICE } from '../data/catalogMeta';
+
 export const VehicleGrid: React.FC = () => {
   const {
     models,
@@ -42,7 +44,7 @@ export const VehicleGrid: React.FC = () => {
   const isFiltered = 
     Boolean(searchQuery) ||
     selectedCategory !== 'all' ||
-    priceRangeMax < 450000 ||
+    priceRangeMax < MAX_CATALOG_PRICE ||
     minRealRangeKm > 0 ||
     requireRemovableBattery ||
     requireFastCharging ||
@@ -64,7 +66,7 @@ export const VehicleGrid: React.FC = () => {
           {searchQuery && (
             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-white text-stone-800 border border-stone-300 shadow-2xs">
               <span>Search: "{searchQuery}"</span>
-              <button onClick={() => setSearchQuery('')} className="hover:text-rose-600 cursor-pointer">
+              <button onClick={() => setSearchQuery('')} aria-label="Remove search filter" className="hover:text-rose-600 cursor-pointer">
                 <X className="w-3 h-3" />
               </button>
             </span>
@@ -79,10 +81,10 @@ export const VehicleGrid: React.FC = () => {
             </span>
           )}
 
-          {priceRangeMax < 450000 && (
+          {priceRangeMax < MAX_CATALOG_PRICE && (
             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-white text-stone-800 border border-stone-300 shadow-2xs">
               <span>Budget &le; {formatINR(priceRangeMax)}</span>
-              <button onClick={() => setPriceRangeMax(450000)} className="hover:text-rose-600 cursor-pointer">
+              <button onClick={() => setPriceRangeMax(MAX_CATALOG_PRICE)} className="hover:text-rose-600 cursor-pointer">
                 <X className="w-3 h-3" />
               </button>
             </span>

@@ -47,16 +47,16 @@ export const TelanganaPriceModal: React.FC<TelanganaPriceModalProps> = ({
   const handleClose = propOnClose || closePriceModal;
 
   const [selectedRtoCode, setSelectedRtoCode] = useState(contextRtoCode || selectedDistrict.rtoCode || 'TG-09');
-  const [prevContextRto, setPrevContextRto] = useState(contextRtoCode);
   const [isInsuranceExpanded, setIsInsuranceExpanded] = useState(false);
   const [isPolicyInfoOpen, setIsPolicyInfoOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const copyTimeoutRef = React.useRef<number | null>(null);
 
-  // Sync context RTO updates during render
-  if (contextRtoCode && prevContextRto !== contextRtoCode) {
-    setPrevContextRto(contextRtoCode);
-    setSelectedRtoCode(contextRtoCode);
-  }
+  useEffect(() => {
+    if (contextRtoCode) setSelectedRtoCode(contextRtoCode);
+  }, [contextRtoCode]);
+
+  useEffect(() => () => { if (copyTimeoutRef.current) window.clearTimeout(copyTimeoutRef.current); }, []);
 
   // Close on ESC
   useEffect(() => {
@@ -103,9 +103,11 @@ NET TELANGANA ON-ROAD PRICE:   ${formatINR(breakdown.totalTelanganaOnRoadPrice)}
 TOTAL UPFRONT CASH SAVED:      ${formatINR(breakdown.totalUpfrontSavings || 0)} (G.O. Ms No. 41)
 --------------------------------------------------
 Generated via EV Compare Telangana Portal (2026)`;
-    navigator.clipboard.writeText(quote.trim());
-    setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 2000);
+    navigator.clipboard?.writeText(quote.trim()).then(() => {
+      setIsCopied(true);
+      if (copyTimeoutRef.current) window.clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = window.setTimeout(() => setIsCopied(false), 2000);
+    }).catch(() => {});
   };
 
   return (

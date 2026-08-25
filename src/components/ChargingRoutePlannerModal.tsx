@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useCompare } from '../context/CompareContext';
 import {
   X,
   Zap,
@@ -20,7 +21,7 @@ import {
   getHighwayCorridorById
 } from '../data/highwayCorridorsData';
 import { calculateHighwayRoutePlan } from '../utils/routePlannerEngine';
-import { getEVModels, getEVModelById } from '../data/evModels';
+import { getEVModelById } from '../data/evModels';
 import type { EVModel } from '../types/ev';
 import type { HighwayCorridor } from '../types/charging';
 
@@ -46,7 +47,8 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
   const [selectedDistrict, setSelectedDistrict] = useState<string>('all');
 
   // Route Planner State
-  const allEvs = useMemo(() => getEVModels(), []);
+  const { models } = useCompare();
+  const allEvs = models;
   const allCorridors = useMemo(() => getAllHighwayCorridors(), []);
 
   const [selectedVehicleId, setSelectedVehicleId] = useState<string>(

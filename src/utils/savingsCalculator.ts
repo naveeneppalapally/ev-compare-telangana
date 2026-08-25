@@ -207,10 +207,10 @@ export function calculateSavings(
   const netSavingsPerKm = petrolTotalCostPerKm - evTotalCostPerKm;
   const evEnergyEfficiencyKmPerKwh = Math.round((1 / Math.max(0.001, gridKwhPerKm)) * 10) / 10;
 
-  // 3. Periodic Costs
+  // 3. Periodic Costs — keep signed so loss-making cases surface instead of hiding as ₹0
   const monthlyPetrolCost = Math.round(monthlyKm * petrolTotalCostPerKm);
   const monthlyEvCost = Math.round(monthlyKm * evTotalCostPerKm);
-  const monthlySavings = Math.max(0, monthlyPetrolCost - monthlyEvCost);
+  const monthlySavings = monthlyPetrolCost - monthlyEvCost;
   const annualSavings = monthlySavings * 12;
   const fiveYearOperationalSavings = annualSavings * 5;
 

@@ -16,8 +16,9 @@ function esc(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
+const EV_ONLY = EV_MODELS.filter(m => !m.isIceBenchmark);
 let count = 0;
-for (const m of EV_MODELS) {
+for (const m of EV_ONLY) {
   const url = `${SITE}/bikes/${m.id}/`;
   const title = `${m.brand} ${m.name} On-Road Price Hyderabad — ${m.specs.realWorldCityRangeKm} km Range | EV Compare TG`;
   const desc = `${m.brand} ${m.name}: ${inr(m.pricing.exShowroom)} ex-showroom, ₹0 road tax in Telangana (G.O. Ms No. 41), ${m.specs.realWorldCityRangeKm} km real city range, ${m.specs.batteryCapacityKwh} kWh ${m.specs.batteryChemistry}. Compare with 53 other EVs.`;
@@ -73,10 +74,10 @@ for (const m of EV_MODELS) {
   count++;
 }
 
-// Sitemap covering home + every model page
+// Sitemap covering home + every EV model page (ICE benchmark excluded)
 const urls = [
   `<url><loc>${SITE}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>`,
-  ...EV_MODELS.map(m =>
+  ...EV_ONLY.map(m =>
     `<url><loc>${SITE}/bikes/${m.id}/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`
   )
 ];
@@ -85,4 +86,4 @@ writeFileSync(
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`
 );
 
-console.log(`Generated ${count} model pages + sitemap (${EV_MODELS.length} bikes).`);
+console.log(`Generated ${count} model pages + sitemap (${EV_ONLY.length} EVs).`);

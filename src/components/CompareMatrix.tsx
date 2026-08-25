@@ -17,10 +17,10 @@ export const CompareMatrix: React.FC = () => {
     selectedCompareIds,
     removeFromCompare,
     clearCompare,
+    setCompareIds,
     isCompareOpen,
     closeCompare,
     selectedRtoCode,
-    addToCompare
   } = useCompare();
 
   const [highlightDiffs, setHighlightDiffs] = useState<boolean>(false);
@@ -54,8 +54,7 @@ export const CompareMatrix: React.FC = () => {
 
   // Quick Preset Handlers
   const applyPreset = (ids: string[]) => {
-    clearCompare();
-    ids.forEach(id => addToCompare(id));
+    setCompareIds(ids);
   };
 
   return (

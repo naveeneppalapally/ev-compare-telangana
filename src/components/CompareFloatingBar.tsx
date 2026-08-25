@@ -12,6 +12,7 @@ export const CompareFloatingBar: React.FC = () => {
     removeFromCompare,
     clearCompare,
     openCompare,
+    compareLimitToast,
   } = useCompare();
 
   if (selectedCompareIds.length === 0) return null;
@@ -29,6 +30,13 @@ export const CompareFloatingBar: React.FC = () => {
       aria-label="Comparison dock"
       className="fixed bottom-4 left-0 right-0 z-30 px-4 pointer-events-none"
     >
+      {compareLimitToast && (
+        <div className="max-w-4xl mx-auto mb-2 pointer-events-auto">
+          <div className="bg-amber-500 text-stone-900 text-xs font-semibold px-4 py-2 rounded-xl shadow-lg text-center animate-fadeIn">
+            {compareLimitToast}
+          </div>
+        </div>
+      )}
       <div className="max-w-4xl mx-auto pointer-events-auto">
         <div className="bg-stone-900 text-white border border-stone-800 rounded-2xl shadow-2xl p-3 sm:px-4 sm:py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
           {/* Left: Tray Label & Clear All */}
