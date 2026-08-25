@@ -2,6 +2,7 @@ import type { RTOInfo, TelanganaDistrict, RegionalZone } from '../types/ev';
 
 export const TELANGANA_CURRENT_PETROL_PRICE = 109.66; // ₹/L in Hyderabad / Telangana
 export const TELANGANA_AVG_ELECTRICITY_RATE = 7.50;  // ₹/kWh (TSSPDCL / TSNPDCL average domestic tariff)
+export const TELANGANA_RATES_LAST_VERIFIED = "24 August 2026"; // Last manual verification of fuel & tariff figures
 
 export const TSSPDCL_DOMESTIC_TARIFF_SLABS = [
   { slab: '0-100 units', ratePerKwh: 5.50 },

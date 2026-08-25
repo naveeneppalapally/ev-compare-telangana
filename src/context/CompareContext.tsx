@@ -1,23 +1,80 @@
-import React, { createContext, useContext, useState, useMemo } from 'react';
+import React, { createContext, useContext, useState, useMemo, useEffect } from 'react';
 import type { EVModel, TelanganaDistrict, VehicleCategory } from '../types/ev';
-import { EV_MODELS, getEVModels, getEVModelById } from '../data/evModels';
-import { 
-  TELANGANA_DISTRICTS, 
-  TELANGANA_CURRENT_PETROL_PRICE, 
+import { TELANGANA_DISTRICTS,
+  TELANGANA_CURRENT_PETROL_PRICE,
   TELANGANA_AVG_ELECTRICITY_RATE,
   getRtoByCode,
   getDistrictById
 } from '../data/telanganaRtoData';
 import { calculateTelanganaOnRoadPrice } from '../utils/priceCalculator';
+import { parseHash, buildHash } from '../utils/urlState';
+import type { DeepLinkModal } from '../utils/urlState';
 
 const MAX_COMPARE_LIMIT = 4;
 const DEFAULT_COMPARE_IDS = ['ather-rizta-z-37', 'ola-s1-pro-gen2', 'tvs-iqube-s-34'];
+
+// Covers the entire catalog so no bike is hidden by default; recomputed exactly
+// once the lazy-loaded catalog arrives.
+const INITIAL_MAX_ON_ROAD_PRICE = 850000;
+
+const PREFS_KEY = 'ev_tg_prefs_v1';
+const FILTERS_KEY = 'ev_tg_filters_v1';
+const VIEW_MODES: ReadonlySet<string> = new Set(['grid', 'brands', 'budget']);
+
+interface StoredPrefs {
+  rtoCode?: string;
+  petrolPrice?: number;
+  electricityRate?: number;
+}
+
+function loadStoredPrefs(): StoredPrefs {
+  try {
+    if (typeof window !== 'undefined') {
+      const raw = localStorage.getItem(PREFS_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') return parsed as StoredPrefs;
+      }
+    }
+  } catch (e) {
+    console.warn('Error reading local preferences:', e);
+  }
+  return {};
+}
+
+interface StoredFilters {
+  view?: string;
+  category?: string;
+  priceMax?: number;
+  minRange?: number;
+  removableBattery?: boolean;
+  fastCharging?: boolean;
+  bootMin?: number;
+  budgetUnder1L?: boolean;
+  sort?: string;
+}
+
+function loadStoredFilters(): StoredFilters {
+  try {
+    if (typeof window !== 'undefined') {
+      const raw = localStorage.getItem(FILTERS_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') return parsed as StoredFilters;
+      }
+    }
+  } catch (e) {
+    console.warn('Error reading saved filters:', e);
+  }
+  return {};
+}
 
 export type CatalogViewMode = 'grid' | 'brands' | 'budget';
 
 export interface CompareContextType {
   // Vehicle Catalog
   models: EVModel[];
+  isCatalogLoading: boolean;
   filteredModels: EVModel[];
   catalogViewMode: CatalogViewMode;
   setCatalogViewMode: (mode: CatalogViewMode) => void;
@@ -140,89 +197,173 @@ export interface CompareContextType {
 const CompareContext = createContext<CompareContextType | undefined>(undefined);
 
 export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const models = useMemo(() => getEVModels(), []);
+  // Catalog is the heaviest asset in the app — loaded async so first paint
+  // ships only UI. Deep-link ids are validated once it arrives.
+  const [models, setModels] = useState<EVModel[]>([]);
 
+  useEffect(() => {
+    let cancelled = false;
+    import('../data/evModels').then((mod) => {
+      if (cancelled) return;
+      setModels(mod.getEVModels());
+    });
+    return () => { cancelled = true; };
+  }, []);
+
+  const initialHash = useMemo(
+    () => (typeof window !== 'undefined' ? parseHash(window.location.hash) : parseHash('')),
+    []
+  );
+  const storedPrefs = useMemo(() => loadStoredPrefs(), []);
+  const storedFilters = useMemo(() => loadStoredFilters(), []);
+
+  // Raw compare ids (URL ?compare= → hash → saved → demo default); pruned to
+  // real catalog ids by a post-load effect.
   const getInitialCompareIds = (): string[] => {
     try {
       if (typeof window !== 'undefined') {
         const urlParams = new URLSearchParams(window.location.search);
         const compareParam = urlParams.get('compare');
-        if (compareParam) {
-          const ids = compareParam.split(',').map(s => s.trim()).filter(id => EV_MODELS.some(m => m.id === id));
-          if (ids.length > 0) return ids.slice(0, MAX_COMPARE_LIMIT);
-        }
+        if (compareParam) return compareParam.split(',').map(s => s.trim()).filter(Boolean).slice(0, MAX_COMPARE_LIMIT);
+        if (initialHash.compareIds.length > 0) return initialHash.compareIds.slice(0, MAX_COMPARE_LIMIT);
         const saved = localStorage.getItem('ev_compare_ids');
         if (saved) {
           const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            const valid = parsed.filter(id => EV_MODELS.some(m => m.id === id));
-            if (valid.length > 0) return valid.slice(0, MAX_COMPARE_LIMIT);
-          }
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed.slice(0, MAX_COMPARE_LIMIT);
         }
       }
-    } catch (e) {
-      console.warn('Error reading compare IDs from storage/URL:', e);
-    }
+    } catch (e) {}
     return DEFAULT_COMPARE_IDS;
   };
 
   const [selectedCompareIds, setSelectedCompareIds] = useState<string[]>(getInitialCompareIds);
   const [diffOnly, setDiffOnly] = useState<boolean>(false);
-  const [catalogViewMode, setCatalogViewMode] = useState<CatalogViewMode>('grid');
+  const [catalogViewMode, setCatalogViewMode] = useState<CatalogViewMode>(() =>
+    storedFilters.view && VIEW_MODES.has(storedFilters.view)
+      ? (storedFilters.view as CatalogViewMode)
+      : 'grid'
+  );
 
   // Filter and Search State
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [selectedCategory, setSelectedCategory] = useState<VehicleCategory>('all');
-  const [priceRangeMax, setPriceRangeMax] = useState<number>(450000);
-  const [minRealRangeKm, setMinRealRangeKm] = useState<number>(0);
-  const [requireRemovableBattery, setRequireRemovableBattery] = useState<boolean>(false);
-  const [requireFastCharging, setRequireFastCharging] = useState<boolean>(false);
-  const [minBootSpaceLiters, setMinBootSpaceLiters] = useState<number>(0);
-  const [budgetUnder1L, setBudgetUnder1L] = useState<boolean>(false);
+  const [selectedCategory, setSelectedCategory] = useState<VehicleCategory>(() =>
+    storedFilters.category === 'scooter' || storedFilters.category === 'motorcycle'
+      ? storedFilters.category
+      : 'all'
+  );
+  const [priceRangeMax, setPriceRangeMax] = useState<number>(
+    typeof storedFilters.priceMax === 'number' && storedFilters.priceMax >= 25000 ? storedFilters.priceMax : INITIAL_MAX_ON_ROAD_PRICE
+  );
+  const [minRealRangeKm, setMinRealRangeKm] = useState<number>(
+    typeof storedFilters.minRange === 'number' && storedFilters.minRange > 0 ? storedFilters.minRange : 0
+  );
+  const [requireRemovableBattery, setRequireRemovableBattery] = useState<boolean>(storedFilters.removableBattery === true);
+  const [requireFastCharging, setRequireFastCharging] = useState<boolean>(storedFilters.fastCharging === true);
+  const [minBootSpaceLiters, setMinBootSpaceLiters] = useState<number>(
+    typeof storedFilters.bootMin === 'number' && storedFilters.bootMin > 0 ? storedFilters.bootMin : 0
+  );
+  const [budgetUnder1L, setBudgetUnder1L] = useState<boolean>(storedFilters.budgetUnder1L === true);
   const [activeFilterBadge, setActiveFilterBadge] = useState<string | null>(null);
-  const [sortBy, setSortBy] = useState<string>('recommended');
+  const [sortBy, setSortBy] = useState<string>(typeof storedFilters.sort === 'string' ? storedFilters.sort : 'recommended');
 
-  // Telangana RTO State
-  const [selectedRtoCode, setSelectedRtoCodeState] = useState<string>('TG-09');
+  // Telangana RTO State (deep link → saved preference → default)
+  const initialRtoCode =
+    (initialHash.rtoCode && getRtoByCode(initialHash.rtoCode)?.rtoCode) ||
+    (storedPrefs.rtoCode && getRtoByCode(storedPrefs.rtoCode)?.rtoCode) ||
+    'TG-09';
+  const [selectedRtoCode, setSelectedRtoCodeState] = useState<string>(initialRtoCode);
   const [selectedDistrict, setSelectedDistrictState] = useState<TelanganaDistrict>(
     () => TELANGANA_DISTRICTS[0]
   );
-  const [petrolPrice, setPetrolPrice] = useState<number>(TELANGANA_CURRENT_PETROL_PRICE);
-  const [electricityRate, setElectricityRate] = useState<number>(TELANGANA_AVG_ELECTRICITY_RATE);
+  const [petrolPrice, setPetrolPrice] = useState<number>(
+    typeof storedPrefs.petrolPrice === 'number' && storedPrefs.petrolPrice > 50 && storedPrefs.petrolPrice < 200
+      ? storedPrefs.petrolPrice
+      : TELANGANA_CURRENT_PETROL_PRICE
+  );
+  const [electricityRate, setElectricityRate] = useState<number>(
+    typeof storedPrefs.electricityRate === 'number' && storedPrefs.electricityRate > 1 && storedPrefs.electricityRate < 30
+      ? storedPrefs.electricityRate
+      : TELANGANA_AVG_ELECTRICITY_RATE
+  );
 
-  // Active Modals & Dialogs
-  const [activeDetailModelId, setActiveDetailModelId] = useState<string | null>(null);
-  const [activePriceModalModelId, setActivePriceModalModelId] = useState<string | null>(null);
-  const [isCompareOpen, setIsCompareOpen] = useState<boolean>(false);
-  const [isRangeModalOpen, setIsRangeModalOpen] = useState<boolean>(false);
-  const [activeSimulatorModelId, setActiveSimulatorModelId] = useState<string | null>(null);
-  const [isSavingsModalOpen, setIsSavingsModalOpen] = useState<boolean>(false);
-  const [isWizardOpen, setIsWizardOpen] = useState<boolean>(false);
+  // Active Modals & Dialogs (initialized from deep-link hash so shared links restore state on refresh)
+  const [activeDetailModelId, setActiveDetailModelId] = useState<string | null>(
+    () => (initialHash.modal === 'detail' ? initialHash.modelId : null)
+  );
+  const [activePriceModalModelId, setActivePriceModalModelId] = useState<string | null>(
+    () => (initialHash.modal === 'price' ? initialHash.modelId : null)
+  );
+  const [isCompareOpen, setIsCompareOpen] = useState<boolean>(() => initialHash.modal === 'compare');
+  const [isRangeModalOpen, setIsRangeModalOpen] = useState<boolean>(() => initialHash.modal === 'range');
+  const [activeSimulatorModelId, setActiveSimulatorModelId] = useState<string | null>(
+    () => (initialHash.modal === 'range' || initialHash.modal === 'savings' ? initialHash.modelId : null)
+  );
+  const [isSavingsModalOpen, setIsSavingsModalOpen] = useState<boolean>(() => initialHash.modal === 'savings');
+  const [isWizardOpen, setIsWizardOpen] = useState<boolean>(() => initialHash.modal === 'wizard');
 
-  const [isChargingModalOpen, setIsChargingModalOpen] = useState<boolean>(false);
-  const [isTariffModalOpen, setIsTariffModalOpen] = useState<boolean>(false);
-  const [isLoanModalOpen, setIsLoanModalOpen] = useState<boolean>(false);
-  const [isTaxInspectorModalOpen, setIsTaxInspectorModalOpen] = useState<boolean>(false);
+  const [isChargingModalOpen, setIsChargingModalOpen] = useState<boolean>(() => initialHash.modal === 'charging');
+  const [routePlannerVehicleId, setRoutePlannerVehicleId] = useState<string | null>(
+    () => (initialHash.modal === 'charging' ? initialHash.modelId : null)
+  );
+  const [routePlannerCorridorId, setRoutePlannerCorridorId] = useState<string | null>(
+    () => (initialHash.modal === 'charging' ? initialHash.corridorId : null)
+  );
+
+  const [isTariffModalOpen, setIsTariffModalOpen] = useState<boolean>(() => initialHash.modal === 'tariff');
+  const [isLoanModalOpen, setIsLoanModalOpen] = useState<boolean>(() => initialHash.modal === 'loan');
+  const [isTaxInspectorModalOpen, setIsTaxInspectorModalOpen] = useState<boolean>(() => initialHash.modal === 'tax');
 
   // EV Tech Guide & Highway Route Planner
-  const [isTechModalOpen, setIsTechModalOpen] = useState<boolean>(false);
-  const [activeTechTopicId, setActiveTechTopicId] = useState<string | null>(null);
+  const [isTechModalOpen, setIsTechModalOpen] = useState<boolean>(() => initialHash.modal === 'tech');
+  const [activeTechTopicId, setActiveTechTopicId] = useState<string | null>(
+    () => (initialHash.modal === 'tech' ? initialHash.topicId : null)
+  );
 
-  const [routePlannerVehicleId, setRoutePlannerVehicleId] = useState<string | null>(null);
-  const [routePlannerCorridorId, setRoutePlannerCorridorId] = useState<string | null>(null);
+  const findModel = React.useCallback(
+    (id: string | null): EVModel | null => (id ? models.find(m => m.id === id) || null : null),
+    [models]
+  );
 
   const activeDetailModalModel = useMemo(
-    () => (activeDetailModelId ? getEVModelById(activeDetailModelId) || null : null),
-    [activeDetailModelId]
+    () => findModel(activeDetailModelId),
+    [findModel, activeDetailModelId]
   );
   const activePriceModalModel = useMemo(
-    () => (activePriceModalModelId ? getEVModelById(activePriceModalModelId) || null : null),
-    [activePriceModalModelId]
+    () => findModel(activePriceModalModelId),
+    [findModel, activePriceModalModelId]
   );
   const simulatorModel = useMemo(
-    () => (activeSimulatorModelId ? getEVModelById(activeSimulatorModelId) || null : null),
-    [activeSimulatorModelId]
+    () => findModel(activeSimulatorModelId),
+    [findModel, activeSimulatorModelId]
   );
+
+  // Once the async catalog lands: prune deep-link/saved compare ids to real
+  // models, and tighten the price ceiling from the fallback to the exact max.
+  useEffect(() => {
+    if (models.length === 0) return;
+    setSelectedCompareIds(prev => {
+      const valid = prev.filter(id => models.some(m => m.id === id)).slice(0, MAX_COMPARE_LIMIT);
+      return valid.length > 0 ? valid : [];
+    });
+  }, [models]);
+
+  useEffect(() => {
+    if (models.length === 0) return;
+    const exactMax = Math.ceil(
+      Math.max(...models.filter(m => !m.isIceBenchmark).map(m =>
+        calculateTelanganaOnRoadPrice(m, selectedRtoCode).totalTelanganaOnRoadPrice
+      )) / 50000
+    ) * 50000;
+    setPriceRangeMax(prev => {
+      if (prev !== INITIAL_MAX_ON_ROAD_PRICE) return prev;
+      try {
+        const saved = loadStoredFilters();
+        if (typeof saved.priceMax === 'number' && saved.priceMax >= 25000) return saved.priceMax;
+      } catch (e) {}
+      return exactMax;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [models]);
 
   const setRtoCode = (code: string) => {
     const rtoInfo = getRtoByCode(code);
@@ -383,7 +524,7 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const resetFilters = () => {
     setSearchQuery('');
     setSelectedCategory('all');
-    setPriceRangeMax(450000);
+    setPriceRangeMax(INITIAL_MAX_ON_ROAD_PRICE);
     setMinRealRangeKm(0);
     setRequireRemovableBattery(false);
     setRequireFastCharging(false);
@@ -392,6 +533,136 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
     setActiveFilterBadge(null);
     setSortBy('recommended');
   };
+
+  // Persist Telangana localization preferences across sessions
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        PREFS_KEY,
+        JSON.stringify({ rtoCode: selectedRtoCode, petrolPrice, electricityRate })
+      );
+    } catch (e) {}
+  }, [selectedRtoCode, petrolPrice, electricityRate]);
+
+  // Persist catalog filters & view mode across sessions
+  useEffect(() => {
+    try {
+      const payload: StoredFilters = {
+        view: catalogViewMode,
+        category: selectedCategory,
+        priceMax: priceRangeMax,
+        minRange: minRealRangeKm,
+        removableBattery: requireRemovableBattery,
+        fastCharging: requireFastCharging,
+        bootMin: minBootSpaceLiters,
+        budgetUnder1L,
+        sort: sortBy
+      };
+      localStorage.setItem(FILTERS_KEY, JSON.stringify(payload));
+    } catch (e) {}
+  }, [
+    catalogViewMode,
+    selectedCategory,
+    priceRangeMax,
+    minRealRangeKm,
+    requireRemovableBattery,
+    requireFastCharging,
+    minBootSpaceLiters,
+    budgetUnder1L,
+    sortBy
+  ]);
+
+  // Mirror active modal / compare / RTO state into the URL hash for shareable deep links
+  const lastHashRef = React.useRef('');
+
+  useEffect(() => {
+    let modalKey: DeepLinkModal | null = null;
+    let modelId: string | null = null;
+    if (activeDetailModelId) { modalKey = 'detail'; modelId = activeDetailModelId; }
+    else if (activePriceModalModelId) { modalKey = 'price'; modelId = activePriceModalModelId; }
+    else if (isRangeModalOpen) { modalKey = 'range'; modelId = activeSimulatorModelId; }
+    else if (isSavingsModalOpen) { modalKey = 'savings'; modelId = activeSimulatorModelId; }
+    else if (isWizardOpen) modalKey = 'wizard';
+    else if (isChargingModalOpen) { modalKey = 'charging'; modelId = routePlannerVehicleId; }
+    else if (isTechModalOpen) modalKey = 'tech';
+    else if (isTariffModalOpen) modalKey = 'tariff';
+    else if (isLoanModalOpen) modalKey = 'loan';
+    else if (isTaxInspectorModalOpen) modalKey = 'tax';
+    else if (isCompareOpen) modalKey = 'compare';
+
+    const hash = buildHash({
+      modal: modalKey,
+      modelId,
+      topicId: isTechModalOpen ? activeTechTopicId : null,
+      corridorId: isChargingModalOpen ? routePlannerCorridorId : null,
+      compareIds: selectedCompareIds,
+      rtoCode: selectedRtoCode
+    });
+
+    try {
+      // Never clobber an external hash change we haven't reconciled yet —
+      // otherwise a pending deep link gets overwritten mid-navigation.
+      if (window.location.hash !== hash && window.location.hash !== lastHashRef.current) return;
+      if (window.location.hash !== hash) {
+        lastHashRef.current = hash;
+        window.history.replaceState(null, '', window.location.pathname + window.location.search + hash);
+      }
+    } catch (e) {}
+  }, [
+    activeDetailModelId,
+    activePriceModalModelId,
+    isRangeModalOpen,
+    isSavingsModalOpen,
+    isWizardOpen,
+    isChargingModalOpen,
+    isTechModalOpen,
+    isTariffModalOpen,
+    isLoanModalOpen,
+    isTaxInspectorModalOpen,
+    isCompareOpen,
+    activeSimulatorModelId,
+    routePlannerVehicleId,
+    routePlannerCorridorId,
+    activeTechTopicId,
+    selectedCompareIds,
+    selectedRtoCode
+  ]);
+
+  // Restore state when the user navigates back/forward or pastes a shared link
+  useEffect(() => {
+    const onHashChange = (e: HashChangeEvent) => {
+      // Read from the event, not location — a mirror write may have raced us
+      const rawHash = e.newURL ? `#${new URL(e.newURL).hash.replace(/^#/, '')}` : window.location.hash;
+      const s = parseHash(rawHash);
+      setActiveDetailModelId(s.modal === 'detail' ? s.modelId : null);
+      setActivePriceModalModelId(s.modal === 'price' ? s.modelId : null);
+      setIsRangeModalOpen(s.modal === 'range');
+      if (s.modal === 'range' && s.modelId) setActiveSimulatorModelId(s.modelId);
+      setIsSavingsModalOpen(s.modal === 'savings');
+      if (s.modal === 'savings' && s.modelId) setActiveSimulatorModelId(s.modelId);
+      setIsWizardOpen(s.modal === 'wizard');
+      setIsChargingModalOpen(s.modal === 'charging');
+      if (s.modal === 'charging') {
+        setRoutePlannerVehicleId(s.modelId);
+        setRoutePlannerCorridorId(s.corridorId);
+      }
+      setIsTechModalOpen(s.modal === 'tech');
+      if (s.modal === 'tech') setActiveTechTopicId(s.topicId);
+      setIsTariffModalOpen(s.modal === 'tariff');
+      setIsLoanModalOpen(s.modal === 'loan');
+      setIsTaxInspectorModalOpen(s.modal === 'tax');
+      setIsCompareOpen(s.modal === 'compare');
+      if (s.compareIds.length > 0) {
+        setSelectedCompareIds(s.compareIds.slice(0, MAX_COMPARE_LIMIT));
+      }
+      if (s.rtoCode && getRtoByCode(s.rtoCode)) {
+        setRtoCode(s.rtoCode);
+      }
+    };
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const filteredModels = useMemo(() => {
     return models.filter((model) => {
@@ -468,6 +739,7 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const value: CompareContextType = {
     models,
+    isCatalogLoading: models.length === 0,
     filteredModels,
     catalogViewMode,
     setCatalogViewMode,

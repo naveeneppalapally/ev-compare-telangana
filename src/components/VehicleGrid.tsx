@@ -14,6 +14,7 @@ export const VehicleGrid: React.FC = () => {
   const {
     models,
     filteredModels,
+    isCatalogLoading,
     searchQuery,
     setSearchQuery,
     selectedCategory,
@@ -52,16 +53,16 @@ export const VehicleGrid: React.FC = () => {
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* 1. Header Bar: Active Tags & Sort & Count */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-200">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-stone-200">
         {/* Results Counter & Active Filter Pills */}
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs font-bold text-slate-700 mr-2">
+          <span className="text-xs font-bold text-stone-700 mr-2">
             Showing <span className="text-emerald-700 font-extrabold font-mono">{filteredModels.length}</span> of {totalCatalogCount} EVs
           </span>
 
           {/* Active Filter Chips with Dismiss */}
           {searchQuery && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-white text-slate-800 border border-slate-300 shadow-2xs">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-white text-stone-800 border border-stone-300 shadow-2xs">
               <span>Search: "{searchQuery}"</span>
               <button onClick={() => setSearchQuery('')} className="hover:text-rose-600 cursor-pointer">
                 <X className="w-3 h-3" />
@@ -79,7 +80,7 @@ export const VehicleGrid: React.FC = () => {
           )}
 
           {priceRangeMax < 450000 && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-white text-slate-800 border border-slate-300 shadow-2xs">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-white text-stone-800 border border-stone-300 shadow-2xs">
               <span>Budget &le; {formatINR(priceRangeMax)}</span>
               <button onClick={() => setPriceRangeMax(450000)} className="hover:text-rose-600 cursor-pointer">
                 <X className="w-3 h-3" />
@@ -146,14 +147,14 @@ export const VehicleGrid: React.FC = () => {
 
         {/* Sort Controls */}
         <div className="flex items-center gap-2 self-end md:self-auto">
-          <span className="text-xs text-slate-500 font-semibold flex items-center gap-1">
+          <span className="text-xs text-stone-500 font-semibold flex items-center gap-1">
             <ArrowUpDown className="w-3 h-3" />
             <span>Sort:</span>
           </span>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="bg-white border border-slate-300 text-xs font-semibold text-slate-800 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-emerald-500 cursor-pointer shadow-2xs"
+            className="bg-white border border-stone-300 text-xs font-semibold text-stone-800 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-emerald-500 cursor-pointer shadow-2xs"
           >
             <option value="recommended">⭐ Recommended / Popular</option>
             <option value="priceAsc">Price: Low to High</option>
@@ -166,7 +167,9 @@ export const VehicleGrid: React.FC = () => {
       </div>
 
       {/* 2. Responsive Card Grid */}
-      {filteredModels.length > 0 ? (
+      {isCatalogLoading ? (
+        <div className="py-16 text-center text-sm text-stone-400 font-medium">Loading catalog…</div>
+      ) : filteredModels.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
           {filteredModels.map((model) => (
             <VehicleCard key={model.id} model={model} />
@@ -174,14 +177,14 @@ export const VehicleGrid: React.FC = () => {
         </div>
       ) : (
         /* 3. Zero-State Handler */
-        <div className="py-16 px-4 text-center rounded-2xl bg-white border border-slate-200 max-w-xl mx-auto shadow-sm">
-          <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4 text-slate-400">
+        <div className="py-16 px-4 text-center rounded-2xl bg-white border border-stone-200 max-w-xl mx-auto shadow-sm">
+          <div className="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center mx-auto mb-4 text-stone-400">
             <SearchX className="w-6 h-6" />
           </div>
-          <h3 className="text-lg font-bold text-slate-900 mb-2">
+          <h3 className="text-lg font-bold text-stone-900 mb-2">
             No Electric Two-Wheelers Found
           </h3>
-          <p className="text-xs text-slate-500 mb-6 max-w-md mx-auto">
+          <p className="text-xs text-stone-500 mb-6 max-w-md mx-auto">
             No models in our catalog match your current search and filter combination. Try adjusting your budget slider or clearing specific filters.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-2">

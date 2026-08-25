@@ -72,6 +72,35 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
     }
   }, [initialCorridorId]);
 
+  // Near-me: sort filtered stations by haversine distance once location is granted
+  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [geoError, setGeoError] = useState<string | null>(null);
+
+  const requestNearMe = () => {
+    setGeoError(null);
+    if (!navigator.geolocation) {
+      setGeoError('Location not supported on this device');
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+      },
+      () => setGeoError('Location permission denied'),
+      { timeout: 10_000 }
+    );
+  };
+
+  const distanceKm = (a: { lat: number; lng: number }, b: { lat: number; lng: number }) => {
+    const R = 6371;
+    const dLat = ((b.lat - a.lat) * Math.PI) / 180;
+    const dLng = ((b.lng - a.lng) * Math.PI) / 180;
+    const h =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos((a.lat * Math.PI) / 180) * Math.cos((b.lat * Math.PI) / 180) * Math.sin(dLng / 2) ** 2;
+    return 2 * R * Math.asin(Math.sqrt(h));
+  };
+
   if (!isOpen) return null;
 
   const currentVehicle: EVModel =
@@ -109,41 +138,49 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
     return true;
   });
 
+  const sortedStations = userLocation
+    ? [...filteredStations].sort(
+        (a, b) =>
+          distanceKm(userLocation, { lat: a.latitude, lng: a.longitude }) -
+          distanceKm(userLocation, { lat: b.latitude, lng: b.longitude })
+      )
+    : filteredStations;
+
   const uniqueNetworks: string[] = Array.from(new Set(TELANGANA_CHARGING_STATIONS.map(s => s.network)));
   const uniqueDistricts: string[] = Array.from(new Set(TELANGANA_CHARGING_STATIONS.map(s => s.district)));
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 overflow-y-auto bg-neutral-900/60 backdrop-blur-md animate-fadeIn text-neutral-900"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 overflow-y-auto bg-stone-900/60 backdrop-blur-md animate-fadeIn text-stone-900"
       role="dialog"
       aria-modal="true"
     >
       <div className="fixed inset-0" onClick={onClose} />
 
-      <div className="relative w-full max-w-5xl bg-white border border-neutral-200 rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[92vh]">
+      <div className="relative w-full max-w-5xl bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[92vh]">
         {/* Modal Header */}
-        <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-neutral-50/90 border-b border-neutral-200 backdrop-blur-md">
+        <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-stone-50/90 border-b border-stone-200 backdrop-blur-md">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-neutral-900 text-white flex items-center justify-center shadow-xs">
+            <div className="w-10 h-10 rounded-2xl bg-stone-900 text-white flex items-center justify-center shadow-xs">
               <Navigation className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-base sm:text-lg font-bold text-neutral-900 leading-tight">
+                <h2 className="text-base sm:text-lg font-bold text-stone-900 leading-tight">
                   Telangana EV Charging Hub &amp; Highway Route Planner
                 </h2>
-                <span className="rounded-full bg-neutral-200 px-2 py-0.5 text-[10px] font-bold text-neutral-800">
+                <span className="rounded-full bg-stone-200 px-2 py-0.5 text-[10px] font-bold text-stone-800">
                   5 Corridors • 50+ Stations
                 </span>
               </div>
-              <p className="text-xs text-neutral-500 font-medium">
+              <p className="text-xs text-stone-500 font-medium">
                 Fast charging network across Hyderabad, Nehru ORR, and 5 inter-district highway corridors
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-full text-neutral-400 hover:text-neutral-900 hover:bg-neutral-100 transition cursor-pointer"
+            className="p-2 rounded-full text-stone-400 hover:text-stone-900 hover:bg-stone-100 transition cursor-pointer"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -151,13 +188,13 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
         </div>
 
         {/* Dual Mode Switcher */}
-        <div className="flex border-b border-neutral-200 bg-neutral-100/70 p-2 gap-2">
+        <div className="flex border-b border-stone-200 bg-stone-100/70 p-2 gap-2">
           <button
             onClick={() => setActiveTab('route_planner')}
             className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-2xl text-xs sm:text-sm font-bold transition cursor-pointer ${
               activeTab === 'route_planner'
-                ? 'bg-neutral-900 text-white shadow-xs'
-                : 'text-neutral-700 hover:text-neutral-900 hover:bg-white/80'
+                ? 'bg-stone-900 text-white shadow-xs'
+                : 'text-stone-700 hover:text-stone-900 hover:bg-white/80'
             }`}
           >
             <Compass className="w-4 h-4" />
@@ -167,8 +204,8 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
             onClick={() => setActiveTab('explorer')}
             className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-2xl text-xs sm:text-sm font-bold transition cursor-pointer ${
               activeTab === 'explorer'
-                ? 'bg-neutral-900 text-white shadow-xs'
-                : 'text-neutral-700 hover:text-neutral-900 hover:bg-white/80'
+                ? 'bg-stone-900 text-white shadow-xs'
+                : 'text-stone-700 hover:text-stone-900 hover:bg-white/80'
             }`}
           >
             <MapPin className="w-4 h-4" />
@@ -180,17 +217,17 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
         {activeTab === 'route_planner' && (
           <div className="p-5 sm:p-6 overflow-y-auto space-y-5">
             {/* Control Panel: Vehicle & Corridor Selection */}
-            <div className="grid grid-cols-1 sm:grid-cols-12 gap-3.5 p-4 rounded-2xl bg-neutral-50 border border-neutral-200">
+            <div className="grid grid-cols-1 sm:grid-cols-12 gap-3.5 p-4 rounded-2xl bg-stone-50 border border-stone-200">
               {/* Vehicle Select */}
               <div className="sm:col-span-4 space-y-1">
-                <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 flex items-center gap-1.5">
-                  <BatteryCharging className="w-3.5 h-3.5 text-neutral-700" />
+                <label className="text-[10px] font-bold uppercase tracking-wider text-stone-500 flex items-center gap-1.5">
+                  <BatteryCharging className="w-3.5 h-3.5 text-stone-700" />
                   <span>Select EV Two-Wheeler</span>
                 </label>
                 <select
                   value={selectedVehicleId}
                   onChange={(e) => setSelectedVehicleId(e.target.value)}
-                  className="w-full text-xs font-semibold rounded-xl bg-white border border-neutral-300 p-2.5 text-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-900/10 cursor-pointer"
+                  className="w-full text-xs font-semibold rounded-xl bg-white border border-stone-300 p-2.5 text-stone-900 focus:outline-none focus:ring-2 focus:ring-stone-900/10 cursor-pointer"
                 >
                   {allEvs.map(v => (
                     <option key={v.id} value={v.id}>
@@ -202,14 +239,14 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
 
               {/* Corridor Select */}
               <div className="sm:col-span-5 space-y-1">
-                <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 flex items-center gap-1.5">
-                  <Navigation className="w-3.5 h-3.5 text-neutral-700" />
+                <label className="text-[10px] font-bold uppercase tracking-wider text-stone-500 flex items-center gap-1.5">
+                  <Navigation className="w-3.5 h-3.5 text-stone-700" />
                   <span>Select Telangana Highway Corridor</span>
                 </label>
                 <select
                   value={selectedCorridorId}
                   onChange={(e) => setSelectedCorridorId(e.target.value)}
-                  className="w-full text-xs font-semibold rounded-xl bg-white border border-neutral-300 p-2.5 text-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-900/10 cursor-pointer"
+                  className="w-full text-xs font-semibold rounded-xl bg-white border border-stone-300 p-2.5 text-stone-900 focus:outline-none focus:ring-2 focus:ring-stone-900/10 cursor-pointer"
                 >
                   {allCorridors.map(c => (
                     <option key={c.id} value={c.id}>
@@ -221,14 +258,14 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
 
               {/* Cruising Style */}
               <div className="sm:col-span-3 space-y-1">
-                <label className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 flex items-center gap-1.5">
-                  <Sliders className="w-3.5 h-3.5 text-neutral-700" />
+                <label className="text-[10px] font-bold uppercase tracking-wider text-stone-500 flex items-center gap-1.5">
+                  <Sliders className="w-3.5 h-3.5 text-stone-700" />
                   <span>Riding Speed Profile</span>
                 </label>
                 <select
                   value={riderStyle}
                   onChange={(e) => setRiderStyle(e.target.value as any)}
-                  className="w-full text-xs font-semibold rounded-xl bg-white border border-neutral-300 p-2.5 text-neutral-900 focus:outline-none focus:ring-2 focus:ring-neutral-900/10 cursor-pointer"
+                  className="w-full text-xs font-semibold rounded-xl bg-white border border-stone-300 p-2.5 text-stone-900 focus:outline-none focus:ring-2 focus:ring-stone-900/10 cursor-pointer"
                 >
                   <option value="eco_cruising">Eco (55 km/h) - High Range</option>
                   <option value="balanced">Balanced (65 km/h) - Recommended</option>
@@ -239,77 +276,77 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
 
             {/* Route Summary KPI Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200">
-                <div className="text-[10px] font-bold uppercase tracking-wider text-neutral-500">
+              <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-stone-500">
                   Corridor Distance
                 </div>
-                <div className="text-xl sm:text-2xl font-extrabold font-mono text-neutral-900 mt-0.5">
-                  {routePlan.totalDistanceKm} <span className="text-xs font-sans text-neutral-500 font-semibold">km</span>
+                <div className="text-xl sm:text-2xl font-extrabold font-mono text-stone-900 mt-0.5">
+                  {routePlan.totalDistanceKm} <span className="text-xs font-sans text-stone-500 font-semibold">km</span>
                 </div>
-                <div className="text-[11px] text-neutral-600 mt-0.5">
+                <div className="text-[11px] text-stone-600 mt-0.5">
                   {currentCorridor.highwayCode} Highway
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200">
-                <div className="text-[10px] font-bold uppercase tracking-wider text-neutral-500">
+              <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-stone-500">
                   Hwy Range / Charge
                 </div>
-                <div className="text-xl sm:text-2xl font-extrabold font-mono text-neutral-900 mt-0.5">
-                  {routePlan.highwayRangeKm} <span className="text-xs font-sans text-neutral-500 font-semibold">km</span>
+                <div className="text-xl sm:text-2xl font-extrabold font-mono text-stone-900 mt-0.5">
+                  {routePlan.highwayRangeKm} <span className="text-xs font-sans text-stone-500 font-semibold">km</span>
                 </div>
-                <div className="text-[11px] text-neutral-600 mt-0.5">
+                <div className="text-[11px] text-stone-600 mt-0.5">
                   Cruising efficiency
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200">
-                <div className="text-[10px] font-bold uppercase tracking-wider text-neutral-500">
+              <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-stone-500">
                   Required Stops
                 </div>
-                <div className="text-xl sm:text-2xl font-extrabold font-mono text-neutral-900 mt-0.5">
-                  {routePlan.requiredStopsCount} <span className="text-xs font-sans text-neutral-500 font-semibold">stop{routePlan.requiredStopsCount !== 1 ? 's' : ''}</span>
+                <div className="text-xl sm:text-2xl font-extrabold font-mono text-stone-900 mt-0.5">
+                  {routePlan.requiredStopsCount} <span className="text-xs font-sans text-stone-500 font-semibold">stop{routePlan.requiredStopsCount !== 1 ? 's' : ''}</span>
                 </div>
-                <div className="text-[11px] text-neutral-600 mt-0.5">
+                <div className="text-[11px] text-stone-600 mt-0.5">
                   {routePlan.estimatedTotalChargingTimeMinutes} min charging
                 </div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200">
-                <div className="text-[10px] font-bold uppercase tracking-wider text-neutral-500">
+              <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-stone-500">
                   Total Travel Time
                 </div>
-                <div className="text-xl sm:text-2xl font-extrabold font-mono text-neutral-900 mt-0.5">
+                <div className="text-xl sm:text-2xl font-extrabold font-mono text-stone-900 mt-0.5">
                   {Math.floor(routePlan.estimatedTotalTravelTimeMinutes / 60)}h {routePlan.estimatedTotalTravelTimeMinutes % 60}m
                 </div>
-                <div className="text-[11px] text-neutral-600 mt-0.5">
+                <div className="text-[11px] text-stone-600 mt-0.5">
                   Est. Fuel: ₹{routePlan.totalEstimatedChargingCostInr}
                 </div>
               </div>
             </div>
 
             {/* Feasibility Summary Banner */}
-            <div className="p-4 rounded-2xl bg-neutral-100 border border-neutral-200 flex items-start gap-3">
-              <div className="w-8 h-8 rounded-xl bg-neutral-900 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+            <div className="p-4 rounded-2xl bg-stone-100 border border-stone-200 flex items-start gap-3">
+              <div className="w-8 h-8 rounded-xl bg-stone-900 text-white flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
                 {routePlan.isFeasibleNonStop ? (
                   <CheckCircle2 className="w-4 h-4" />
                 ) : (
                   <Zap className="w-4 h-4" />
                 )}
               </div>
-              <div className="text-xs sm:text-sm font-medium text-neutral-800 leading-relaxed">
+              <div className="text-xs sm:text-sm font-medium text-stone-800 leading-relaxed">
                 {routePlan.routeSummaryText}
               </div>
             </div>
 
             {/* Step-by-Step Waypoint & Charging Timeline */}
             <div className="space-y-3">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-neutral-500 flex items-center gap-1.5">
-                <Layers className="w-3.5 h-3.5 text-neutral-700" />
+              <h3 className="text-xs font-bold uppercase tracking-wider text-stone-500 flex items-center gap-1.5">
+                <Layers className="w-3.5 h-3.5 text-stone-700" />
                 <span>Corridor Waypoints &amp; Charging Station Timeline</span>
               </h3>
 
-              <div className="relative pl-7 space-y-4 before:absolute before:left-3 before:top-3 before:bottom-3 before:w-0.5 before:bg-neutral-200">
+              <div className="relative pl-7 space-y-4 before:absolute before:left-3 before:top-3 before:bottom-3 before:w-0.5 before:bg-stone-200">
                 {currentCorridor.waypoints.map((wp, idx) => {
                   const matchingStop = routePlan.stops.find(s => s.distanceFromStartKm === wp.distanceFromStartKm);
                   const isStart = idx === 0;
@@ -321,10 +358,10 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                       <div
                         className={`absolute -left-7 top-2 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold border-2 transition-transform ${
                           matchingStop
-                            ? 'bg-neutral-900 border-neutral-300 text-white shadow-xs'
+                            ? 'bg-stone-900 border-stone-300 text-white shadow-xs'
                             : isStart || isEnd
-                            ? 'bg-neutral-900 border-neutral-300 text-white'
-                            : 'bg-white border-neutral-300 text-neutral-700'
+                            ? 'bg-stone-900 border-stone-300 text-white'
+                            : 'bg-white border-stone-300 text-stone-700'
                         }`}
                       >
                         {matchingStop ? '⚡' : idx + 1}
@@ -334,50 +371,50 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                       <div
                         className={`p-4 rounded-2xl border transition-all ${
                           matchingStop
-                            ? 'bg-neutral-50 border-neutral-300 shadow-sm'
-                            : 'bg-white border-neutral-200'
+                            ? 'bg-stone-50 border-stone-300 shadow-sm'
+                            : 'bg-white border-stone-200'
                         }`}
                       >
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                           <div className="flex items-center gap-2">
-                            <span className="text-sm font-bold text-neutral-900">
+                            <span className="text-sm font-bold text-stone-900">
                               {wp.name}
                             </span>
-                            <span className="px-2 py-0.5 text-[10px] font-mono font-bold bg-neutral-100 text-neutral-700 rounded-md border border-neutral-200">
+                            <span className="px-2 py-0.5 text-[10px] font-mono font-bold bg-stone-100 text-stone-700 rounded-md border border-stone-200">
                               KM {wp.distanceFromStartKm}
                             </span>
                           </div>
                           {matchingStop && (
-                            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-neutral-900 bg-neutral-200 px-2.5 py-0.5 rounded-full">
+                            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-stone-900 bg-stone-200 px-2.5 py-0.5 rounded-full">
                               <BatteryCharging className="w-3.5 h-3.5" />
                               Required Charging Stop (~{matchingStop.chargingDurationMinutes} mins)
                             </span>
                           )}
                         </div>
 
-                        <p className="text-xs text-neutral-500 mt-1">
+                        <p className="text-xs text-stone-500 mt-1">
                           {wp.description}
                         </p>
 
                         {/* Stop Details Box if charging */}
                         {matchingStop && (
-                          <div className="mt-3 p-3.5 rounded-xl bg-white border border-neutral-200 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                          <div className="mt-3 p-3.5 rounded-xl bg-white border border-stone-200 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                             <div>
-                              <span className="text-[10px] uppercase font-bold text-neutral-400 block">Charging Hub</span>
-                              <div className="font-bold text-neutral-900 mt-0.5">
+                              <span className="text-[10px] uppercase font-bold text-stone-400 block">Charging Hub</span>
+                              <div className="font-bold text-stone-900 mt-0.5">
                                 {matchingStop.station.name}
                               </div>
-                              <div className="text-[11px] text-neutral-600 font-medium">
+                              <div className="text-[11px] text-stone-600 font-medium">
                                 {matchingStop.station.network} ({matchingStop.station.maxPowerKw} kW)
                               </div>
                             </div>
 
                             <div>
-                              <span className="text-[10px] uppercase font-bold text-neutral-400 block">Battery Top-Up</span>
-                              <div className="font-bold font-mono text-neutral-900 mt-0.5">
+                              <span className="text-[10px] uppercase font-bold text-stone-400 block">Battery Top-Up</span>
+                              <div className="font-bold font-mono text-stone-900 mt-0.5">
                                 {matchingStop.batteryArrivalPercent}% ➔ {matchingStop.batteryDeparturePercent}% (+{matchingStop.chargeGainedKwh} kWh)
                               </div>
-                              <div className="text-[11px] text-neutral-500">
+                              <div className="text-[11px] text-stone-500">
                                 Stop Duration: ~{matchingStop.chargingDurationMinutes} mins (₹{matchingStop.estimatedCostInr})
                               </div>
                             </div>
@@ -388,7 +425,7 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                                   href={matchingStop.station.googleMapsUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-xs"
+                                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition shadow-xs"
                                 >
                                   <span>Directions</span>
                                   <ExternalLink className="w-3.5 h-3.5" />
@@ -406,16 +443,16 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
 
             {/* Popular Scenic Highlights */}
             {currentCorridor.popularScenicSpots && (
-              <div className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200 space-y-2">
-                <h4 className="text-[10px] font-bold uppercase tracking-wider text-neutral-500 flex items-center gap-1.5">
-                  <Compass className="w-3.5 h-3.5 text-neutral-700" />
+              <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200 space-y-2">
+                <h4 className="text-[10px] font-bold uppercase tracking-wider text-stone-500 flex items-center gap-1.5">
+                  <Compass className="w-3.5 h-3.5 text-stone-700" />
                   <span>Key Landmarks Along {currentCorridor.highwayCode}</span>
                 </h4>
                 <div className="flex flex-wrap gap-1.5">
                   {currentCorridor.popularScenicSpots.map((spot, i) => (
                     <span
                       key={i}
-                      className="px-2.5 py-1 text-xs rounded-lg bg-white text-neutral-800 border border-neutral-200 font-medium"
+                      className="px-2.5 py-1 text-xs rounded-lg bg-white text-stone-800 border border-stone-200 font-medium"
                     >
                       📍 {spot}
                     </span>
@@ -432,13 +469,13 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
             {/* Search & Filter Strip */}
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-2.5">
               <div className="sm:col-span-4 relative">
-                <Search className="w-4 h-4 absolute left-3 top-3 text-neutral-400" />
+                <Search className="w-4 h-4 absolute left-3 top-3 text-stone-400" />
                 <input
                   type="text"
                   placeholder="Search by area, highway, landmark..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 text-xs font-semibold rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-neutral-900/10"
+                  className="w-full pl-9 pr-4 py-2 text-xs font-semibold rounded-xl bg-stone-50 border border-stone-200 text-stone-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-stone-900/10"
                 />
               </div>
 
@@ -446,7 +483,7 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                 <select
                   value={selectedNetwork}
                   onChange={(e) => setSelectedNetwork(e.target.value)}
-                  className="w-full py-2 px-3 text-xs font-semibold rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-900 focus:bg-white focus:outline-none"
+                  className="w-full py-2 px-3 text-xs font-semibold rounded-xl bg-stone-50 border border-stone-200 text-stone-900 focus:bg-white focus:outline-none"
                 >
                   <option value="all">⚡ All Networks ({uniqueNetworks.length})</option>
                   {uniqueNetworks.map(n => (
@@ -459,7 +496,7 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                 <select
                   value={selectedDistrict}
                   onChange={(e) => setSelectedDistrict(e.target.value)}
-                  className="w-full py-2 px-3 text-xs font-semibold rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-900 focus:bg-white focus:outline-none"
+                  className="w-full py-2 px-3 text-xs font-semibold rounded-xl bg-stone-50 border border-stone-200 text-stone-900 focus:bg-white focus:outline-none"
                 >
                   <option value="all">📍 All Telangana Districts</option>
                   {uniqueDistricts.map(d => (
@@ -472,7 +509,7 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                 <select
                   value={selectedConnector}
                   onChange={(e) => setSelectedConnector(e.target.value)}
-                  className="w-full py-2 px-3 text-xs font-semibold rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-900 focus:bg-white focus:outline-none"
+                  className="w-full py-2 px-3 text-xs font-semibold rounded-xl bg-stone-50 border border-stone-200 text-stone-900 focus:bg-white focus:outline-none"
                 >
                   <option value="all">🔌 All Connectors</option>
                   <option value="CCS2_DC">CCS2 Fast DC</option>
@@ -486,48 +523,72 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
 
             {/* Station List Results */}
             <div className="space-y-3">
-              <div className="flex items-center justify-between text-xs text-neutral-500">
-                <span>Showing <strong className="text-neutral-900 font-bold">{filteredStations.length}</strong> verified stations</span>
-                {selectedNetwork !== 'all' || selectedDistrict !== 'all' || selectedConnector !== 'all' || searchQuery ? (
-                  <button
-                    onClick={() => {
-                      setSearchQuery('');
-                      setSelectedNetwork('all');
-                      setSelectedDistrict('all');
-                      setSelectedConnector('all');
-                    }}
-                    className="text-neutral-900 underline font-bold cursor-pointer"
-                  >
-                    Reset Filters
-                  </button>
-                ) : null}
+              <div className="flex items-center justify-between text-xs text-stone-500">
+                <span>
+                  Showing <strong className="text-stone-900 font-bold">{sortedStations.length}</strong> verified stations
+                  {userLocation && ' · nearest first'}
+                </span>
+                <div className="flex items-center gap-3">
+                  {geoError && <span className="text-red-600 text-[11px]">{geoError}</span>}
+                  {(selectedNetwork !== 'all' || selectedDistrict !== 'all' || selectedConnector !== 'all' || searchQuery) && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSearchQuery('');
+                        setSelectedNetwork('all');
+                        setSelectedDistrict('all');
+                        setSelectedConnector('all');
+                      }}
+                      className="text-stone-900 underline font-bold cursor-pointer"
+                    >
+                      Reset Filters
+                    </button>
+                  )}
+                  {!userLocation ? (
+                    <button
+                      type="button"
+                      onClick={requestNearMe}
+                      className="px-2.5 py-1 rounded-full bg-milestone text-white font-semibold text-[11px] hover:bg-[#0077ed] transition cursor-pointer"
+                    >
+                      Near me
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setUserLocation(null)}
+                      className="text-stone-900 underline font-bold cursor-pointer"
+                    >
+                      Clear location
+                    </button>
+                  )}
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-                {filteredStations.map(station => (
+                {sortedStations.map(station => (
                   <div
                     key={station.id}
-                    className="p-4 rounded-2xl bg-white border border-neutral-200 hover:border-neutral-300 hover:shadow-md transition flex flex-col justify-between gap-3"
+                    className="p-4 rounded-2xl bg-white border border-stone-200 hover:border-stone-300 hover:shadow-md transition flex flex-col justify-between gap-3"
                   >
                     <div className="space-y-2">
                       <div className="flex items-start justify-between gap-2">
                         <div>
-                          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase bg-neutral-100 text-neutral-800 border border-neutral-200">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase bg-stone-100 text-stone-800 border border-stone-200">
                             {station.network}
                           </span>
-                          <h4 className="text-sm font-bold text-neutral-900 mt-1">
+                          <h4 className="text-sm font-bold text-stone-900 mt-1">
                             {station.name}
                           </h4>
-                          <p className="text-xs text-neutral-500">
+                          <p className="text-xs text-stone-500">
                             {station.cityOrHighway} • {station.district}
                           </p>
                         </div>
-                        <span className="text-xs font-mono font-bold text-neutral-900 bg-neutral-100 px-2.5 py-1 rounded-lg border border-neutral-200 shrink-0">
+                        <span className="text-xs font-mono font-bold text-stone-900 bg-stone-100 px-2.5 py-1 rounded-lg border border-stone-200 shrink-0">
                           {station.maxPowerKw} kW
                         </span>
                       </div>
 
-                      <p className="text-xs text-neutral-600 line-clamp-2">
+                      <p className="text-xs text-stone-600 line-clamp-2">
                         {station.address}
                       </p>
 
@@ -536,7 +597,7 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                         {station.connectors.map((c, i) => (
                           <span
                             key={i}
-                            className="px-2 py-0.5 text-[11px] rounded-md bg-neutral-50 text-neutral-700 font-medium border border-neutral-200"
+                            className="px-2 py-0.5 text-[11px] rounded-md bg-stone-50 text-stone-700 font-medium border border-stone-200"
                           >
                             🔌 {c.type.replace('_', ' ')} ({c.powerKw} kW) - {c.pricePerUnit}
                           </span>
@@ -548,7 +609,7 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                         {station.amenities.map((a, i) => (
                           <span
                             key={i}
-                            className="text-[10px] text-neutral-500 bg-neutral-100 px-1.5 py-0.5 rounded"
+                            className="text-[10px] text-stone-500 bg-stone-100 px-1.5 py-0.5 rounded"
                           >
                             ✓ {a}
                           </span>
@@ -556,8 +617,8 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between pt-2 border-t border-neutral-100">
-                      <span className="text-[11px] text-neutral-500 font-medium">
+                    <div className="flex items-center justify-between pt-2 border-t border-stone-100">
+                      <span className="text-[11px] text-stone-500 font-medium">
                         {station.is24x7 ? '🟢 24x7 Open' : '🟡 Daytime Hours'}
                       </span>
                       {station.googleMapsUrl && (
@@ -565,7 +626,7 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                           href={station.googleMapsUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-xs"
+                          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition shadow-xs"
                         >
                           <span>Directions</span>
                           <ExternalLink className="w-3.5 h-3.5" />
@@ -582,3 +643,5 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
     </div>
   );
 };
+
+export default ChargingRoutePlannerModal;

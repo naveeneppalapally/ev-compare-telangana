@@ -43,25 +43,25 @@ export const BrandShowcaseView: React.FC = () => {
         return (
           <section 
             key={brand}
-            className="p-6 sm:p-8 rounded-3xl bg-neutral-50 border border-neutral-200 shadow-xs space-y-6"
+            className="p-6 sm:p-8 rounded-3xl bg-stone-50 border border-stone-200 shadow-xs space-y-6"
           >
             {/* Brand Header Banner */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-5 border-b border-neutral-200">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-5 border-b border-stone-200">
               <div className="flex items-center gap-3.5">
-                <div className="w-12 h-12 rounded-2xl bg-neutral-900 text-white flex items-center justify-center font-black text-lg shadow-sm">
+                <div className="w-12 h-12 rounded-2xl bg-stone-900 text-white flex items-center justify-center font-black text-lg shadow-sm">
                   {brand.charAt(0)}
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h2 className="text-xl sm:text-2xl font-black text-neutral-900 tracking-tight">
+                    <h2 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight">
                       {brand}
                     </h2>
-                    <span className="rounded-full bg-neutral-200 px-2.5 py-0.5 text-xs font-bold text-neutral-800">
+                    <span className="rounded-full bg-stone-200 px-2.5 py-0.5 text-xs font-bold text-stone-800">
                       {vehicles.length} {vehicles.length === 1 ? 'Model' : 'Models in Lineup'}
                     </span>
                   </div>
-                  <p className="text-xs text-neutral-500 font-mono mt-0.5">
-                    Price Range: <strong className="text-neutral-900 font-bold">{priceRangeText}</strong> • Up to {maxRange} km City Range • Up to {maxBattery} kWh Battery
+                  <p className="text-xs text-stone-500 font-mono mt-0.5">
+                    Price Range: <strong className="text-stone-900 font-bold">{priceRangeText}</strong> • Up to {maxRange} km City Range • Up to {maxBattery} kWh Battery
                   </p>
                 </div>
               </div>
@@ -70,7 +70,7 @@ export const BrandShowcaseView: React.FC = () => {
               {vehicles.length > 1 && (
                 <button
                   onClick={() => compareBrandLineup(brand)}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-xs cursor-pointer shrink-0"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition shadow-xs cursor-pointer shrink-0"
                 >
                   <Scale className="w-4 h-4" />
                   <span>Compare {brand} Lineup ({Math.min(4, vehicles.length)} Variants)</span>

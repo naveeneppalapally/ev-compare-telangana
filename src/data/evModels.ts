@@ -1,6 +1,6 @@
 import type { EVModel } from '../types/ev';
 
-export const EV_CATALOG_LAST_UPDATED = "August 2026";
+export { EV_CATALOG_LAST_UPDATED } from './catalogMeta.ts';
 
 export const EV_MODELS: EVModel[] = [
   // ==========================================

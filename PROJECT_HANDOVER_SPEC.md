@@ -2,7 +2,7 @@
 
 > **Live Production URL**: [https://ev-compare-telangana.vercel.app](https://ev-compare-telangana.vercel.app)  
 > **GitHub Repository**: [https://github.com/naveeneppalapally/ev-compare-telangana](https://github.com/naveeneppalapally/ev-compare-telangana)  
-> **Primary Technology Stack**: React 18, TypeScript, Vite, Tailwind CSS, Lucide Icons, Node.js Native Test Runner  
+> **Primary Technology Stack**: React 19, TypeScript, Vite, Tailwind CSS, Lucide Icons, Node.js Native Test Runner  
 > **Test Coverage**: 463 / 463 automated unit & empirical tests passing (100%)
 
 ---
@@ -43,8 +43,8 @@ ev-compare-telangana/
 │   │   └── CompareContext.tsx         # Global state provider (Catalog, Filters, Modals, RTO)
 │   ├── utils/
 │   │   ├── priceCalculator.ts         # Telangana on-road price & G.O. Ms No. 41 tax waiver engine
-│   │   ├── savingsEngine.ts           # Petrol vs EV monthly savings, 5-yr TCO & ROI payback
-│   │   ├── rangePhysicsEngine.ts      # Temperature, pillion weight & terrain range simulator
+│   │   ├── savingsCalculator.ts       # Petrol vs EV monthly savings, 5-yr TCO & ROI payback
+│   │   ├── rangeSimulator.ts          # Temperature, pillion weight & terrain range simulator
 │   │   ├── recommendationEngine.ts    # 4-step buyer recommendation scoring algorithm
 │   │   ├── routePlannerEngine.ts      # Inter-district highway battery feasibility & stop scheduler
 │   │   └── vehicleImagery.ts          # Image fallbacks and helper utilities
@@ -117,7 +117,7 @@ ev-compare-telangana/
 - **Net Telangana On-Road Price**:
   `exShowroomNet + 5YrInsurance + HSRPLaserFitment (₹400) + Handling (₹1,500) + OptionalCharger`
 
-### 2. Petrol vs. EV Savings Engine (`src/utils/savingsEngine.ts`)
+### 2. Petrol vs. EV Savings Engine (`src/utils/savingsCalculator.ts`)
 - **Daily Commute Distance**: `D` (km)
 - **Petrol Cost**: `(D / 45 kmpl) * ₹109.66/L`
 - **EV Cost**: `(D * 32 Wh/km / 1000 / 0.88 efficiency) * ₹7.50/kWh`

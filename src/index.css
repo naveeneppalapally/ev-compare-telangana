@@ -1,18 +1,86 @@
 @import "tailwindcss";
 
+/*
+ * EV Compare TG — Apple/Google-clean design system.
+ * Palette and type mirror apple.com: #ffffff / #f5f5f7 surfaces,
+ * #1d1d1f ink, #d2d2d7 hairlines, #0071e3 action blue, #008a4b positive green.
+ */
+@theme {
+  --font-sans: "Instrument Sans", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "Fragment Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-serif: "Newsreader", Georgia, serif;
+  --color-ink: #0f0f0f;
+  --color-paper: #f6f6f3;
+  --color-quartzite: #e4e4dc;
+  --color-milestone: #0a84ff;
+  --color-signal: #00a86b;
+}
+
 @layer base {
   body {
-    background-color: #fbfbfd;
-    color: #1d1d1f;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     min-height: 100vh;
+    background-color: #ffffff;
+    color: var(--color-ink);
+    letter-spacing: -0.011em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    letter-spacing: -0.011em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-milestone);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-ink);
+    color: #ffffff;
+  }
+
+  /* Consistent tactile buttons everywhere */
+  button:not(:disabled) {
+    transition:
+      transform 0.12s ease,
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  button:not(:disabled):active {
+    transform: scale(0.98);
   }
 }
 
-/* Minimalist Apple-style scrollbar */
+/* Display headline: editorial-tinted, tight — distinct from system default */
+.display-headline {
+  font-family: "Instrument Sans", sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+}
+.display-headline em {
+  font-family: "Newsreader", serif;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+@keyframes ev-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-fadeIn,
+.animate-fade-in {
+  animation: ev-rise-in 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Neutral minimalist scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -23,12 +91,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d1d5db;
+  background: #c7c7cc;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
+  background: #aeaeb2;
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -37,4 +105,15 @@
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

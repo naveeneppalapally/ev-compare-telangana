@@ -1,0 +1,8 @@
+{
+  "_comment": "Manual verification dates. CI fails if any entry is older than 45 days. Update alongside the matching constant in src/data/.",
+  "petrolPrice": "2026-08-24",
+  "electricityTariff": "2026-08-24",
+  "vehicleCatalog": "2026-08-24",
+  "chargingStations": "2026-08-24",
+  "policyGO41": "2026-08-24"
+}

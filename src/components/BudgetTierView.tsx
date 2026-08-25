@@ -64,24 +64,24 @@ export const BudgetTierView: React.FC = () => {
         return (
           <section 
             key={tier.key}
-            className="p-6 sm:p-8 rounded-3xl bg-neutral-50 border border-neutral-200 shadow-xs space-y-6"
+            className="p-6 sm:p-8 rounded-3xl bg-stone-50 border border-stone-200 shadow-xs space-y-6"
           >
             {/* Tier Header */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-5 border-b border-neutral-200">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-5 border-b border-stone-200">
               <div className="flex items-center gap-3.5">
-                <div className="w-12 h-12 rounded-2xl bg-neutral-900 text-white flex items-center justify-center shadow-sm">
+                <div className="w-12 h-12 rounded-2xl bg-stone-900 text-white flex items-center justify-center shadow-sm">
                   <IconComponent className="w-6 h-6" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h2 className="text-xl sm:text-2xl font-black text-neutral-900 tracking-tight">
+                    <h2 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight">
                       {tier.title}
                     </h2>
-                    <span className="rounded-full bg-neutral-200 px-2.5 py-0.5 text-xs font-bold text-neutral-800">
+                    <span className="rounded-full bg-stone-200 px-2.5 py-0.5 text-xs font-bold text-stone-800">
                       {tier.vehicles.length} Models
                     </span>
                   </div>
-                  <p className="text-xs text-neutral-500 font-medium mt-0.5">
+                  <p className="text-xs text-stone-500 font-medium mt-0.5">
                     {tier.subtitle}
                   </p>
                 </div>
@@ -91,7 +91,7 @@ export const BudgetTierView: React.FC = () => {
               {tier.vehicles.length > 1 && (
                 <button
                   onClick={() => compareBudgetTier(tier.key)}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition shadow-xs cursor-pointer shrink-0"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition shadow-xs cursor-pointer shrink-0"
                 >
                   <Scale className="w-4 h-4" />
                   <span>Compare Top {Math.min(4, tier.vehicles.length)} in this Tier</span>

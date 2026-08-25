@@ -1,0 +1,39 @@
+{
+  "name": "EV Compare Telangana — Electric Two-Wheeler Decision Platform",
+  "short_name": "EV Compare TG",
+  "description": "Compare 54 electric two-wheelers with Telangana on-road pricing (G.O. Ms No. 41 road tax exemption), real-world range physics, petrol-vs-EV TCO and charging station maps.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f8fafc",
+  "theme_color": "#f8fafc",
+  "lang": "en-IN",
+  "categories": ["shopping", "utilities", "education"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

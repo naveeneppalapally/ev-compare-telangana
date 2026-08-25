@@ -249,26 +249,26 @@ export const SmartWizardModal: React.FC<SmartWizardModalProps> = ({
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 overflow-y-auto bg-neutral-900/60 backdrop-blur-md animate-fadeIn text-neutral-900"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 overflow-y-auto bg-stone-900/60 backdrop-blur-md animate-fadeIn text-stone-900"
       role="dialog"
       aria-modal="true"
       aria-labelledby="wizard-modal-title"
     >
       <div className="fixed inset-0" onClick={handleClose} />
 
-      <div className="relative w-full max-w-4xl bg-white border border-neutral-200 rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[92vh]">
+      <div className="relative w-full max-w-4xl bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[92vh]">
         
         {/* Header */}
-        <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-neutral-50/90 border-b border-neutral-200 backdrop-blur-md">
+        <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-stone-50/90 border-b border-stone-200 backdrop-blur-md">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-neutral-900 text-white flex items-center justify-center shadow-xs">
+            <div className="w-10 h-10 rounded-2xl bg-stone-900 text-white flex items-center justify-center shadow-xs">
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h2 id="wizard-modal-title" className="text-base sm:text-lg font-bold text-neutral-900 leading-tight">
+              <h2 id="wizard-modal-title" className="text-base sm:text-lg font-bold text-stone-900 leading-tight">
                 Smart Buyer Recommendation Quiz
               </h2>
-              <p className="text-xs text-neutral-500 font-medium">
+              <p className="text-xs text-stone-500 font-medium">
                 Find your best-fit EV in 4 quick steps based on commute &amp; charging access
               </p>
             </div>
@@ -278,7 +278,7 @@ export const SmartWizardModal: React.FC<SmartWizardModalProps> = ({
             {step === 5 && (
               <button
                 onClick={handleReset}
-                className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-700 text-xs font-semibold border border-neutral-300 transition cursor-pointer"
+                className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold border border-stone-300 transition cursor-pointer"
               >
                 <RotateCcw className="w-3 h-3" />
                 <span>Retake</span>
@@ -286,7 +286,7 @@ export const SmartWizardModal: React.FC<SmartWizardModalProps> = ({
             )}
             <button
               onClick={handleClose}
-              className="p-2 rounded-full text-neutral-400 hover:text-neutral-900 hover:bg-neutral-100 transition cursor-pointer"
+              className="p-2 rounded-full text-stone-400 hover:text-stone-900 hover:bg-stone-100 transition cursor-pointer"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
@@ -295,9 +295,9 @@ export const SmartWizardModal: React.FC<SmartWizardModalProps> = ({
         </div>
 
         {/* Step Progress Bar */}
-        <div className="w-full bg-neutral-100 h-1.5">
+        <div className="w-full bg-stone-100 h-1.5">
           <div 
-            className="bg-neutral-900 h-1.5 transition-all duration-300"
+            className="bg-stone-900 h-1.5 transition-all duration-300"
             style={{ width: `${(step / 5) * 100}%` }}
           />
         </div>
@@ -307,13 +307,13 @@ export const SmartWizardModal: React.FC<SmartWizardModalProps> = ({
           {step <= 4 && currentStepConfig && (
             <div className="max-w-2xl mx-auto space-y-5">
               <div>
-                <span className="text-[11px] font-bold text-neutral-500 uppercase tracking-wider block">
+                <span className="text-[11px] font-bold text-stone-500 uppercase tracking-wider block">
                   Step {step} of 4: {currentStepConfig.title}
                 </span>
-                <h3 className="text-xl font-bold text-neutral-900 mt-1">
+                <h3 className="text-xl font-bold text-stone-900 mt-1">
                   {currentStepConfig.question}
                 </h3>
-                <p className="text-xs text-neutral-500 mt-1">
+                <p className="text-xs text-stone-500 mt-1">
                   {currentStepConfig.description}
                 </p>
               </div>
@@ -330,22 +330,22 @@ export const SmartWizardModal: React.FC<SmartWizardModalProps> = ({
                       }}
                       className={`p-4 rounded-2xl border text-left transition cursor-pointer flex flex-col justify-between ${
                         isSelected
-                          ? 'border-neutral-900 bg-neutral-900 text-white shadow-md'
-                          : 'border-neutral-200 bg-neutral-50 text-neutral-800 hover:border-neutral-300 hover:bg-neutral-100'
+                          ? 'border-stone-900 bg-stone-900 text-white shadow-md'
+                          : 'border-stone-200 bg-stone-50 text-stone-800 hover:border-stone-300 hover:bg-stone-100'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <div className={`p-2 rounded-xl ${isSelected ? 'bg-neutral-800 text-white' : 'bg-white text-neutral-700 border border-neutral-200'}`}>
+                        <div className={`p-2 rounded-xl ${isSelected ? 'bg-stone-800 text-white' : 'bg-white text-stone-700 border border-stone-200'}`}>
                           <IconComponent className="w-4 h-4" />
                         </div>
                         {isSelected && <Check className="w-4 h-4 text-white" />}
                       </div>
 
                       <div>
-                        <span className={`text-sm font-bold block ${isSelected ? 'text-white' : 'text-neutral-900'}`}>
+                        <span className={`text-sm font-bold block ${isSelected ? 'text-white' : 'text-stone-900'}`}>
                           {opt.label}
                         </span>
-                        <span className={`text-[11px] mt-1 block ${isSelected ? 'text-neutral-300' : 'text-neutral-500'}`}>
+                        <span className={`text-[11px] mt-1 block ${isSelected ? 'text-stone-300' : 'text-stone-500'}`}>
                           {opt.desc}
                         </span>
                       </div>
@@ -360,13 +360,13 @@ export const SmartWizardModal: React.FC<SmartWizardModalProps> = ({
           {step === 5 && (
             <div className="space-y-6">
               <div className="text-center max-w-xl mx-auto">
-                <span className="text-[11px] font-bold text-neutral-500 uppercase tracking-wider block">
+                <span className="text-[11px] font-bold text-stone-500 uppercase tracking-wider block">
                   Match Complete
                 </span>
-                <h3 className="text-2xl font-extrabold text-neutral-900 mt-1">
+                <h3 className="text-2xl font-extrabold text-stone-900 mt-1">
                   Your Top Recommended Electric Two-Wheelers
                 </h3>
-                <p className="text-xs text-neutral-500 mt-1">
+                <p className="text-xs text-stone-500 mt-1">
                   Scored based on your commute, apartment socket setup, and budget preferences in Telangana.
                 </p>
               </div>
@@ -379,18 +379,18 @@ export const SmartWizardModal: React.FC<SmartWizardModalProps> = ({
                   return (
                     <div 
                       key={rec.model.id}
-                      className="p-5 rounded-2xl bg-neutral-50 border border-neutral-200 flex flex-col justify-between relative shadow-xs"
+                      className="p-5 rounded-2xl bg-stone-50 border border-stone-200 flex flex-col justify-between relative shadow-xs"
                     >
                       <div className="flex items-center justify-between mb-3">
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-900 text-white">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-stone-900 text-white">
                           #{idx + 1} Best Match ({rec.matchScore}%)
                         </span>
-                        <span className="text-[10px] text-neutral-500 uppercase font-bold">
+                        <span className="text-[10px] text-stone-500 uppercase font-bold">
                           {rec.model.category === 'motorcycle' ? '🏍️ Motorcycle' : '🛵 Scooter'}
                         </span>
                       </div>
 
-                      <div className="h-32 rounded-xl overflow-hidden bg-neutral-900 mb-3 flex items-center justify-center border border-neutral-200">
+                      <div className="h-32 rounded-xl overflow-hidden bg-stone-900 mb-3 flex items-center justify-center border border-stone-200">
                         <VehicleImage 
                           model={rec.model} 
                           className="w-full h-full"
@@ -398,20 +398,20 @@ export const SmartWizardModal: React.FC<SmartWizardModalProps> = ({
                       </div>
 
                       <div className="mb-3">
-                        <span className="text-[10px] font-bold uppercase text-neutral-500">{rec.model.brand}</span>
-                        <h4 className="text-sm font-bold text-neutral-900 truncate">{rec.model.name}</h4>
-                        <div className="text-base font-black font-mono text-neutral-900 mt-1">
+                        <span className="text-[10px] font-bold uppercase text-stone-500">{rec.model.brand}</span>
+                        <h4 className="text-sm font-bold text-stone-900 truncate">{rec.model.name}</h4>
+                        <div className="text-base font-black font-mono text-stone-900 mt-1">
                           {formatINR(price.totalTelanganaOnRoadPrice)}
                         </div>
-                        <span className="text-[10px] text-neutral-500 font-mono">
+                        <span className="text-[10px] text-stone-500 font-mono">
                           {rec.model.specs.realWorldCityRangeKm} km city range • {rec.model.specs.batteryCapacityKwh} kWh
                         </span>
                       </div>
 
-                      <div className="space-y-1 mb-4 text-[11px] text-neutral-600 bg-white p-2.5 rounded-xl border border-neutral-200">
+                      <div className="space-y-1 mb-4 text-[11px] text-stone-600 bg-white p-2.5 rounded-xl border border-stone-200">
                         {reasons.slice(0, 2).map((r, rIdx) => (
                           <div key={rIdx} className="flex items-start gap-1.5">
-                            <Check className="w-3.5 h-3.5 text-neutral-900 shrink-0 mt-0.5" />
+                            <Check className="w-3.5 h-3.5 text-stone-900 shrink-0 mt-0.5" />
                             <span>{r}</span>
                           </div>
                         ))}
@@ -423,7 +423,7 @@ export const SmartWizardModal: React.FC<SmartWizardModalProps> = ({
                             openDetail(rec.model.id);
                             handleClose();
                           }}
-                          className="py-1.5 px-2 rounded-xl bg-white hover:bg-neutral-100 text-neutral-800 border border-neutral-300 text-xs font-bold transition cursor-pointer"
+                          className="py-1.5 px-2 rounded-xl bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
                         >
                           Specs
                         </button>
@@ -432,8 +432,8 @@ export const SmartWizardModal: React.FC<SmartWizardModalProps> = ({
                           onClick={() => toggleCompare(rec.model.id)}
                           className={`py-1.5 px-2 rounded-xl text-xs font-bold transition cursor-pointer ${
                             compared
-                              ? 'bg-neutral-900 text-white'
-                              : 'bg-neutral-900 hover:bg-neutral-800 text-white'
+                              ? 'bg-stone-900 text-white'
+                              : 'bg-stone-900 hover:bg-stone-800 text-white'
                           }`}
                         >
                           {compared ? 'Added ✓' : '+ Compare'}
@@ -448,11 +448,11 @@ export const SmartWizardModal: React.FC<SmartWizardModalProps> = ({
         </div>
 
         {/* Footer Navigation */}
-        <div className="p-4 sm:px-6 border-t border-neutral-200 bg-neutral-50/90 flex items-center justify-between">
+        <div className="p-4 sm:px-6 border-t border-stone-200 bg-stone-50/90 flex items-center justify-between">
           {step > 1 && step <= 4 && (
             <button
               onClick={() => setStep(step - 1)}
-              className="flex items-center gap-1 px-4 py-2 rounded-full bg-white hover:bg-neutral-100 text-neutral-800 border border-neutral-300 text-xs font-bold transition cursor-pointer"
+              className="flex items-center gap-1 px-4 py-2 rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Previous</span>
@@ -462,7 +462,7 @@ export const SmartWizardModal: React.FC<SmartWizardModalProps> = ({
           {step < 4 && (
             <button
               onClick={() => setStep(step + 1)}
-              className="ml-auto flex items-center gap-1.5 px-5 py-2 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition cursor-pointer shadow-xs"
+              className="ml-auto flex items-center gap-1.5 px-5 py-2 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition cursor-pointer shadow-xs"
             >
               <span>Next</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -472,7 +472,7 @@ export const SmartWizardModal: React.FC<SmartWizardModalProps> = ({
           {step === 4 && (
             <button
               onClick={() => setStep(5)}
-              className="ml-auto flex items-center gap-1.5 px-6 py-2 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition cursor-pointer shadow-xs"
+              className="ml-auto flex items-center gap-1.5 px-6 py-2 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition cursor-pointer shadow-xs"
             >
               <Sparkles className="w-3.5 h-3.5" />
               <span>See My Matches</span>
@@ -485,7 +485,7 @@ export const SmartWizardModal: React.FC<SmartWizardModalProps> = ({
                 openCompare();
                 handleClose();
               }}
-              className="ml-auto flex items-center gap-1.5 px-6 py-2 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition cursor-pointer shadow-xs"
+              className="ml-auto flex items-center gap-1.5 px-6 py-2 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition cursor-pointer shadow-xs"
             >
               <Scale className="w-3.5 h-3.5" />
               <span>Open Comparison Matrix</span>

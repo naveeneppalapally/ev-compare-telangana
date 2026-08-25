@@ -1,14 +1,77 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#030712" />
-    <meta name="description" content="EV Compare Telangana — Authoritative Electric Two-Wheeler Comparison, Real-World Range Physics, G.O. Ms No. 41 ₹0 Road Tax Calculator, and TCO Payback Platform." />
-    <title>EV Compare Telangana — Electric Two-Wheeler Decision &amp; Pricing Platform</title>
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Instrument+Sans:wght@500;600;700&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" />
+
+    <title>EV Compare Telangana — Electric Two-Wheeler Prices, Range & TCO Calculator</title>
+    <meta
+      name="description"
+      content="Compare 54 electric scooters and motorcycles with authentic specs, Telangana on-road pricing (G.O. Ms No. 41: 100% road tax exemption), real-world range physics for Hyderabad heat, petrol-vs-EV savings, charging stations and highway route planning."
+    />
+
+    <!-- Canonical + indexing -->
+    <link rel="canonical" href="https://ev-compare-telangana.vercel.app/" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="EV Compare Telangana" />
+    <meta property="og:url" content="https://ev-compare-telangana.vercel.app/" />
+    <meta property="og:title" content="EV Compare Telangana — Electric Two-Wheeler Decision Platform" />
+    <meta
+      property="og:description"
+      content="Authentic EV specs, ₹0 road tax pricing across 38 Telangana RTOs, real range simulator, petrol-vs-EV TCO and charging route planner."
+    />
+    <meta property="og:image" content="https://ev-compare-telangana.vercel.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="EV Compare Telangana — electric two-wheeler comparison platform" />
+    <meta property="og:locale" content="en_IN" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="EV Compare Telangana — Electric Two-Wheeler Decision Platform" />
+    <meta
+      name="twitter:description"
+      content="Authentic EV specs, ₹0 road tax pricing across 38 Telangana RTOs, real range simulator, petrol-vs-EV TCO and charging route planner."
+    />
+    <meta name="twitter:image" content="https://ev-compare-telangana.vercel.app/og-image.png" />
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "EV Compare Telangana",
+        "url": "https://ev-compare-telangana.vercel.app/",
+        "applicationCategory": "ShoppingApplication",
+        "operatingSystem": "Any",
+        "description": "Compare 54 electric two-wheelers with Telangana on-road pricing under G.O. Ms No. 41, real-world range physics, petrol-vs-EV total cost of ownership and charging station route planning.",
+        "inLanguage": "en-IN",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "INR"
+        },
+        "featureList": [
+          "54-vehicle EV catalog with verified specifications",
+          "Telangana on-road price calculator with G.O. Ms No. 41 tax waiver",
+          "Physics-based real-world range simulator",
+          "Petrol vs EV 5-year total cost of ownership calculator",
+          "Charging station explorer and highway route planner"
+        ]
+      }
+    </script>
   </head>
-  <body class="bg-[#030712] text-zinc-100 antialiased">
+  <body class="bg-white text-ink antialiased">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
