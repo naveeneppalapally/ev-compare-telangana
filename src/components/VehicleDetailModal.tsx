@@ -195,28 +195,36 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
           </div>
         </div>
 
-        {/* Tab Navigation */}
-        <div className="px-4 sm:px-6 border-b border-stone-200 bg-stone-50/50 flex gap-2 overflow-x-auto scrollbar-none text-xs">
-          {[
-            { key: 'overview', label: 'Overview' },
-            { key: 'benchmark', label: '⚡ EV vs ⛽ Petrol Benchmark' },
-            { key: 'battery', label: 'Battery & Charging' },
-            { key: 'performance', label: 'Motor & Dynamics' },
-            { key: 'tech', label: 'Features & Tech' },
-            { key: 'pros-cons', label: 'Pros & Cons' }
-          ].map((tab) => (
-            <button
-              key={tab.key}
-              onClick={() => setActiveTab(tab.key as any)}
-              className={`py-3 px-3.5 min-h-[44px] font-bold border-b-2 whitespace-nowrap transition cursor-pointer shrink-0 ${
-                activeTab === tab.key
-                  ? 'border-stone-900 text-stone-900'
-                  : 'border-transparent text-stone-500 hover:text-stone-900'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+        {/* Tab Navigation — scrollable on mobile with fade cue and auto-centering */}
+        <div className="relative border-b border-stone-200 bg-stone-50/50">
+          <div className="px-4 sm:px-6 flex gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none text-xs scroll-smooth snap-x snap-mandatory">
+            {[
+              { key: 'overview', label: 'Overview', short: 'Overview' },
+              { key: 'benchmark', label: 'EV vs Petrol', short: 'vs Petrol' },
+              { key: 'battery', label: 'Battery', short: 'Battery' },
+              { key: 'performance', label: 'Motor', short: 'Motor' },
+              { key: 'tech', label: 'Features', short: 'Tech' },
+              { key: 'pros-cons', label: 'Pros & Cons', short: 'Pros/Cons' }
+            ].map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key as any)}
+                ref={(el) => {
+                  if (el && activeTab === tab.key) el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }}
+                className={`py-3 px-3 sm:px-3.5 min-h-[44px] font-bold border-b-2 whitespace-nowrap transition cursor-pointer shrink-0 snap-start text-xs sm:text-xs ${
+                  activeTab === tab.key
+                    ? 'border-stone-900 text-stone-900'
+                    : 'border-transparent text-stone-500 hover:text-stone-900'
+                }`}
+              >
+                <span className="sm:hidden">{tab.short}</span>
+                <span className="hidden sm:inline">{tab.label}</span>
+              </button>
+            ))}
+          </div>
+          {/* Right fade to hint horizontal scroll */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-stone-50/50 to-transparent sm:hidden" aria-hidden />
         </div>
 
         {/* Scrollable Body */}

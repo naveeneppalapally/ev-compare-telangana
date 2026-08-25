@@ -3,6 +3,7 @@ import type { EVModel } from '../types/ev';
 import { useCompare } from '../context/CompareContext';
 import { calculateTelanganaOnRoadPrice, formatINR } from '../utils/priceCalculator';
 import { VehicleImage } from './VehicleImage';
+import { ColourVisualizerModal } from './ColourVisualizerModal';
 import { TechTooltip } from './TechTooltip';
 import { explainFeature } from '../data/featureKnowledge';
 import { EMI_ANNUAL_RATE, EMI_DOWN_PAYMENT_RATIO, EMI_TENURE_MONTHS } from '../data/catalogMeta';
@@ -36,6 +37,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ model }) => {
   } = useCompare();
 
   const [selectedColorIdx, setSelectedColorIdx] = useState(0);
+  const [isVisualizerOpen, setIsVisualizerOpen] = useState(false);
   const compared = isCompared(model.id);
   const pricingBreakdown = calculateTelanganaOnRoadPrice(model, selectedRtoCode);
 
@@ -126,17 +128,17 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ model }) => {
         </p>
       </div>
 
-      {/* 3. Image Container with Authentic Photo & Resilient Fallback */}
+      {/* 3. Image — tap to view all colours full-screen, not specs */}
       <div
         role="button"
         tabIndex={0}
-        aria-label={`View ${model.brand} ${model.name} full specifications`}
+        aria-label={`View ${model.brand} ${model.name} in ${model.colorOptions?.[selectedColorIdx]?.name ?? 'all colours'}`}
         className="relative my-3 mx-4 h-44 rounded-xl overflow-hidden bg-white border border-stone-200 flex items-center justify-center group/img cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-900"
-        onClick={() => openDetail(model.id)}
+        onClick={() => setIsVisualizerOpen(true)}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            openDetail(model.id);
+            setIsVisualizerOpen(true);
           }
         }}
       >
@@ -158,9 +160,9 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ model }) => {
           </span>
         </div>
 
-        {/* Quick View Tag on Hover */}
+        {/* View colours hint on hover */}
         <div className="absolute bottom-2.5 right-2.5 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center gap-1 px-2.5 py-1 rounded-md bg-stone-900 text-white text-xs font-bold shadow-md z-10">
-          <span>Specs</span>
+          <span>View</span>
           <ChevronRight className="w-3.5 h-3.5" />
         </div>
       </div>
@@ -401,6 +403,13 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ model }) => {
           </button>
         )}
       </div>
+
+      <ColourVisualizerModal
+        isOpen={isVisualizerOpen}
+        onClose={() => setIsVisualizerOpen(false)}
+        model={model}
+        initialColourIndex={selectedColorIdx}
+      />
     </div>
   );
 };
