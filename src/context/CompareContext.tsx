@@ -12,7 +12,7 @@ import { parseHash, buildHash } from '../utils/urlState';
 import type { DeepLinkModal } from '../utils/urlState';
 
 const MAX_COMPARE_LIMIT = 4;
-const DEFAULT_COMPARE_IDS = ['ather-rizta-z-37', 'ola-s1-pro-gen2', 'tvs-iqube-s-34'];
+const DEFAULT_COMPARE_IDS: string[] = [];
 
 // Covers the entire catalog so no bike is hidden by default; recomputed exactly
 // once the lazy-loaded catalog arrives.
@@ -232,7 +232,12 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
         const saved = localStorage.getItem('ev_compare_ids');
         if (saved) {
           const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) return parsed.slice(0, MAX_COMPARE_LIMIT);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            // Migrate old default (3 bikes) that was auto-saved — don't force dock on new users
+            const oldDefaults = ['ather-rizta-z-37', 'ola-s1-pro-gen2', 'tvs-iqube-s-34'];
+            const isOldDefault = parsed.length === 3 && parsed.every((id, i) => id === oldDefaults[i]);
+            if (!isOldDefault) return parsed.slice(0, MAX_COMPARE_LIMIT);
+          }
         }
       }
     } catch (e) {}
@@ -492,54 +497,90 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
   };
 
   const openDetail = (id: string) => setActiveDetailModelId(id);
-  const closeDetail = () => setActiveDetailModelId(null);
+  const closeDetail = () => {
+    if (hasPushedRef.current) { hasPushedRef.current = false; window.history.back(); return; }
+    setActiveDetailModelId(null);
+  };
 
   const openPriceModal = (id: string) => setActivePriceModalModelId(id);
-  const closePriceModal = () => setActivePriceModalModelId(null);
+  const closePriceModal = () => {
+    if (hasPushedRef.current) { hasPushedRef.current = false; window.history.back(); return; }
+    setActivePriceModalModelId(null);
+  };
 
   const openCompare = () => setIsCompareOpen(true);
-  const closeCompare = () => setIsCompareOpen(false);
+  const closeCompare = () => {
+    if (hasPushedRef.current) { hasPushedRef.current = false; window.history.back(); return; }
+    setIsCompareOpen(false);
+  };
 
   const openRangeModal = (id?: string) => {
     if (id) setActiveSimulatorModelId(id);
     else if (!activeSimulatorModelId && models[0]) setActiveSimulatorModelId(models[0].id);
     setIsRangeModalOpen(true);
   };
-  const closeRangeModal = () => setIsRangeModalOpen(false);
+  const closeRangeModal = () => {
+    if (hasPushedRef.current) { hasPushedRef.current = false; window.history.back(); return; }
+    setIsRangeModalOpen(false);
+  };
 
   const openSavingsModal = (id?: string) => {
     if (id) setActiveSimulatorModelId(id);
     setIsSavingsModalOpen(true);
   };
-  const closeSavingsModal = () => setIsSavingsModalOpen(false);
+  const closeSavingsModal = () => {
+    if (hasPushedRef.current) { hasPushedRef.current = false; window.history.back(); return; }
+    setIsSavingsModalOpen(false);
+  };
 
   const openWizard = () => setIsWizardOpen(true);
-  const closeWizard = () => setIsWizardOpen(false);
+  const closeWizard = () => {
+    if (hasPushedRef.current) { hasPushedRef.current = false; window.history.back(); return; }
+    setIsWizardOpen(false);
+  };
 
   const openChargingModal = () => setIsChargingModalOpen(true);
-  const closeChargingModal = () => setIsChargingModalOpen(false);
+  const closeChargingModal = () => {
+    if (hasPushedRef.current) { hasPushedRef.current = false; window.history.back(); return; }
+    setIsChargingModalOpen(false);
+  };
 
   const openTariffModal = () => setIsTariffModalOpen(true);
-  const closeTariffModal = () => setIsTariffModalOpen(false);
+  const closeTariffModal = () => {
+    if (hasPushedRef.current) { hasPushedRef.current = false; window.history.back(); return; }
+    setIsTariffModalOpen(false);
+  };
 
   const openLoanModal = () => setIsLoanModalOpen(true);
-  const closeLoanModal = () => setIsLoanModalOpen(false);
+  const closeLoanModal = () => {
+    if (hasPushedRef.current) { hasPushedRef.current = false; window.history.back(); return; }
+    setIsLoanModalOpen(false);
+  };
 
   const openTaxInspectorModal = () => setIsTaxInspectorModalOpen(true);
-  const closeTaxInspectorModal = () => setIsTaxInspectorModalOpen(false);
+  const closeTaxInspectorModal = () => {
+    if (hasPushedRef.current) { hasPushedRef.current = false; window.history.back(); return; }
+    setIsTaxInspectorModalOpen(false);
+  };
 
   const openTechModal = (topicId?: string) => {
     if (topicId) setActiveTechTopicId(topicId);
     setIsTechModalOpen(true);
   };
-  const closeTechModal = () => setIsTechModalOpen(false);
+  const closeTechModal = () => {
+    if (hasPushedRef.current) { hasPushedRef.current = false; window.history.back(); return; }
+    setIsTechModalOpen(false);
+  };
 
   const openRoutePlanner = (vehicleId?: string, corridorId?: string) => {
     if (vehicleId) setRoutePlannerVehicleId(vehicleId);
     if (corridorId) setRoutePlannerCorridorId(corridorId);
     setIsChargingModalOpen(true);
   };
-  const closeRoutePlanner = () => setIsChargingModalOpen(false);
+  const closeRoutePlanner = () => {
+    if (hasPushedRef.current) { hasPushedRef.current = false; window.history.back(); return; }
+    setIsChargingModalOpen(false);
+  };
 
   const resetFilters = () => {
     setSearchQuery('');
@@ -594,6 +635,9 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   // Mirror active modal / compare / RTO state into the URL hash for shareable deep links
   const lastHashRef = React.useRef('');
+  const hasPushedRef = React.useRef(false);
+  const prevModalKeyRef = React.useRef<DeepLinkModal | null>(null);
+  const isInitialMountRef = React.useRef(true);
 
   useEffect(() => {
     let modalKey: DeepLinkModal | null = null;
@@ -620,13 +664,21 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
     });
 
     try {
-      // Never clobber an external hash change we haven't reconciled yet —
-      // otherwise a pending deep link gets overwritten mid-navigation.
       if (window.location.hash !== hash && window.location.hash !== lastHashRef.current) return;
       if (window.location.hash !== hash) {
+        const isModalOpenNow = modalKey !== null;
+        const wasModalOpen = prevModalKeyRef.current !== null;
+        const shouldPush = !wasModalOpen && isModalOpenNow && !isInitialMountRef.current;
+        if (shouldPush) {
+          window.history.pushState(null, '', window.location.pathname + window.location.search + hash);
+          hasPushedRef.current = true;
+        } else {
+          window.history.replaceState(null, '', window.location.pathname + window.location.search + hash);
+        }
         lastHashRef.current = hash;
-        window.history.replaceState(null, '', window.location.pathname + window.location.search + hash);
       }
+      prevModalKeyRef.current = modalKey;
+      isInitialMountRef.current = false;
     } catch (e) {}
   }, [
     activeDetailModelId,
@@ -651,9 +703,9 @@ export const CompareProvider: React.FC<{ children: React.ReactNode }> = ({ child
   // Restore state when the user navigates back/forward or pastes a shared link
   useEffect(() => {
     const onHashChange = (e: HashChangeEvent) => {
-      // Read from the event, not location — a mirror write may have raced us
       const rawHash = e.newURL ? `#${new URL(e.newURL).hash.replace(/^#/, '')}` : window.location.hash;
       const s = parseHash(rawHash);
+      if (s.modal === null) hasPushedRef.current = false;
       setActiveDetailModelId(s.modal === 'detail' ? s.modelId : null);
       setActivePriceModalModelId(s.modal === 'price' ? s.modelId : null);
       setIsRangeModalOpen(s.modal === 'range');
