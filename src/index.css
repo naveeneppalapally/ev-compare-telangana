@@ -17,9 +17,20 @@
   --color-signal: #00a86b;
 }
 
+html {
+  overflow-x: clip;
+  scroll-padding-top: 5rem;
+}
+
+html,
+body {
+  overflow-x: clip;
+}
+
 @layer base {
   body {
     min-height: 100vh;
+    overflow-x: clip;
     background-color: #ffffff;
     color: var(--color-ink);
     letter-spacing: -0.011em;

@@ -134,15 +134,15 @@ export const ColourVisualizerModal: React.FC<ColourVisualizerModalProps> = ({
       <div className="absolute inset-0" onClick={onClose} aria-hidden="true" />
 
       {/* Top bar */}
-      <div className="relative z-10 flex items-center justify-between gap-4 px-4 sm:px-6 py-3.5 bg-paper border-b border-quartzite shrink-0">
-        <div className="flex items-center gap-3 min-w-0">
+      <div className="relative z-10 flex items-center justify-between gap-2 sm:gap-4 px-4 sm:px-6 py-3.5 bg-paper border-b border-quartzite shrink-0 pt-[env(safe-area-inset-top)] sm:pt-3.5">
+        <div className="flex items-center gap-3 min-w-0 flex-1">
           <span
             className="w-5 h-5 rounded-full border border-quartzite shrink-0 shadow-xs"
             style={{ backgroundColor: fallbackHex }}
             aria-hidden="true"
           />
           <div className="min-w-0">
-            <p className="text-[11px] font-bold tracking-widest uppercase text-stone-500 leading-none">
+            <p className="text-[11px] font-bold tracking-widest uppercase text-stone-500 leading-none truncate">
               {model.brand} · {model.name}
             </p>
             <p className="text-sm font-extrabold text-ink leading-tight truncate">
@@ -154,7 +154,7 @@ export const ColourVisualizerModal: React.FC<ColourVisualizerModalProps> = ({
           </div>
         </div>
 
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           {hasColours && (
             <span className="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full bg-ink text-white text-xs font-mono font-bold">
               {activeIndex + 1} of {total}
@@ -166,7 +166,7 @@ export const ColourVisualizerModal: React.FC<ColourVisualizerModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-full bg-white border border-quartzite text-ink hover:bg-stone-50 hover:border-stone-300 transition cursor-pointer"
+            className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-white border border-quartzite text-ink hover:bg-stone-50 hover:border-stone-300 transition cursor-pointer shrink-0"
             aria-label="Close colour visualizer"
           >
             <X className="w-4 h-4" />
@@ -181,7 +181,7 @@ export const ColourVisualizerModal: React.FC<ColourVisualizerModalProps> = ({
           <button
             type="button"
             onClick={goPrev}
-            className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-paper border border-quartzite text-ink hover:bg-white hover:border-stone-300 shadow-lg flex items-center justify-center transition cursor-pointer z-20"
+            className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 w-11 h-11 min-h-[44px] min-w-[44px] sm:w-12 sm:h-12 rounded-full bg-paper border border-quartzite text-ink hover:bg-white hover:border-stone-300 shadow-lg flex items-center justify-center transition cursor-pointer z-20"
             aria-label="Previous colour"
           >
             <ChevronLeft className="w-5 h-5" />
@@ -219,7 +219,7 @@ export const ColourVisualizerModal: React.FC<ColourVisualizerModalProps> = ({
           <button
             type="button"
             onClick={goNext}
-            className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-milestone border border-milestone text-white hover:bg-[#0077ed] shadow-lg flex items-center justify-center transition cursor-pointer z-20"
+            className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 w-11 h-11 min-h-[44px] min-w-[44px] sm:w-12 sm:h-12 rounded-full bg-milestone border border-milestone text-white hover:bg-[#0077ed] shadow-lg flex items-center justify-center transition cursor-pointer z-20"
             aria-label="Next colour"
           >
             <ChevronRight className="w-5 h-5" />
@@ -228,7 +228,7 @@ export const ColourVisualizerModal: React.FC<ColourVisualizerModalProps> = ({
 
         {/* Dot indicators */}
         {total > 1 && (
-          <div className="mt-4 sm:mt-6 flex items-center justify-center gap-2">
+          <div className="mt-4 sm:mt-6 flex items-center justify-center gap-0 sm:gap-1">
             {colours.map((_, idx) => (
               <button
                 key={idx}
@@ -236,12 +236,10 @@ export const ColourVisualizerModal: React.FC<ColourVisualizerModalProps> = ({
                 onClick={() => goTo(idx)}
                 aria-label={`Go to colour ${idx + 1} of ${total}: ${colours[idx].name}`}
                 aria-current={idx === activeIndex}
-                className={`transition-all cursor-pointer ${
-                  idx === activeIndex
-                    ? 'w-7 h-2.5 rounded-full bg-milestone'
-                    : 'w-2.5 h-2.5 rounded-full bg-white/70 hover:bg-white border border-white/40'
-                }`}
-              />
+                className="min-h-[44px] min-w-[44px] flex items-center justify-center p-2 shrink-0 cursor-pointer"
+              >
+                <span className={`block transition-all ${idx === activeIndex ? 'w-7 h-2.5 rounded-full bg-milestone' : 'w-2.5 h-2.5 rounded-full bg-white/70 hover:bg-white border border-white/40'}`} aria-hidden="true" />
+              </button>
             ))}
           </div>
         )}
@@ -256,7 +254,7 @@ export const ColourVisualizerModal: React.FC<ColourVisualizerModalProps> = ({
       </div>
 
       {/* Bottom bar — swatches */}
-      <div className="relative z-10 bg-paper border-t border-quartzite px-4 sm:px-6 py-4 shrink-0">
+      <div className="relative z-10 bg-paper border-t border-quartzite px-4 sm:px-6 py-4 pb-[env(safe-area-inset-bottom)] sm:pb-4 shrink-0">
         <div className="max-w-[930px] mx-auto">
           <div className="flex items-center justify-between gap-3 mb-3">
             <p className="text-[11px] font-bold tracking-widest uppercase text-stone-500">
@@ -279,7 +277,7 @@ export const ColourVisualizerModal: React.FC<ColourVisualizerModalProps> = ({
                   aria-label={`Select ${c.name}`}
                   aria-pressed={isActive}
                   title={c.name}
-                  className={`group flex items-center gap-2.5 px-3 py-2 rounded-full border transition shrink-0 cursor-pointer ${
+                  className={`group flex items-center gap-2.5 px-3 py-2.5 min-h-[44px] rounded-full border transition shrink-0 cursor-pointer ${
                     isActive
                       ? 'bg-ink border-ink text-white shadow-md'
                       : 'bg-white border-quartzite text-ink hover:border-stone-300 hover:bg-stone-50'

@@ -64,72 +64,72 @@ export const VehicleGrid: React.FC = () => {
 
           {/* Active Filter Chips with Dismiss */}
           {searchQuery && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-white text-stone-800 border border-stone-300 shadow-2xs">
-              <span>Search: "{searchQuery}"</span>
-              <button onClick={() => setSearchQuery('')} aria-label="Remove search filter" className="hover:text-rose-600 cursor-pointer">
+            <span className="inline-flex items-center gap-1.5 min-h-[36px] px-3 py-2 rounded-full text-xs font-semibold bg-white text-stone-800 border border-stone-300 shadow-2xs max-w-full">
+              <span className="truncate max-w-[160px]">Search: "{searchQuery}"</span>
+              <button onClick={() => setSearchQuery('')} aria-label="Remove search filter" className="hover:text-rose-600 hover:bg-stone-100 cursor-pointer min-h-[28px] min-w-[28px] p-1.5 flex items-center justify-center rounded-full -mr-1 shrink-0 transition">
                 <X className="w-3 h-3" />
               </button>
             </span>
           )}
 
           {selectedCategory !== 'all' && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-300 shadow-2xs">
-              <span className="capitalize">{selectedCategory}s</span>
-              <button onClick={() => setSelectedCategory('all')} className="hover:text-rose-600 cursor-pointer">
+            <span className="inline-flex items-center gap-1.5 min-h-[36px] px-3 py-2 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-300 shadow-2xs max-w-full">
+              <span className="capitalize truncate max-w-[120px]">{selectedCategory}s</span>
+              <button onClick={() => setSelectedCategory('all')} aria-label="Remove category filter" className="hover:text-rose-600 hover:bg-emerald-100 cursor-pointer min-h-[28px] min-w-[28px] p-1.5 flex items-center justify-center rounded-full -mr-1 shrink-0 transition">
                 <X className="w-3 h-3" />
               </button>
             </span>
           )}
 
           {priceRangeMax < MAX_CATALOG_PRICE && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-white text-stone-800 border border-stone-300 shadow-2xs">
-              <span>Budget &le; {formatINR(priceRangeMax)}</span>
-              <button onClick={() => setPriceRangeMax(MAX_CATALOG_PRICE)} className="hover:text-rose-600 cursor-pointer">
+            <span className="inline-flex items-center gap-1.5 min-h-[36px] px-3 py-2 rounded-full text-xs font-semibold bg-white text-stone-800 border border-stone-300 shadow-2xs max-w-full">
+              <span className="truncate">Budget &le; {formatINR(priceRangeMax)}</span>
+              <button onClick={() => setPriceRangeMax(MAX_CATALOG_PRICE)} aria-label="Remove budget filter" className="hover:text-rose-600 hover:bg-stone-100 cursor-pointer min-h-[28px] min-w-[28px] p-1.5 flex items-center justify-center rounded-full -mr-1 shrink-0 transition">
                 <X className="w-3 h-3" />
               </button>
             </span>
           )}
 
           {requireRemovableBattery && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-cyan-50 text-cyan-800 border border-cyan-300 shadow-2xs">
-              <span>🔋 Removable Battery</span>
-              <button onClick={() => setRequireRemovableBattery(false)} className="hover:text-rose-600 cursor-pointer">
+            <span className="inline-flex items-center gap-1.5 min-h-[36px] px-3 py-2 rounded-full text-xs font-semibold bg-cyan-50 text-cyan-800 border border-cyan-300 shadow-2xs max-w-full">
+              <span className="truncate">🔋 Removable Battery</span>
+              <button onClick={() => setRequireRemovableBattery(false)} aria-label="Remove removable battery filter" className="hover:text-rose-600 hover:bg-cyan-100 cursor-pointer min-h-[28px] min-w-[28px] p-1.5 flex items-center justify-center rounded-full -mr-1 shrink-0 transition">
                 <X className="w-3 h-3" />
               </button>
             </span>
           )}
 
           {requireFastCharging && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-300 shadow-2xs">
-              <span>⚡ Fast Charging</span>
-              <button onClick={() => setRequireFastCharging(false)} className="hover:text-rose-600 cursor-pointer">
+            <span className="inline-flex items-center gap-1.5 min-h-[36px] px-3 py-2 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-300 shadow-2xs max-w-full">
+              <span className="truncate">⚡ Fast Charging</span>
+              <button onClick={() => setRequireFastCharging(false)} aria-label="Remove fast charging filter" className="hover:text-rose-600 hover:bg-amber-100 cursor-pointer min-h-[28px] min-w-[28px] p-1.5 flex items-center justify-center rounded-full -mr-1 shrink-0 transition">
                 <X className="w-3 h-3" />
               </button>
             </span>
           )}
 
           {minBootSpaceLiters > 0 && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-300 shadow-2xs">
-              <span>🎒 Boot &gt;30L</span>
-              <button onClick={() => setMinBootSpaceLiters(0)} className="hover:text-rose-600 cursor-pointer">
+            <span className="inline-flex items-center gap-1.5 min-h-[36px] px-3 py-2 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-300 shadow-2xs max-w-full">
+              <span className="truncate">🎒 Boot &gt;30L</span>
+              <button onClick={() => setMinBootSpaceLiters(0)} aria-label="Remove boot space filter" className="hover:text-rose-600 hover:bg-emerald-100 cursor-pointer min-h-[28px] min-w-[28px] p-1.5 flex items-center justify-center rounded-full -mr-1 shrink-0 transition">
                 <X className="w-3 h-3" />
               </button>
             </span>
           )}
 
           {budgetUnder1L && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-purple-50 text-purple-800 border border-purple-300 shadow-2xs">
-              <span>💰 Budget &lt;₹1L</span>
-              <button onClick={() => setBudgetUnder1L(false)} className="hover:text-rose-600 cursor-pointer">
+            <span className="inline-flex items-center gap-1.5 min-h-[36px] px-3 py-2 rounded-full text-xs font-semibold bg-purple-50 text-purple-800 border border-purple-300 shadow-2xs max-w-full">
+              <span className="truncate">💰 Budget &lt;₹1L</span>
+              <button onClick={() => setBudgetUnder1L(false)} aria-label="Remove budget under 1L filter" className="hover:text-rose-600 hover:bg-purple-100 cursor-pointer min-h-[28px] min-w-[28px] p-1.5 flex items-center justify-center rounded-full -mr-1 shrink-0 transition">
                 <X className="w-3 h-3" />
               </button>
             </span>
           )}
 
           {activeFilterBadge && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-300 shadow-2xs">
-              <span>Badge: {activeFilterBadge}</span>
-              <button onClick={() => setActiveFilterBadge(null)} className="hover:text-rose-600 cursor-pointer">
+            <span className="inline-flex items-center gap-1.5 min-h-[36px] px-3 py-2 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-300 shadow-2xs max-w-full">
+              <span className="truncate max-w-[140px]">Badge: {activeFilterBadge}</span>
+              <button onClick={() => setActiveFilterBadge(null)} aria-label="Remove badge filter" className="hover:text-rose-600 hover:bg-amber-100 cursor-pointer min-h-[28px] min-w-[28px] p-1.5 flex items-center justify-center rounded-full -mr-1 shrink-0 transition">
                 <X className="w-3 h-3" />
               </button>
             </span>
@@ -138,10 +138,10 @@ export const VehicleGrid: React.FC = () => {
           {isFiltered && (
             <button
               onClick={resetFilters}
-              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition cursor-pointer shadow-2xs"
+              className="inline-flex items-center gap-1.5 min-h-[36px] px-3 py-2 rounded-full text-xs font-bold bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition cursor-pointer shadow-2xs"
               title="Reset all filters"
             >
-              <RotateCcw className="w-3 h-3" />
+              <RotateCcw className="w-3 h-3 shrink-0" />
               <span>Reset All</span>
             </button>
           )}
@@ -156,7 +156,7 @@ export const VehicleGrid: React.FC = () => {
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="bg-white border border-stone-300 text-xs font-semibold text-stone-800 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-emerald-500 cursor-pointer shadow-2xs"
+            className="bg-white border border-stone-300 text-xs font-semibold text-stone-800 rounded-lg px-3 py-2.5 min-h-[44px] h-11 focus:outline-none focus:border-emerald-500 cursor-pointer shadow-2xs"
           >
             <option value="recommended">⭐ Recommended / Popular</option>
             <option value="priceAsc">Price: Low to High</option>

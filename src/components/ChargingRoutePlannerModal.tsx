@@ -193,36 +193,36 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 overflow-y-auto bg-stone-900/60 backdrop-blur-md animate-fadeIn text-stone-900"
+      className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 overflow-y-auto bg-stone-900/60 backdrop-blur-md animate-fadeIn text-stone-900 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] sm:pt-4 sm:pb-4"
       role="dialog"
       aria-modal="true"
     >
       <div className="fixed inset-0" onClick={onClose} />
 
-      <div className="relative w-full max-w-5xl bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[92vh]">
+      <div className="relative w-full max-w-5xl bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[100dvh] sm:max-h-[92vh]">
         {/* Modal Header */}
-        <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-stone-50/90 border-b border-stone-200 backdrop-blur-md">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-stone-900 text-white flex items-center justify-center shadow-xs">
+        <div className="sticky top-0 z-20 flex items-center justify-between gap-2 px-4 sm:px-6 py-3 sm:py-4 bg-stone-50/90 border-b border-stone-200 backdrop-blur-md flex-wrap sm:flex-nowrap">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <div className="w-10 h-10 rounded-2xl bg-stone-900 text-white flex items-center justify-center shadow-xs shrink-0">
               <Navigation className="w-5 h-5" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
+            <div className="min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
                 <h2 className="text-base sm:text-lg font-bold text-stone-900 leading-tight">
                   Telangana EV Charging Hub &amp; Highway Route Planner
                 </h2>
-                <span className="rounded-full bg-stone-200 px-2 py-0.5 text-[10px] font-bold text-stone-800">
+                <span className="rounded-full bg-stone-200 px-2 py-0.5 text-[10px] font-bold text-stone-800 shrink-0">
                   5 Corridors • 50+ Stations
                 </span>
               </div>
-              <p className="text-xs text-stone-500 font-medium">
+              <p className="text-xs text-stone-500 font-medium truncate">
                 Fast charging network across Hyderabad, Nehru ORR, and 5 inter-district highway corridors
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-full text-stone-400 hover:text-stone-900 hover:bg-stone-100 transition cursor-pointer"
+            className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full text-stone-400 hover:text-stone-900 hover:bg-stone-100 transition cursor-pointer shrink-0"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -467,7 +467,7 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                                   href={matchingStop.station.googleMapsUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition shadow-xs"
+                                  className="inline-flex items-center gap-1.5 px-3.5 py-2.5 min-h-[44px] rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition shadow-xs"
                                 >
                                   <span>Directions</span>
                                   <ExternalLink className="w-3.5 h-3.5" />
@@ -590,7 +590,7 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                     <button
                       type="button"
                       onClick={requestNearMe}
-                      className="px-2.5 py-1 rounded-full bg-milestone text-white font-semibold text-[11px] hover:bg-[#0077ed] transition cursor-pointer"
+                      className="px-3 py-2 min-h-[40px] rounded-full bg-milestone text-white font-semibold text-[11px] hover:bg-[#0077ed] transition cursor-pointer"
                     >
                       Near me
                     </button>
@@ -598,7 +598,7 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                     <button
                       type="button"
                       onClick={() => setUserLocation(null)}
-                      className="text-stone-900 underline font-bold cursor-pointer"
+                      className="text-stone-900 underline font-bold cursor-pointer min-h-[44px] px-2 flex items-center"
                     >
                       Clear location
                     </button>
@@ -689,7 +689,7 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                           onClick={() => handleLiveStatusUpdate(station.id, 'working')}
                           aria-pressed={live?.status === 'working'}
                           aria-label="Mark station as working"
-                          className={`px-2.5 py-1 rounded-full text-[11px] font-bold border transition cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ink ${
+                          className={`px-3 py-2 min-h-[40px] rounded-full text-[11px] font-bold border transition cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ink ${
                             live?.status === 'working'
                               ? 'bg-signal text-white border-signal shadow-xs'
                               : 'bg-white text-stone-700 border-stone-200 hover:bg-signal/10 hover:border-signal/30 hover:text-signal'
@@ -702,7 +702,7 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                           onClick={() => handleLiveStatusUpdate(station.id, 'occupied')}
                           aria-pressed={live?.status === 'occupied'}
                           aria-label="Mark station as occupied"
-                          className={`px-2.5 py-1 rounded-full text-[11px] font-bold border transition cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ink ${
+                          className={`px-3 py-2 min-h-[40px] rounded-full text-[11px] font-bold border transition cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ink ${
                             live?.status === 'occupied'
                               ? 'bg-amber-500 text-white border-amber-500 shadow-xs'
                               : 'bg-white text-stone-700 border-stone-200 hover:bg-amber-50 hover:border-amber-300 hover:text-amber-700'
@@ -715,7 +715,7 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                           onClick={() => handleLiveStatusUpdate(station.id, 'broken')}
                           aria-pressed={live?.status === 'broken'}
                           aria-label="Mark station as broken"
-                          className={`px-2.5 py-1 rounded-full text-[11px] font-bold border transition cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ink ${
+                          className={`px-3 py-2 min-h-[40px] rounded-full text-[11px] font-bold border transition cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ink ${
                             live?.status === 'broken'
                               ? 'bg-red-500 text-white border-red-500 shadow-xs'
                               : 'bg-white text-stone-700 border-stone-200 hover:bg-red-50 hover:border-red-300 hover:text-red-700'
@@ -738,7 +738,7 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between pt-2 border-t border-stone-100">
+                    <div className="flex items-center justify-between pt-2 border-t border-stone-100 gap-2 flex-wrap">
                       <span className="text-[11px] text-stone-500 font-medium">
                         {station.is24x7 ? '🟢 24x7 Open' : '🟡 Daytime Hours'}
                       </span>
@@ -747,7 +747,7 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                           href={station.googleMapsUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-ink hover:bg-stone-800 text-white text-xs font-bold transition shadow-xs"
+                          className="inline-flex items-center gap-1.5 px-3.5 py-2.5 min-h-[44px] rounded-full bg-ink hover:bg-stone-800 text-white text-xs font-bold transition shadow-xs"
                         >
                           <span>Directions</span>
                           <ExternalLink className="w-3.5 h-3.5" />

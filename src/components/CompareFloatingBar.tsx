@@ -28,7 +28,7 @@ export const CompareFloatingBar: React.FC = () => {
     <div
       role="region"
       aria-label="Comparison dock"
-      className="fixed bottom-4 left-0 right-0 z-30 px-4 pointer-events-none"
+      className="fixed bottom-4 left-0 right-0 z-30 px-4 pb-[env(safe-area-inset-bottom)] pointer-events-none"
     >
       {compareLimitToast && (
         <div className="max-w-4xl mx-auto mb-2 pointer-events-auto">
@@ -62,7 +62,7 @@ export const CompareFloatingBar: React.FC = () => {
 
             <button
               onClick={clearCompare}
-              className="flex items-center gap-1 px-2 py-1 rounded-md text-[11px] font-semibold text-stone-400 hover:text-white transition cursor-pointer"
+              className="flex items-center gap-1 px-2 py-2 min-h-[36px] rounded-md text-[11px] font-semibold text-stone-400 hover:text-white transition cursor-pointer"
               title="Clear all selected vehicles"
             >
               <RotateCcw className="w-3 h-3" />
@@ -94,11 +94,11 @@ export const CompareFloatingBar: React.FC = () => {
                 </div>
                 <button
                   onClick={() => removeFromCompare(model.id)}
-                  className="w-5 h-5 rounded-full bg-stone-700 hover:bg-stone-600 text-stone-300 hover:text-white flex items-center justify-center transition ml-1 cursor-pointer"
+                  className="w-7 h-7 min-h-[28px] min-w-[28px] p-1.5 rounded-full bg-stone-700 hover:bg-stone-600 text-stone-300 hover:text-white flex items-center justify-center transition ml-1 cursor-pointer shrink-0"
                   title={`Remove ${model.name}`}
                   aria-label={`Remove ${model.name}`}
                 >
-                  <X className="w-3 h-3" />
+                  <X className="w-3.5 h-3.5" />
                 </button>
               </div>
             ))}
@@ -118,7 +118,7 @@ export const CompareFloatingBar: React.FC = () => {
           <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
             <button
               onClick={openCompare}
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2 rounded-full font-bold text-xs sm:text-sm transition bg-white hover:bg-stone-100 text-stone-900 cursor-pointer shadow-sm"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3 min-h-[44px] rounded-full font-bold text-xs sm:text-sm transition bg-white hover:bg-stone-100 text-stone-900 cursor-pointer shadow-sm"
             >
               <Scale className="w-4 h-4" />
               <span>

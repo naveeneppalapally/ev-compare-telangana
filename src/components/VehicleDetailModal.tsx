@@ -140,54 +140,54 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 overflow-y-auto bg-stone-900/60 backdrop-blur-md animate-fadeIn text-stone-900"
+      className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 overflow-y-auto bg-stone-900/60 backdrop-blur-md animate-fadeIn text-stone-900 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] sm:pt-4 sm:pb-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="detail-modal-title"
     >
       <div className="fixed inset-0" onClick={handleClose} />
 
-      <div className="relative w-full max-w-4xl bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[92vh]">
+      <div className="relative w-full max-w-4xl bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[100dvh] sm:max-h-[92vh]">
         
         {/* Header */}
-        <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-stone-50/90 border-b border-stone-200 backdrop-blur-md">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-stone-900 text-white flex items-center justify-center shadow-xs">
+        <div className="sticky top-0 z-20 flex items-center justify-between gap-2 px-4 sm:px-6 py-3 sm:py-4 bg-stone-50/90 border-b border-stone-200 backdrop-blur-md flex-wrap sm:flex-nowrap">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <div className="w-10 h-10 rounded-2xl bg-stone-900 text-white flex items-center justify-center shadow-xs shrink-0">
               <Zap className="w-5 h-5" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
+            <div className="min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-xs font-bold uppercase tracking-wider text-stone-500">{model.brand}</span>
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-stone-200 text-stone-800">
                   {model.category === 'motorcycle' ? '🏍️ Motorcycle' : '🛵 Scooter'}
                 </span>
               </div>
-              <h2 id="detail-modal-title" className="text-base sm:text-lg font-extrabold text-stone-900 leading-tight">
+              <h2 id="detail-modal-title" className="text-base sm:text-lg font-extrabold text-stone-900 leading-tight truncate">
                 {model.name}
               </h2>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap shrink-0">
             {!model.isIceBenchmark && (
               <button
                 type="button"
                 onClick={() => setIsLeadOpen(true)}
-                className="flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-milestone hover:bg-[#0077ed] text-white text-xs font-semibold transition cursor-pointer"
+                className="flex items-center gap-1.5 px-4 py-2.5 min-h-[44px] rounded-full bg-milestone hover:bg-[#0077ed] text-white text-xs font-semibold transition cursor-pointer"
               >
                 <span>Book Test Ride</span>
               </button>
             )}
             <button
               onClick={handleShare}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold border border-stone-300 transition cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-2.5 min-h-[44px] rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold border border-stone-300 transition cursor-pointer"
             >
               {isCopied ? <Check className="w-3.5 h-3.5 text-stone-900" /> : <Share2 className="w-3.5 h-3.5 text-stone-600" />}
               <span>{isCopied ? 'Shared' : 'WhatsApp'}</span>
             </button>
             <button
               onClick={handleClose}
-              className="p-2 rounded-full text-stone-400 hover:text-stone-900 hover:bg-stone-100 transition cursor-pointer"
+              className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full text-stone-400 hover:text-stone-900 hover:bg-stone-100 transition cursor-pointer shrink-0"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
@@ -196,7 +196,7 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
         </div>
 
         {/* Tab Navigation */}
-        <div className="px-6 border-b border-stone-200 bg-stone-50/50 flex gap-2 overflow-x-auto scrollbar-none text-xs">
+        <div className="px-4 sm:px-6 border-b border-stone-200 bg-stone-50/50 flex gap-2 overflow-x-auto scrollbar-none text-xs">
           {[
             { key: 'overview', label: 'Overview' },
             { key: 'benchmark', label: '⚡ EV vs ⛽ Petrol Benchmark' },
@@ -208,7 +208,7 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key as any)}
-              className={`py-3 px-3.5 font-bold border-b-2 whitespace-nowrap transition cursor-pointer ${
+              className={`py-3 px-3.5 min-h-[44px] font-bold border-b-2 whitespace-nowrap transition cursor-pointer shrink-0 ${
                 activeTab === tab.key
                   ? 'border-stone-900 text-stone-900'
                   : 'border-transparent text-stone-500 hover:text-stone-900'
@@ -276,7 +276,7 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                             aria-pressed={selectedColorIndex === idx}
                             style={{ backgroundColor: c.hex }}
                             title={c.name}
-                            className={`w-5 h-5 rounded-full border cursor-pointer transition ${
+                            className={`w-8 h-8 min-h-[44px] min-w-[44px] rounded-full border cursor-pointer transition shrink-0 flex items-center justify-center ${
                               selectedColorIndex === idx ? 'border-stone-900 ring-2 ring-milestone scale-110' : 'border-stone-300 hover:border-stone-400'
                             }`}
                           />
@@ -284,7 +284,7 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                         <button
                           type="button"
                           onClick={() => setIsColourVisualizerOpen(true)}
-                          className="ml-1 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-paper border border-quartzite text-ink text-xs font-semibold hover:bg-white hover:border-stone-300 transition cursor-pointer"
+                          className="ml-1 inline-flex items-center gap-1.5 px-3 py-2.5 min-h-[44px] rounded-full bg-paper border border-quartzite text-ink text-xs font-semibold hover:bg-white hover:border-stone-300 transition cursor-pointer"
                         >
                           <Palette className="w-3.5 h-3.5 text-stone-500" />
                           View all colours
@@ -368,7 +368,8 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
               </div>
 
               <div className="rounded-2xl border border-stone-200 overflow-hidden bg-white">
-                <table className="w-full text-left border-collapse">
+                <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0">
+                <table className="w-full text-left border-collapse min-w-[560px]">
                   <thead>
                     <tr className="bg-stone-50 border-b border-stone-200 text-[11px] font-bold text-stone-600 uppercase">
                       <th className="p-3.5">Metric</th>
@@ -409,6 +410,7 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                     </tr>
                   </tbody>
                 </table>
+                </div>
               </div>
             </div>
           )}
@@ -632,7 +634,7 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                 setActivePriceModalModel(model);
                 handleClose();
               }}
-              className="px-3.5 py-1.5 rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
+              className="px-3.5 py-2.5 min-h-[44px] rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
             >
               On-Road Price Breakdown
             </button>
@@ -642,7 +644,7 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                 setIsRangeSimulatorModalOpen(true);
                 handleClose();
               }}
-              className="px-3.5 py-1.5 rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
+              className="px-3.5 py-2.5 min-h-[44px] rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
             >
               Range Simulator
             </button>
@@ -652,7 +654,7 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                   openRoutePlanner(model.id);
                   handleClose();
                 }}
-                className="px-3.5 py-1.5 rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
+                className="px-3.5 py-2.5 min-h-[44px] rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
               >
                 ⚡ Highway Route Simulation
               </button>
@@ -664,7 +666,7 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
               if (compared) removeFromCompare(model.id);
               else addToCompare(model.id);
             }}
-            className="px-5 py-2 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition cursor-pointer shadow-xs"
+            className="px-5 py-2.5 min-h-[44px] rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition cursor-pointer shadow-xs"
           >
             {compared ? 'In Comparison Tray ✓' : '+ Add to Compare'}
           </button>

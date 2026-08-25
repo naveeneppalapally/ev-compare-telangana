@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCompare } from '../context/CompareContext';
 import { TELANGANA_RTOS } from '../data/telanganaRtoData';
 import {
@@ -28,6 +28,32 @@ export const Header: React.FC = () => {
   } = useCompare();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Body scroll lock when drawer open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = prev;
+      };
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
+  // Esc to close drawer
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [mobileMenuOpen]);
 
   return (
     <header className="sticky top-0 z-40 w-full">
@@ -184,7 +210,7 @@ export const Header: React.FC = () => {
             <button
               type="button"
               onClick={openCompare}
-              className="relative p-2 rounded-full bg-milestone text-white"
+              className="relative min-h-[44px] min-w-[44px] h-11 w-11 flex items-center justify-center rounded-full bg-milestone text-white"
               aria-label={`Compare vehicles (${selectedCompareIds.length} selected)`}
             >
               <Scale className="w-4 h-4" />
@@ -198,7 +224,7 @@ export const Header: React.FC = () => {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-full bg-paper text-ink hover:bg-quartzite/60 transition cursor-pointer"
+              className="min-h-[44px] min-w-[44px] h-11 w-11 flex items-center justify-center rounded-full bg-paper text-ink hover:bg-quartzite/60 transition cursor-pointer"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
@@ -211,8 +237,14 @@ export const Header: React.FC = () => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div id="mobile-menu"
-        className="lg:hidden border-t border-quartzite bg-white px-4 py-4 space-y-3 animate-fadeIn">
+        <>
+          <div
+            className="fixed inset-0 z-30 bg-black/20 backdrop-blur-[1px] lg:hidden"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
+          <div id="mobile-menu"
+          className="lg:hidden relative z-40 border-t border-quartzite bg-white px-4 py-4 space-y-3 animate-fadeIn max-h-[calc(100dvh-92px)] overflow-y-auto">
           <div>
             <label htmlFor="mobile-rto-select" className="block text-[10px] font-semibold uppercase tracking-wider text-stone-500 mb-1">
               Select Telangana District / RTO
@@ -224,7 +256,7 @@ export const Header: React.FC = () => {
                 setRtoCode(e.target.value);
                 setMobileMenuOpen(false);
               }}
-              className="w-full py-2 px-3 bg-paper border border-quartzite rounded-xl text-sm font-medium text-ink"
+              className="w-full min-h-[44px] h-11 py-3 px-3 bg-paper border border-quartzite rounded-xl text-sm font-medium text-ink"
             >
               {TELANGANA_RTOS.map((rto) => (
                 <option key={rto.rtoCode} value={rto.rtoCode}>
@@ -252,13 +284,14 @@ export const Header: React.FC = () => {
                   action();
                   setMobileMenuOpen(false);
                 }}
-                className="p-2.5 rounded-xl bg-paper border border-quartzite text-left text-xs font-semibold text-ink hover:bg-quartzite/40 transition cursor-pointer"
+                className="min-h-[44px] py-3 px-3 rounded-xl bg-paper border border-quartzite text-left text-xs font-semibold text-ink hover:bg-quartzite/40 transition cursor-pointer"
               >
                 {label}
               </button>
             ))}
           </div>
         </div>
+        </>
       )}
     </header>
   );

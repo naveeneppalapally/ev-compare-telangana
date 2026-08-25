@@ -64,21 +64,21 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ model }) => {
     >
       {/* 1. Header: Brand, Badges & Compare Toggle */}
       <div className="p-4 pb-0 flex items-start justify-between gap-2">
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-ink text-white">
+        <div className="flex flex-wrap items-center gap-1.5 min-w-0 flex-1">
+          <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-ink text-white shrink-0 max-w-[110px] truncate">
             {model.brand}
           </span>
           {model.badges.slice(0, 1).map((badge, idx) => (
             <span
               key={idx}
-              className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-medium bg-white text-stone-700 border border-quartzite shadow-sm"
+              className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-medium bg-white text-stone-700 border border-quartzite shadow-sm truncate max-w-[130px]"
               title={explainFeature(badge) ?? badge}
             >
-              {badge}
+              <span className="truncate">{badge}</span>
             </span>
           ))}
           {model.specs.isRemovableBattery && (
-            <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-semibold bg-milestone/10 text-milestone border border-milestone/20">
+            <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-semibold bg-milestone/10 text-milestone border border-milestone/20 shrink-0 truncate max-w-[110px]">
               Removable
             </span>
           )}
@@ -88,9 +88,9 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ model }) => {
         <button
           type="button"
           onClick={() => toggleCompare(model.id)}
-          className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold transition shrink-0 cursor-pointer ${
+          className={`flex items-center gap-1 min-h-[36px] px-3 py-1.5 rounded-full text-xs font-bold transition shrink-0 cursor-pointer ${
             compared
-              ? 'bg-stone-900 text-white'
+              ? 'bg-stone-900 text-white hover:bg-stone-800'
               : 'bg-stone-100 text-stone-700 hover:bg-stone-200 border border-stone-300'
           }`}
           title={compared ? 'Remove from comparison' : 'Add to comparison'}
@@ -172,7 +172,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ model }) => {
             <span className="font-semibold text-stone-800">{model.colorOptions[selectedColorIdx]?.name}</span>
             <span className="text-stone-400"> · {model.colorOptions.length} colours</span>
           </span>
-          <div className="flex items-center gap-1 flex-wrap justify-end shrink-0">
+          <div className="flex items-center gap-2 flex-wrap justify-end shrink-0">
             {model.colorOptions.map((color, idx) => (
               <button
                 key={idx}
@@ -182,8 +182,8 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ model }) => {
                 aria-label={`Colour ${idx + 1}: ${color.name}`}
                 aria-pressed={selectedColorIdx === idx}
                 title={color.name}
-                className={`w-3.5 h-3.5 rounded-full border cursor-pointer transition ${
-                  selectedColorIdx === idx ? 'border-ink ring-2 ring-milestone scale-110' : 'border-stone-300'
+                className={`w-7 h-7 min-h-[28px] min-w-[28px] rounded-full border cursor-pointer transition shrink-0 ${
+                  selectedColorIdx === idx ? 'border-ink ring-2 ring-milestone scale-110' : 'border-stone-300 hover:border-stone-400'
                 }`}
               />
             ))}
@@ -375,17 +375,17 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ model }) => {
         <div className="grid grid-cols-2 gap-2">
           <button
             onClick={() => openDetail(model.id)}
-            className="flex items-center justify-center gap-1 py-2 px-2 rounded-xl bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
+            className="flex items-center justify-center gap-1 min-h-[44px] py-3 px-3 rounded-xl bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
           >
-            <Info className="w-3.5 h-3.5 text-stone-600" />
+            <Info className="w-3.5 h-3.5 text-stone-600 shrink-0" />
             <span>Full Specs</span>
           </button>
 
           <button
             onClick={() => openPriceModal(model.id)}
-            className="flex items-center justify-center gap-1 py-2 px-2 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition cursor-pointer"
+            className="flex items-center justify-center gap-1 min-h-[44px] py-3 px-3 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition cursor-pointer"
           >
-            <Zap className="w-3.5 h-3.5 text-white" />
+            <Zap className="w-3.5 h-3.5 text-white shrink-0" />
             <span>Price Details</span>
           </button>
         </div>
@@ -393,11 +393,11 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({ model }) => {
         {!model.isIceBenchmark && (
           <button
             onClick={() => openRoutePlanner(model.id)}
-            className="w-full flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-xl bg-stone-100 hover:bg-stone-200/80 text-stone-800 border border-stone-200 text-xs font-semibold transition cursor-pointer"
+            className="w-full flex items-center justify-center gap-1.5 min-h-[44px] py-3 px-3 rounded-xl bg-stone-100 hover:bg-stone-200/80 text-stone-800 border border-stone-200 text-xs font-semibold transition cursor-pointer"
             title="Plan highway route across Telangana with this vehicle"
           >
-            <Navigation className="w-3.5 h-3.5 text-stone-700" />
-            <span>Plan Highway Route ({model.specs.realWorldHighwayRangeKm} km Hwy)</span>
+            <Navigation className="w-3.5 h-3.5 text-stone-700 shrink-0" />
+            <span className="truncate">Plan Highway Route ({model.specs.realWorldHighwayRangeKm} km Hwy)</span>
           </button>
         )}
       </div>

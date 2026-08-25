@@ -66,7 +66,7 @@ export const DealerStockPanel: React.FC<DealerStockPanelProps> = ({ model, rtoCo
           <button
             type="button"
             onClick={() => handleBook({ id: 'generic', brand: model.brand, name: `Nearest ${model.brand} dealer`, rtoCode: normalizedRto, district: '', address: '', phone: '', stock: [], slots: ['Tomorrow 10:00 AM'] } as Dealer, 'Tomorrow 10:00 AM')}
-            className="mt-3 px-4 py-1.5 rounded-full bg-milestone hover:bg-[#0077ed] text-white text-xs font-semibold transition cursor-pointer"
+            className="mt-3 px-4 py-2.5 min-h-[44px] rounded-full bg-milestone hover:bg-[#0077ed] text-white text-xs font-semibold transition cursor-pointer"
           >
             Request test ride in {normalizedRto}
           </button>
@@ -152,7 +152,7 @@ export const DealerStockPanel: React.FC<DealerStockPanelProps> = ({ model, rtoCo
                     {dealer.slots.slice(0, 3).map((slot) => (
                       <span
                         key={slot}
-                        className="inline-flex items-center px-3 py-1 rounded-full bg-paper border border-quartzite text-[11px] font-medium text-ink"
+                        className="inline-flex items-center px-3 py-1.5 min-h-[36px] rounded-full bg-paper border border-quartzite text-[11px] font-medium text-ink"
                       >
                         {slot}
                       </span>
@@ -164,7 +164,7 @@ export const DealerStockPanel: React.FC<DealerStockPanelProps> = ({ model, rtoCo
                         key={slot}
                         type="button"
                         onClick={() => handleBook(dealer, slot)}
-                        className="px-3.5 py-1.5 rounded-full bg-milestone hover:bg-[#0077ed] text-white text-xs font-semibold transition cursor-pointer shadow-sm"
+                        className="px-3.5 py-2.5 min-h-[44px] rounded-full bg-milestone hover:bg-[#0077ed] text-white text-xs font-semibold transition cursor-pointer shadow-sm"
                       >
                         Book {slot}
                       </button>

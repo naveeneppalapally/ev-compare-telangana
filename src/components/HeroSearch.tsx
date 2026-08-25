@@ -147,7 +147,7 @@ export const HeroSearch: React.FC = () => {
                   type="button"
                   onClick={handleClear}
                   aria-label="Clear search"
-                  className="text-stone-400 hover:text-ink p-1 mr-1 cursor-pointer rounded-full hover:bg-stone-100"
+                  className="text-stone-400 hover:text-ink p-2 mr-1 cursor-pointer rounded-full hover:bg-stone-100 min-h-[36px] min-w-[36px] flex items-center justify-center shrink-0"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -161,6 +161,15 @@ export const HeroSearch: React.FC = () => {
                 <span>Smart Match</span>
               </button>
             </div>
+            {/* Mobile Smart Match — visible only on <640px, full-width below search */}
+            <button
+              type="button"
+              onClick={openWizard}
+              className="sm:hidden w-full mt-3 flex items-center justify-center gap-1.5 px-5 py-3 rounded-full bg-ink hover:bg-stone-900 text-white font-semibold text-sm shadow-md hover:shadow-lg transition cursor-pointer min-h-[44px]"
+            >
+              <Sparkles className="w-4 h-4 text-white" />
+              <span>Smart Match — Find my EV</span>
+            </button>
 
             {/* Quick Feature Stats */}
             <dl className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-3 max-w-xl text-xs">
@@ -253,54 +262,56 @@ export const HeroSearch: React.FC = () => {
         </div>
 
         {/* View Mode Switcher: 3 Top Layouts */}
-        <div className="mb-6 p-2 rounded-2xl bg-stone-100 border border-stone-200 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-stone-600 uppercase tracking-wider ml-2 hidden sm:inline">
-              Catalog View:
-            </span>
-            <div className="flex items-center gap-1 p-1 rounded-xl bg-white border border-stone-200 shadow-2xs">
-              <button
-                onClick={() => setCatalogViewMode('grid')}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
-                  catalogViewMode === 'grid'
-                    ? 'bg-stone-900 text-white shadow-xs'
-                    : 'text-stone-600 hover:text-stone-900'
-                }`}
-              >
-                <LayoutGrid className="w-3.5 h-3.5" />
-                <span>All Vehicles Grid</span>
-              </button>
+        <div className="-mx-4 px-4 sm:mx-0 sm:px-0 overflow-x-auto scrollbar-none no-scrollbar">
+          <div className="mb-6 p-2 rounded-2xl bg-stone-100 border border-stone-200 flex flex-col sm:flex-row items-center justify-between gap-3 min-w-0">
+            <div className="flex items-center gap-2 min-w-0 w-full sm:w-auto">
+              <span className="text-xs font-bold text-stone-600 uppercase tracking-wider ml-2 hidden sm:inline shrink-0">
+                Catalog View:
+              </span>
+              <div className="flex items-center gap-1 p-1 rounded-xl bg-white border border-stone-200 shadow-2xs overflow-x-auto scrollbar-none no-scrollbar max-w-full shrink-0">
+                <button
+                  onClick={() => setCatalogViewMode('grid')}
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold transition cursor-pointer shrink-0 whitespace-nowrap min-h-[36px] ${
+                    catalogViewMode === 'grid'
+                      ? 'bg-stone-900 text-white shadow-xs'
+                      : 'text-stone-600 hover:text-stone-900'
+                  }`}
+                >
+                  <LayoutGrid className="w-3.5 h-3.5" />
+                  <span>All Vehicles Grid</span>
+                </button>
 
-              <button
-                onClick={() => setCatalogViewMode('brands')}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
-                  catalogViewMode === 'brands'
-                    ? 'bg-stone-900 text-white shadow-xs'
-                    : 'text-stone-600 hover:text-stone-900'
-                }`}
-              >
-                <Building2 className="w-3.5 h-3.5" />
-                <span>By Brand Showcase</span>
-              </button>
+                <button
+                  onClick={() => setCatalogViewMode('brands')}
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold transition cursor-pointer shrink-0 whitespace-nowrap min-h-[36px] ${
+                    catalogViewMode === 'brands'
+                      ? 'bg-stone-900 text-white shadow-xs'
+                      : 'text-stone-600 hover:text-stone-900'
+                  }`}
+                >
+                  <Building2 className="w-3.5 h-3.5" />
+                  <span>By Brand Showcase</span>
+                </button>
 
-              <button
-                onClick={() => setCatalogViewMode('budget')}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
-                  catalogViewMode === 'budget'
-                    ? 'bg-stone-900 text-white shadow-xs'
-                    : 'text-stone-600 hover:text-stone-900'
-                }`}
-              >
-                <IndianRupee className="w-3.5 h-3.5" />
-                <span>By Budget Tier</span>
-              </button>
+                <button
+                  onClick={() => setCatalogViewMode('budget')}
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold transition cursor-pointer shrink-0 whitespace-nowrap min-h-[36px] ${
+                    catalogViewMode === 'budget'
+                      ? 'bg-stone-900 text-white shadow-xs'
+                      : 'text-stone-600 hover:text-stone-900'
+                  }`}
+                >
+                  <IndianRupee className="w-3.5 h-3.5" />
+                  <span>By Budget Tier</span>
+                </button>
+              </div>
             </div>
-          </div>
 
-          <div className="text-xs text-stone-500 font-medium mr-2">
-            {catalogViewMode === 'brands' && 'Grouped by manufacturer with 1-click brand lineup compare'}
-            {catalogViewMode === 'budget' && 'Grouped by realistic price bands to avoid mismatched comparisons'}
-            {catalogViewMode === 'grid' && 'Interactive catalog with detailed spec filtering'}
+            <div className="text-xs text-stone-500 font-medium mr-2 shrink-0">
+              {catalogViewMode === 'brands' && 'Grouped by manufacturer with 1-click brand lineup compare'}
+              {catalogViewMode === 'budget' && 'Grouped by realistic price bands to avoid mismatched comparisons'}
+              {catalogViewMode === 'grid' && 'Interactive catalog with detailed spec filtering'}
+            </div>
           </div>
         </div>
 
@@ -321,14 +332,14 @@ export const HeroSearch: React.FC = () => {
             )}
           </div>
 
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none no-scrollbar text-xs">
             {popularBrands.map(({ brand, count }) => {
               const isSelected = searchQuery.toLowerCase() === brand.toLowerCase();
               return (
                 <button
                   key={brand}
                   onClick={() => handleBrandClick(brand)}
-                  className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition cursor-pointer border ${
+                  className={`px-3.5 py-2 min-h-[36px] inline-flex items-center rounded-full text-xs font-semibold whitespace-nowrap transition cursor-pointer border shrink-0 ${
                     isSelected
                       ? 'bg-stone-900 text-white border-stone-900 shadow-xs'
                       : 'bg-stone-100 text-stone-700 border-stone-200 hover:bg-stone-200 hover:text-stone-900'
@@ -350,10 +361,10 @@ export const HeroSearch: React.FC = () => {
         <div className="bg-stone-50 border border-stone-200 rounded-2xl p-4 space-y-4 shadow-xs">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             {/* Category Tabs */}
-            <div className="flex items-center gap-1 p-1 rounded-full bg-stone-200/70 border border-stone-200 w-full sm:w-auto justify-center">
+            <div className="flex items-center gap-1 p-1 rounded-full bg-stone-200/70 border border-stone-200 w-full sm:w-auto justify-start sm:justify-center overflow-x-auto scrollbar-none no-scrollbar flex-nowrap">
               <button
                 onClick={() => setSelectedCategory('all')}
-                className={`px-4 py-1.5 rounded-full text-xs font-bold transition cursor-pointer ${
+                className={`px-4 py-2 rounded-full text-xs font-bold transition cursor-pointer shrink-0 whitespace-nowrap min-h-[36px] ${
                   selectedCategory === 'all'
                     ? 'bg-white text-stone-900 shadow-xs'
                     : 'text-stone-600 hover:text-stone-900'
@@ -363,7 +374,7 @@ export const HeroSearch: React.FC = () => {
               </button>
               <button
                 onClick={() => setSelectedCategory('motorcycle')}
-                className={`px-4 py-1.5 rounded-full text-xs font-bold transition cursor-pointer ${
+                className={`px-4 py-2 rounded-full text-xs font-bold transition cursor-pointer shrink-0 whitespace-nowrap min-h-[36px] ${
                   selectedCategory === 'motorcycle'
                     ? 'bg-white text-stone-900 shadow-xs'
                     : 'text-stone-600 hover:text-stone-900'
@@ -373,7 +384,7 @@ export const HeroSearch: React.FC = () => {
               </button>
               <button
                 onClick={() => setSelectedCategory('scooter')}
-                className={`px-4 py-1.5 rounded-full text-xs font-bold transition cursor-pointer ${
+                className={`px-4 py-2 rounded-full text-xs font-bold transition cursor-pointer shrink-0 whitespace-nowrap min-h-[36px] ${
                   selectedCategory === 'scooter'
                     ? 'bg-white text-stone-900 shadow-xs'
                     : 'text-stone-600 hover:text-stone-900'
@@ -389,16 +400,18 @@ export const HeroSearch: React.FC = () => {
                 <span className="text-stone-500 font-medium">Max On-Road Budget:</span>
                 <span className="font-mono font-bold text-stone-900">{formatINR(priceRangeMax)}</span>
               </div>
-              <input
-                type="range"
-                min="80000"
-                max={Math.ceil(Math.max(...models.filter(m => !m.isIceBenchmark).map(m => m.pricing.exShowroom)) * 1.15 / 10000) * 10000}
-                step="10000"
-                value={priceRangeMax}
-                onChange={(e) => setPriceRangeMax(Number(e.target.value))}
-                aria-label="Maximum on-road budget"
-                className="w-full h-1.5 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-milestone"
-              />
+              <div className="py-3 -my-1 flex items-center min-h-[44px]">
+                <input
+                  type="range"
+                  min="80000"
+                  max={Math.ceil(Math.max(...models.filter(m => !m.isIceBenchmark).map(m => m.pricing.exShowroom)) * 1.15 / 10000) * 10000}
+                  step="10000"
+                  value={priceRangeMax}
+                  onChange={(e) => setPriceRangeMax(Number(e.target.value))}
+                  aria-label="Maximum on-road budget"
+                  className="w-full h-2 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-milestone"
+                />
+              </div>
             </div>
           </div>
 
@@ -411,7 +424,7 @@ export const HeroSearch: React.FC = () => {
             {/* 1. Removable Battery */}
             <button
               onClick={() => setRequireRemovableBattery(!requireRemovableBattery)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3.5 py-2.5 rounded-full text-xs font-semibold border transition cursor-pointer min-h-[36px] ${
                 requireRemovableBattery
                   ? 'bg-stone-900 border-stone-900 text-white'
                   : 'bg-white border-stone-300 text-stone-700 hover:bg-stone-100'
@@ -425,7 +438,7 @@ export const HeroSearch: React.FC = () => {
             {/* 2. Fast Charging */}
             <button
               onClick={() => setRequireFastCharging(!requireFastCharging)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3.5 py-2.5 rounded-full text-xs font-semibold border transition cursor-pointer min-h-[36px] ${
                 requireFastCharging
                   ? 'bg-stone-900 border-stone-900 text-white'
                   : 'bg-white border-stone-300 text-stone-700 hover:bg-stone-100'
@@ -439,7 +452,7 @@ export const HeroSearch: React.FC = () => {
             {/* 3. Boot Space >30L */}
             <button
               onClick={() => setMinBootSpaceLiters(minBootSpaceLiters > 0 ? 0 : 30)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3.5 py-2.5 rounded-full text-xs font-semibold border transition cursor-pointer min-h-[36px] ${
                 minBootSpaceLiters > 0
                   ? 'bg-stone-900 border-stone-900 text-white'
                   : 'bg-white border-stone-300 text-stone-700 hover:bg-stone-100'
@@ -453,7 +466,7 @@ export const HeroSearch: React.FC = () => {
             {/* 4. Budget <1L */}
             <button
               onClick={() => setBudgetUnder1L(!budgetUnder1L)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3.5 py-2.5 rounded-full text-xs font-semibold border transition cursor-pointer min-h-[36px] ${
                 budgetUnder1L
                   ? 'bg-stone-900 border-stone-900 text-white'
                   : 'bg-white border-stone-300 text-stone-700 hover:bg-stone-100'

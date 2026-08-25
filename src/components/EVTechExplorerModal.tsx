@@ -81,36 +81,36 @@ export const EVTechExplorerModal: React.FC<EVTechExplorerModalProps> = ({
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 overflow-y-auto bg-stone-900/60 backdrop-blur-md animate-fadeIn text-stone-900"
+      className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 overflow-y-auto bg-stone-900/60 backdrop-blur-md animate-fadeIn text-stone-900 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] sm:pt-4 sm:pb-4"
       role="dialog"
       aria-modal="true"
     >
       <div className="fixed inset-0" onClick={onClose} />
 
-      <div className="relative w-full max-w-5xl bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[92vh]">
+      <div className="relative w-full max-w-5xl bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[100dvh] sm:max-h-[92vh]">
         {/* Modal Header */}
-        <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-stone-50/90 border-b border-stone-200 backdrop-blur-md">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-stone-900 text-white flex items-center justify-center shadow-xs">
+        <div className="sticky top-0 z-20 flex items-center justify-between gap-2 px-4 sm:px-6 py-3 sm:py-4 bg-stone-50/90 border-b border-stone-200 backdrop-blur-md flex-wrap sm:flex-nowrap">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <div className="w-10 h-10 rounded-2xl bg-stone-900 text-white flex items-center justify-center shadow-xs shrink-0">
               <Sparkles className="w-5 h-5" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
+            <div className="min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
                 <h2 className="text-base sm:text-lg font-bold text-stone-900 leading-tight">
                   Electric Two-Wheeler Technology Guide
                 </h2>
-                <span className="rounded-full bg-stone-200 px-2 py-0.5 text-[10px] font-bold text-stone-800">
+                <span className="rounded-full bg-stone-200 px-2 py-0.5 text-[10px] font-bold text-stone-800 shrink-0">
                   Engineering Deep-Dive
                 </span>
               </div>
-              <p className="text-xs text-stone-500 font-medium">
+              <p className="text-xs text-stone-500 font-medium truncate">
                 Understand On-Board Chargers, LFP vs NMC chemistries, liquid cooling, and drivetrain architectures
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-full text-stone-400 hover:text-stone-900 hover:bg-stone-100 transition cursor-pointer"
+            className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full text-stone-400 hover:text-stone-900 hover:bg-stone-100 transition cursor-pointer shrink-0"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -129,7 +129,7 @@ export const EVTechExplorerModal: React.FC<EVTechExplorerModalProps> = ({
                   const firstTopic = EV_TECH_TOPICS.find(t => t.pillar === p.id);
                   if (firstTopic) setSelectedTopicId(firstTopic.id);
                 }}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition cursor-pointer ${
+                className={`flex items-center gap-2 px-4 py-2.5 min-h-[44px] rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition cursor-pointer shrink-0 ${
                   isActive
                     ? 'bg-stone-900 text-white shadow-xs'
                     : 'text-stone-700 hover:text-stone-900 hover:bg-white/80'
@@ -143,9 +143,9 @@ export const EVTechExplorerModal: React.FC<EVTechExplorerModalProps> = ({
         </div>
 
         {/* Main Body with Sidebar + Content */}
-        <div className="grid grid-cols-1 md:grid-cols-12 flex-1 overflow-y-auto">
+        <div className="grid grid-cols-1 md:grid-cols-12 flex-1 min-h-0 overflow-y-auto md:overflow-hidden">
           {/* Subtopics List Sidebar */}
-          <div className="md:col-span-4 border-r border-stone-200 bg-stone-50/80 p-3 space-y-1.5 overflow-y-auto">
+          <div className="md:col-span-4 border-r border-stone-200 bg-stone-50/80 p-3 space-y-1.5 md:overflow-y-auto">
             <h3 className="text-[10px] font-bold uppercase tracking-wider text-stone-400 px-2 pt-1">
               Modules in this Pillar
             </h3>
@@ -155,7 +155,7 @@ export const EVTechExplorerModal: React.FC<EVTechExplorerModalProps> = ({
                 <button
                   key={t.id}
                   onClick={() => setSelectedTopicId(t.id)}
-                  className={`w-full text-left p-3 rounded-2xl transition flex flex-col gap-1 border cursor-pointer ${
+                  className={`w-full text-left p-3 rounded-2xl transition flex flex-col gap-1 border cursor-pointer min-h-[44px] ${
                     isSelected
                       ? 'bg-white border-stone-300 shadow-xs'
                       : 'bg-transparent border-transparent hover:bg-stone-100 text-stone-700'
@@ -179,7 +179,7 @@ export const EVTechExplorerModal: React.FC<EVTechExplorerModalProps> = ({
           </div>
 
           {/* Detailed Content View */}
-          <div className="md:col-span-8 p-5 sm:p-6 space-y-5 overflow-y-auto bg-white">
+          <div className="md:col-span-8 p-5 sm:p-6 space-y-5 md:overflow-y-auto bg-white">
             {/* Title Block */}
             <div className="space-y-1.5">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-stone-100 text-stone-800 border border-stone-200 text-xs font-semibold">

@@ -25,6 +25,7 @@ const TelanganaTaxInspectorModal = React.lazy(() => import('./components/Telanga
 
 const AppContent: React.FC = () => {
   const {
+    selectedCompareIds,
     catalogViewMode,
     isChargingModalOpen,
     closeChargingModal,
@@ -43,12 +44,12 @@ const AppContent: React.FC = () => {
   } = useCompare();
 
   return (
-    <div className="min-h-screen bg-white text-ink flex flex-col font-sans antialiased selection:bg-ink selection:text-white">
+    <div className="min-h-screen bg-white text-ink flex flex-col font-sans antialiased selection:bg-ink selection:text-white overflow-x-hidden overflow-x-clip">
       {/* Sticky Header & Policy Ticker */}
       <Header />
 
       {/* Main Content Area */}
-      <main className="flex-1">
+      <main className={`flex-1 ${selectedCompareIds.length > 0 ? 'pb-[120px]' : ''}`}>
         {/* Hero Banner, Search, View Switcher & Quick Filters */}
         <HeroSearch />
 

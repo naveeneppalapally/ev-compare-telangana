@@ -118,49 +118,49 @@ export const CompareMatrix: React.FC = () => {
         </div>
 
         {/* Quick Intra-Brand & Segment Presets Bar */}
-        <div className="px-6 py-2.5 bg-stone-100/70 border-b border-stone-200 flex items-center gap-2 overflow-x-auto text-xs scrollbar-none">
+        <div className="px-6 py-2.5 bg-stone-100/70 border-b border-stone-200 flex items-center gap-2 overflow-x-auto text-xs scrollbar-none snap-x snap-mandatory scroll-smooth overscroll-x-contain [-webkit-overflow-scrolling:touch] no-scrollbar">
           <span className="text-stone-500 font-bold uppercase text-[10px] shrink-0">
             Intra-Brand &amp; Segment Presets:
           </span>
 
           <button
             onClick={() => applyPreset(['ather-rizta-z-37', 'ather-450x-gen3-37', 'ather-apex-450'])}
-            className="px-3 py-1 rounded-lg bg-white border border-stone-200 hover:bg-stone-200/60 font-semibold text-stone-800 text-[11px] whitespace-nowrap transition cursor-pointer"
+            className="px-3.5 py-2 min-h-[36px] snap-start rounded-lg bg-white border border-stone-200 hover:bg-stone-200/60 font-semibold text-stone-800 text-[11px] whitespace-nowrap transition cursor-pointer"
           >
             ⚡ Ather Family (Rizta vs 450X vs Apex)
           </button>
 
           <button
             onClick={() => applyPreset(['ola-s1-x-plus-30', 'ola-s1-air', 'ola-s1-pro-gen2', 'ola-roadster-pro-16'])}
-            className="px-3 py-1 rounded-lg bg-white border border-stone-200 hover:bg-stone-200/60 font-semibold text-stone-800 text-[11px] whitespace-nowrap transition cursor-pointer"
+            className="px-3.5 py-2 min-h-[36px] snap-start rounded-lg bg-white border border-stone-200 hover:bg-stone-200/60 font-semibold text-stone-800 text-[11px] whitespace-nowrap transition cursor-pointer"
           >
             ⚡ Ola Lineup (S1X vs Air vs Pro vs Roadster)
           </button>
 
           <button
             onClick={() => applyPreset(['tvs-iqube-s-34', 'tvs-iqube-st-51', 'bajaj-chetak-premium-32', 'ather-rizta-z-37'])}
-            className="px-3 py-1 rounded-lg bg-white border border-stone-200 hover:bg-stone-200/60 font-semibold text-stone-800 text-[11px] whitespace-nowrap transition cursor-pointer"
+            className="px-3.5 py-2 min-h-[36px] snap-start rounded-lg bg-white border border-stone-200 hover:bg-stone-200/60 font-semibold text-stone-800 text-[11px] whitespace-nowrap transition cursor-pointer"
           >
             🛵 Family Scooters (iQube vs Chetak vs Rizta)
           </button>
 
           <button
             onClick={() => applyPreset(['revolt-rv1-plus-32', 'revolt-rv400-32', 'pure-ev-ecodryft-350', 'hop-oxo-37'])}
-            className="px-3 py-1 rounded-lg bg-white border border-stone-200 hover:bg-stone-200/60 font-semibold text-stone-800 text-[11px] whitespace-nowrap transition cursor-pointer"
+            className="px-3.5 py-2 min-h-[36px] snap-start rounded-lg bg-white border border-stone-200 hover:bg-stone-200/60 font-semibold text-stone-800 text-[11px] whitespace-nowrap transition cursor-pointer"
           >
             🏍️ Commuter Motorcycles (Revolt vs Pure vs Hop)
           </button>
 
           <button
             onClick={() => applyPreset(['ultraviolette-f77-mach2', 'matter-aera-5000-plus', 'raptee-hv-t30', 'ola-roadster-pro-16'])}
-            className="px-3 py-1 rounded-lg bg-white border border-stone-200 hover:bg-stone-200/60 font-semibold text-stone-800 text-[11px] whitespace-nowrap transition cursor-pointer"
+            className="px-3.5 py-2 min-h-[36px] snap-start rounded-lg bg-white border border-stone-200 hover:bg-stone-200/60 font-semibold text-stone-800 text-[11px] whitespace-nowrap transition cursor-pointer"
           >
             🚀 Hyper-Performance Bikes (&gt;120 km/h)
           </button>
         </div>
 
         {/* Scrollable Table Area */}
-        <div className="flex-1 overflow-auto">
+        <div className="flex-1 overflow-auto overflow-x-auto overscroll-x-contain -mx-4 sm:mx-0 px-4 sm:px-0">
           {comparedVehicles.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full p-8 text-center">
               <Scale className="w-12 h-12 text-stone-300 mb-3" />
@@ -176,10 +176,10 @@ export const CompareMatrix: React.FC = () => {
               </button>
             </div>
           ) : (
-            <table className="w-full border-collapse text-left">
+            <table className="w-full min-w-[680px] sm:min-w-0 border-collapse text-left">
               <thead className="sticky top-0 z-10 bg-white shadow-xs border-b border-stone-200">
                 <tr className="divide-x divide-stone-200">
-                  <th className="p-4 bg-stone-50 w-[240px] text-xs font-bold text-stone-700 uppercase">
+                  <th className="p-4 bg-stone-50 w-[140px] min-w-[140px] sm:w-[240px] sm:min-w-[240px] text-xs font-bold text-stone-700 uppercase sticky left-0 z-20 shadow-[2px_0_8px_rgba(0,0,0,0.08)] sm:shadow-none">
                     Vehicle Model
                   </th>
                   {comparedVehicles.map((model) => (
@@ -234,7 +234,7 @@ export const CompareMatrix: React.FC = () => {
                 </tr>
 
                 <tr className="divide-x divide-stone-200 hover:bg-stone-50/50">
-                  <td className="p-3.5 font-semibold text-stone-600">Ex-Showroom Price</td>
+                  <td className="p-3.5 font-semibold text-stone-600 sticky left-0 z-10 bg-white border-r border-stone-200 shadow-[2px_0_6px_rgba(0,0,0,0.06)] sm:shadow-none">Ex-Showroom Price</td>
                   {comparedVehicles.map(v => (
                     <td key={v.id} className="p-3.5 font-mono font-bold text-stone-900">
                       {formatINR(v.pricing.exShowroom)}
@@ -243,7 +243,7 @@ export const CompareMatrix: React.FC = () => {
                 </tr>
 
                 <tr className="divide-x divide-stone-200 hover:bg-stone-50/50">
-                  <td className="p-3.5 font-semibold text-stone-600">Telangana Life Tax (Road Tax)</td>
+                  <td className="p-3.5 font-semibold text-stone-600 sticky left-0 z-10 bg-white border-r border-stone-200 shadow-[2px_0_6px_rgba(0,0,0,0.06)] sm:shadow-none">Telangana Life Tax (Road Tax)</td>
                   {comparedVehicles.map(v => (
                     <td key={v.id} className="p-3.5 font-mono font-bold text-stone-900">
                       <span className="inline-flex items-center gap-1 bg-stone-100 text-stone-900 px-2 py-0.5 rounded font-mono font-bold">
@@ -254,7 +254,7 @@ export const CompareMatrix: React.FC = () => {
                 </tr>
 
                 <tr className="divide-x divide-stone-200 hover:bg-stone-50/50">
-                  <td className="p-3.5 font-semibold text-stone-600">Total Upfront Tax Savings</td>
+                  <td className="p-3.5 font-semibold text-stone-600 sticky left-0 z-10 bg-white border-r border-stone-200 shadow-[2px_0_6px_rgba(0,0,0,0.06)] sm:shadow-none">Total Upfront Tax Savings</td>
                   {comparedVehicles.map(v => {
                     const priceRes = calculateTelanganaOnRoadPrice(v, selectedRtoCode);
                     return (
@@ -273,7 +273,7 @@ export const CompareMatrix: React.FC = () => {
                 </tr>
 
                 <tr className="divide-x divide-stone-200 hover:bg-stone-50/50">
-                  <td className="p-3.5 font-semibold text-stone-600">Battery Pack</td>
+                  <td className="p-3.5 font-semibold text-stone-600 sticky left-0 z-10 bg-white border-r border-stone-200 shadow-[2px_0_6px_rgba(0,0,0,0.06)] sm:shadow-none">Battery Pack</td>
                   {comparedVehicles.map(v => (
                     <td key={v.id} className="p-3.5 font-bold text-stone-900">
                       {v.isIceBenchmark ? 'N/A' : `${v.specs.batteryCapacityKwh} kWh (${v.specs.batteryChemistry})`}
@@ -282,7 +282,7 @@ export const CompareMatrix: React.FC = () => {
                 </tr>
 
                 <tr className="divide-x divide-stone-200 hover:bg-stone-50/50">
-                  <td className="p-3.5 font-semibold text-stone-600">Removable Battery?</td>
+                  <td className="p-3.5 font-semibold text-stone-600 sticky left-0 z-10 bg-white border-r border-stone-200 shadow-[2px_0_6px_rgba(0,0,0,0.06)] sm:shadow-none">Removable Battery?</td>
                   {comparedVehicles.map(v => (
                     <td key={v.id} className="p-3.5 font-bold text-stone-900">
                       {v.specs.isRemovableBattery ? '✅ Yes (Removable)' : '❌ Fixed Pack'}
@@ -291,7 +291,7 @@ export const CompareMatrix: React.FC = () => {
                 </tr>
 
                 <tr className="divide-x divide-stone-200 hover:bg-stone-50/50">
-                  <td className="p-3.5 font-semibold text-stone-600">Real City Range (Hyderabad)</td>
+                  <td className="p-3.5 font-semibold text-stone-600 sticky left-0 z-10 bg-white border-r border-stone-200 shadow-[2px_0_6px_rgba(0,0,0,0.06)] sm:shadow-none">Real City Range (Hyderabad)</td>
                   {comparedVehicles.map(v => (
                     <td key={v.id} className="p-3.5 font-mono font-black text-stone-900 text-sm">
                       {v.specs.realWorldCityRangeKm} km
@@ -300,7 +300,7 @@ export const CompareMatrix: React.FC = () => {
                 </tr>
 
                 <tr className="divide-x divide-stone-200 hover:bg-stone-50/50">
-                  <td className="p-3.5 font-semibold text-stone-600">ARAI IDC Certified Range</td>
+                  <td className="p-3.5 font-semibold text-stone-600 sticky left-0 z-10 bg-white border-r border-stone-200 shadow-[2px_0_6px_rgba(0,0,0,0.06)] sm:shadow-none">ARAI IDC Certified Range</td>
                   {comparedVehicles.map(v => (
                     <td key={v.id} className="p-3.5 font-mono text-stone-600">
                       {v.specs.araiRangeKm} km
@@ -309,7 +309,7 @@ export const CompareMatrix: React.FC = () => {
                 </tr>
 
                 <tr className="divide-x divide-stone-200 hover:bg-stone-50/50">
-                  <td className="p-3.5 font-semibold text-stone-600">Home 0-80% Charging</td>
+                  <td className="p-3.5 font-semibold text-stone-600 sticky left-0 z-10 bg-white border-r border-stone-200 shadow-[2px_0_6px_rgba(0,0,0,0.06)] sm:shadow-none">Home 0-80% Charging</td>
                   {comparedVehicles.map(v => (
                     <td key={v.id} className="p-3.5 text-stone-800">
                       {v.specs.chargingTime0To80}
@@ -325,7 +325,7 @@ export const CompareMatrix: React.FC = () => {
                 </tr>
 
                 <tr className="divide-x divide-stone-200 hover:bg-stone-50/50">
-                  <td className="p-3.5 font-semibold text-stone-600">Top Speed</td>
+                  <td className="p-3.5 font-semibold text-stone-600 sticky left-0 z-10 bg-white border-r border-stone-200 shadow-[2px_0_6px_rgba(0,0,0,0.06)] sm:shadow-none">Top Speed</td>
                   {comparedVehicles.map(v => (
                     <td key={v.id} className="p-3.5 font-mono font-bold text-stone-900">
                       {v.specs.topSpeedKmh} km/h
@@ -334,7 +334,7 @@ export const CompareMatrix: React.FC = () => {
                 </tr>
 
                 <tr className="divide-x divide-stone-200 hover:bg-stone-50/50">
-                  <td className="p-3.5 font-semibold text-stone-600">0 to 40 km/h Acceleration</td>
+                  <td className="p-3.5 font-semibold text-stone-600 sticky left-0 z-10 bg-white border-r border-stone-200 shadow-[2px_0_6px_rgba(0,0,0,0.06)] sm:shadow-none">0 to 40 km/h Acceleration</td>
                   {comparedVehicles.map(v => (
                     <td key={v.id} className="p-3.5 font-mono text-stone-800">
                       {v.specs.accel0To40Kmh}s
@@ -343,7 +343,7 @@ export const CompareMatrix: React.FC = () => {
                 </tr>
 
                 <tr className="divide-x divide-stone-200 hover:bg-stone-50/50">
-                  <td className="p-3.5 font-semibold text-stone-600">Peak Motor Power</td>
+                  <td className="p-3.5 font-semibold text-stone-600 sticky left-0 z-10 bg-white border-r border-stone-200 shadow-[2px_0_6px_rgba(0,0,0,0.06)] sm:shadow-none">Peak Motor Power</td>
                   {comparedVehicles.map(v => (
                     <td key={v.id} className="p-3.5 font-mono text-stone-800">
                       {v.specs.motorPeakPowerKw} kW ({(v.specs.motorPeakPowerKw * 1.341).toFixed(1)} bhp)
@@ -352,7 +352,7 @@ export const CompareMatrix: React.FC = () => {
                 </tr>
 
                 <tr className="divide-x divide-stone-200 hover:bg-stone-50/50">
-                  <td className="p-3.5 font-semibold text-stone-600">Instant Wheel Torque</td>
+                  <td className="p-3.5 font-semibold text-stone-600 sticky left-0 z-10 bg-white border-r border-stone-200 shadow-[2px_0_6px_rgba(0,0,0,0.06)] sm:shadow-none">Instant Wheel Torque</td>
                   {comparedVehicles.map(v => (
                     <td key={v.id} className="p-3.5 font-mono text-stone-800">
                       {v.specs.motorPeakTorqueNm} Nm
@@ -368,7 +368,7 @@ export const CompareMatrix: React.FC = () => {
                 </tr>
 
                 <tr className="divide-x divide-stone-200 hover:bg-stone-50/50">
-                  <td className="p-3.5 font-semibold text-stone-600">Petrol Counterpart Model</td>
+                  <td className="p-3.5 font-semibold text-stone-600 sticky left-0 z-10 bg-white border-r border-stone-200 shadow-[2px_0_6px_rgba(0,0,0,0.06)] sm:shadow-none">Petrol Counterpart Model</td>
                   {comparedVehicles.map(v => (
                     <td key={v.id} className="p-3.5 font-bold text-stone-900">
                       {v.equivalentPetrolBenchmark?.modelName || 'Honda Activa 6G (109.5cc)'}
@@ -377,7 +377,7 @@ export const CompareMatrix: React.FC = () => {
                 </tr>
 
                 <tr className="divide-x divide-stone-200 hover:bg-stone-50/50">
-                  <td className="p-3.5 font-semibold text-stone-600">Power &amp; Torque Matchup</td>
+                  <td className="p-3.5 font-semibold text-stone-600 sticky left-0 z-10 bg-white border-r border-stone-200 shadow-[2px_0_6px_rgba(0,0,0,0.06)] sm:shadow-none">Power &amp; Torque Matchup</td>
                   {comparedVehicles.map(v => (
                     <td key={v.id} className="p-3.5 text-xs text-stone-700">
                       {v.equivalentPetrolBenchmark?.powerComparisonSummary || 'EV provides superior instant acceleration'}
@@ -386,7 +386,7 @@ export const CompareMatrix: React.FC = () => {
                 </tr>
 
                 <tr className="divide-x divide-stone-200 hover:bg-stone-50/50">
-                  <td className="p-3.5 font-semibold text-stone-600">Petrol On-Road Price in TG</td>
+                  <td className="p-3.5 font-semibold text-stone-600 sticky left-0 z-10 bg-white border-r border-stone-200 shadow-[2px_0_6px_rgba(0,0,0,0.06)] sm:shadow-none">Petrol On-Road Price in TG</td>
                   {comparedVehicles.map(v => (
                     <td key={v.id} className="p-3.5 font-mono text-stone-800">
                       {v.equivalentPetrolBenchmark ? formatINR(v.equivalentPetrolBenchmark.petrolOnRoadTG) : '₹98,500'}
@@ -402,7 +402,7 @@ export const CompareMatrix: React.FC = () => {
                 </tr>
 
                 <tr className="divide-x divide-stone-200 hover:bg-stone-50/50">
-                  <td className="p-3.5 font-semibold text-stone-600">Underseat Boot Space</td>
+                  <td className="p-3.5 font-semibold text-stone-600 sticky left-0 z-10 bg-white border-r border-stone-200 shadow-[2px_0_6px_rgba(0,0,0,0.06)] sm:shadow-none">Underseat Boot Space</td>
                   {comparedVehicles.map(v => (
                     <td key={v.id} className="p-3.5 font-bold text-stone-900">
                       {v.specs.bootSpaceLiters ? `${v.specs.bootSpaceLiters} Liters` : 'No Underseat Boot (Motorcycle)'}
@@ -411,7 +411,7 @@ export const CompareMatrix: React.FC = () => {
                 </tr>
 
                 <tr className="divide-x divide-stone-200 hover:bg-stone-50/50">
-                  <td className="p-3.5 font-semibold text-stone-600">Battery Warranty</td>
+                  <td className="p-3.5 font-semibold text-stone-600 sticky left-0 z-10 bg-white border-r border-stone-200 shadow-[2px_0_6px_rgba(0,0,0,0.06)] sm:shadow-none">Battery Warranty</td>
                   {comparedVehicles.map(v => (
                     <td key={v.id} className="p-3.5 text-stone-800">
                       {v.warranty.batteryYears} Years / {v.warranty.batteryKm.toLocaleString()} km
@@ -429,13 +429,13 @@ export const CompareMatrix: React.FC = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={clearCompare}
-              className="px-4 py-2 rounded-full bg-stone-200 hover:bg-stone-300 text-stone-800 font-semibold transition cursor-pointer"
+              className="px-4 py-3 min-h-[44px] rounded-full bg-stone-200 hover:bg-stone-300 text-stone-800 font-semibold transition cursor-pointer"
             >
               Clear All
             </button>
             <button
               onClick={closeCompare}
-              className="px-5 py-2 rounded-full bg-stone-900 hover:bg-stone-800 text-white font-bold transition cursor-pointer shadow-xs"
+              className="px-5 py-3 min-h-[44px] rounded-full bg-stone-900 hover:bg-stone-800 text-white font-bold transition cursor-pointer shadow-xs"
             >
               Back to Catalog
             </button>

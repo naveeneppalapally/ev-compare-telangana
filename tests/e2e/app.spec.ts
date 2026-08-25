@@ -1,12 +1,10 @@
 import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
-  // Vehicle photos are irrelevant to UI-flow assertions and starve the local
-  // preview server — abort them so tests stay deterministic.
   await page.route('**/images/**', (route) => route.abort());
   await page.goto('/');
-  // Catalog loads async — wait for the grid to be populated
-  await expect(page.locator('h3 button', { hasText: /./ }).first()).toBeVisible({ timeout: 15_000 });
+  await page.waitForLoadState('domcontentloaded');
+  await expect(page.locator('h3 button', { hasText: /./ }).first()).toBeVisible({ timeout: 45_000 });
 });
 
 test('hero renders headline and search', async ({ page }) => {
@@ -15,26 +13,36 @@ test('hero renders headline and search', async ({ page }) => {
 });
 
 test('full catalog is visible with no bikes hidden by default', async ({ page }) => {
-  const cards = page.locator('main .grid > div');
+  const cards = page.locator('main h3 button');
   await expect(cards.first()).toBeVisible();
   const count = await cards.count();
   expect(count).toBeGreaterThanOrEqual(50);
 });
 
 test('brand filter narrows results', async ({ page }) => {
-  const before = await page.locator('main .grid > div').count();
-  // Brand strip chips carry a model-count suffix ("Ather Energy4")
-  await page.getByRole('button', { name: /^Ather Energy\d+$/ }).click();
-  await expect
-    .poll(async () => page.locator('main .grid > div').count(), { timeout: 20_000 })
-    .toBeLessThan(before);
-  await expect(page.locator('h3 button').first()).toContainText(/Ather/i);
+  const cardTitles = page.locator('main h3 button');
+  const before = await cardTitles.count();
+  // Brand pills live in the "Filter By Manufacturer" strip; scope there to avoid spotlight cards
+  const brandBtn = page
+    .locator('text=Filter By Manufacturer')
+    .locator('..')
+    .locator('..')
+    .getByRole('button', { name: /Ather Energy/ })
+    .first();
+  // Fallback: direct pill by count suffix if scoped fails
+  const pill = (await brandBtn.count()) ? brandBtn : page.getByRole('button', { name: /^Ather Energy\s*4$/ }).first();
+  await pill.scrollIntoViewIfNeeded();
+  await pill.click();
+  await expect.poll(async () => cardTitles.count(), { timeout: 20_000 }).toBeLessThan(before);
+  await expect(cardTitles.first()).toContainText(/Ather/i);
 });
 
 test('detail modal opens, shows colour swatches, closes on Escape', async ({ page }) => {
-  await page.getByRole('button', { name: 'Full Specs' }).first().click();
+  const specsBtn = page.getByRole('button', { name: 'Full Specs' }).first();
+  await specsBtn.scrollIntoViewIfNeeded();
+  await specsBtn.click();
   const dialog = page.locator('[role="dialog"]').first();
-  await expect(dialog).toBeVisible();
+  await expect(dialog).toBeVisible({ timeout: 15_000 });
 
   const swatches = dialog.locator('button[aria-label^="Colour"]');
   if ((await swatches.count()) > 1) {

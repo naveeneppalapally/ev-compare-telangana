@@ -113,42 +113,42 @@ Generated via EV Compare Telangana Portal (2026)`;
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 overflow-y-auto bg-stone-900/60 backdrop-blur-md animate-fadeIn text-stone-900"
+      className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 overflow-y-auto bg-stone-900/60 backdrop-blur-md animate-fadeIn text-stone-900 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] sm:pt-4 sm:pb-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="price-modal-title"
     >
       <div className="fixed inset-0" onClick={handleClose} />
 
-      <div className="relative w-full max-w-4xl bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[92vh]">
+      <div className="relative w-full max-w-4xl bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[100dvh] sm:max-h-[92vh]">
         
         {/* Header */}
-        <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-stone-50/90 border-b border-stone-200 backdrop-blur-md">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-stone-900 text-white flex items-center justify-center shadow-xs">
+        <div className="sticky top-0 z-20 flex items-center justify-between gap-2 px-4 sm:px-6 py-3 sm:py-4 bg-stone-50/90 border-b border-stone-200 backdrop-blur-md flex-wrap sm:flex-nowrap">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <div className="w-10 h-10 rounded-2xl bg-stone-900 text-white flex items-center justify-center shadow-xs shrink-0">
               <ShieldCheck className="w-5 h-5" />
             </div>
-            <div>
-              <h2 id="price-modal-title" className="text-base sm:text-lg font-bold text-stone-900 leading-tight">
+            <div className="min-w-0">
+              <h2 id="price-modal-title" className="text-base sm:text-lg font-bold text-stone-900 leading-tight truncate">
                 Telangana On-Road Price Calculator
               </h2>
-              <p className="text-xs text-stone-500 font-medium">
+              <p className="text-xs text-stone-500 font-medium truncate">
                 Official statutory calculations under G.O. Ms No. 41 (2024–2026)
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0 flex-wrap">
             <button
               onClick={handleCopyQuote}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold border border-stone-300 transition cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-2.5 min-h-[44px] rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold border border-stone-300 transition cursor-pointer"
             >
               {isCopied ? <Check className="w-3.5 h-3.5 text-stone-900" /> : <Share2 className="w-3.5 h-3.5 text-stone-600" />}
               <span>{isCopied ? 'Quote Copied!' : 'Copy Quote'}</span>
             </button>
             <button
               onClick={handleClose}
-              className="p-2 rounded-full text-stone-400 hover:text-stone-900 hover:bg-stone-100 transition cursor-pointer"
+              className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full text-stone-400 hover:text-stone-900 hover:bg-stone-100 transition cursor-pointer shrink-0"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
@@ -366,16 +366,16 @@ Generated via EV Compare Telangana Portal (2026)`;
 
         {/* Footer CTAs */}
         <div className="p-4 sm:px-6 border-t border-stone-200 bg-stone-50/90 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={() => openDetail(model.id)}
-              className="px-3.5 py-1.5 rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
+              className="px-3.5 py-2.5 min-h-[44px] rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
             >
               Full Specifications
             </button>
             <button
               onClick={() => openSavingsModal(model.id)}
-              className="px-3.5 py-1.5 rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
+              className="px-3.5 py-2.5 min-h-[44px] rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
             >
               Petrol vs EV ROI
             </button>
@@ -383,7 +383,7 @@ Generated via EV Compare Telangana Portal (2026)`;
 
           <button
             onClick={handleCopyQuote}
-            className="flex items-center gap-1.5 px-5 py-2 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition cursor-pointer shadow-xs"
+            className="flex items-center gap-1.5 px-5 py-2.5 min-h-[44px] rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition cursor-pointer shadow-xs"
           >
             {isCopied ? <Check className="w-3.5 h-3.5" /> : <Share2 className="w-3.5 h-3.5" />}
             <span>{isCopied ? 'Copied Quote' : 'Copy Official Quote'}</span>

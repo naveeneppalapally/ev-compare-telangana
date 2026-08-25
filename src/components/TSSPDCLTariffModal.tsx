@@ -62,30 +62,30 @@ export const TSSPDCLTariffModal: React.FC<TSSPDCLTariffModalProps> = ({
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 overflow-y-auto bg-stone-900/60 backdrop-blur-md animate-fadeIn text-stone-900"
+      className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 overflow-y-auto bg-stone-900/60 backdrop-blur-md animate-fadeIn text-stone-900 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] sm:pt-4 sm:pb-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="tariff-modal-title"
     >
       <div className="fixed inset-0" onClick={onClose} />
 
-      <div className="relative w-full max-w-4xl bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[92vh]">
+      <div className="relative w-full max-w-4xl bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[100dvh] sm:max-h-[92vh]">
         {/* Header */}
-        <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-stone-50/90 border-b border-stone-200 backdrop-blur-md">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-stone-900 text-white flex items-center justify-center shadow-xs">
+        <div className="sticky top-0 z-20 flex items-center justify-between gap-2 px-4 sm:px-6 py-3 sm:py-4 bg-stone-50/90 border-b border-stone-200 backdrop-blur-md flex-wrap sm:flex-nowrap">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <div className="w-10 h-10 rounded-2xl bg-stone-900 text-white flex items-center justify-center shadow-xs shrink-0">
               <Zap className="w-5 h-5" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
+            <div className="min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
                 <h2 id="tariff-modal-title" className="text-base sm:text-lg font-bold text-stone-900 leading-tight">
                   TSSPDCL Domestic EV Charging Bill Calculator
                 </h2>
-                <span className="rounded-full bg-stone-200 px-2 py-0.5 text-[10px] font-bold text-stone-800">
+                <span className="rounded-full bg-stone-200 px-2 py-0.5 text-[10px] font-bold text-stone-800 shrink-0">
                   LT-I Domestic Tariff
                 </span>
               </div>
-              <p className="text-xs text-stone-500 font-medium">
+              <p className="text-xs text-stone-500 font-medium truncate">
                 Official Telangana slab billing impact when charging your electric two-wheeler at home
               </p>
             </div>
@@ -93,7 +93,7 @@ export const TSSPDCLTariffModal: React.FC<TSSPDCLTariffModalProps> = ({
 
           <button
             onClick={onClose}
-            className="p-2 rounded-full text-stone-400 hover:text-stone-900 hover:bg-stone-100 transition cursor-pointer"
+            className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full text-stone-400 hover:text-stone-900 hover:bg-stone-100 transition cursor-pointer shrink-0"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -191,14 +191,15 @@ export const TSSPDCLTariffModal: React.FC<TSSPDCLTariffModalProps> = ({
 
           {/* Official TSSPDCL Slabs Table */}
           <div className="rounded-2xl border border-stone-200 overflow-hidden bg-white">
-            <div className="bg-stone-50 px-5 py-3 border-b border-stone-200 flex items-center justify-between">
+            <div className="bg-stone-50 px-5 py-3 border-b border-stone-200 flex items-center justify-between gap-2 flex-wrap">
               <span className="text-xs font-bold text-stone-800 uppercase tracking-wider">
                 Official TSSPDCL LT-I Domestic Telescopic Tariff Schedule
               </span>
               <span className="text-xs font-mono font-bold text-stone-500">Telangana Electricity Regulatory Commission</span>
             </div>
 
-            <table className="w-full text-left text-xs border-collapse">
+            <div className="overflow-x-auto -mx-6 px-6 sm:mx-0 sm:px-0">
+            <table className="w-full text-left text-xs border-collapse min-w-[560px]">
               <thead>
                 <tr className="bg-stone-50 text-[11px] font-bold text-stone-500 uppercase border-b border-stone-200">
                   <th className="p-3">Consumption Slab</th>
@@ -234,15 +235,16 @@ export const TSSPDCLTariffModal: React.FC<TSSPDCLTariffModalProps> = ({
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="p-4 sm:px-6 border-t border-stone-200 bg-stone-50/90 flex items-center justify-between text-xs text-stone-500">
+        <div className="p-4 sm:px-6 border-t border-stone-200 bg-stone-50/90 flex flex-wrap items-center justify-between gap-3 text-xs text-stone-500">
           <span>Even at the highest ₹9.00/unit slab, an EV costs under ₹0.32/km compared to ₹2.44/km for petrol.</span>
           <button
             onClick={onClose}
-            className="px-5 py-2 rounded-full bg-stone-900 hover:bg-stone-800 text-white font-bold transition cursor-pointer shadow-xs"
+            className="px-5 py-2.5 min-h-[44px] rounded-full bg-stone-900 hover:bg-stone-800 text-white font-bold transition cursor-pointer shadow-xs"
           >
             Close Calculator
           </button>

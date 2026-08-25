@@ -122,26 +122,26 @@ export const RangeSimulatorModal: React.FC<RangeSimulatorModalProps> = ({
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 overflow-y-auto bg-stone-900/60 backdrop-blur-md animate-fadeIn text-stone-900"
+      className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 overflow-y-auto bg-stone-900/60 backdrop-blur-md animate-fadeIn text-stone-900 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] sm:pt-4 sm:pb-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="range-modal-title"
     >
       <div className="fixed inset-0" onClick={handleClose} />
 
-      <div className="relative w-full max-w-4xl bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[92vh]">
+      <div className="relative w-full max-w-4xl bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[100dvh] sm:max-h-[92vh]">
         
         {/* Header */}
-        <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-stone-50/90 border-b border-stone-200 backdrop-blur-md">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-stone-900 text-white flex items-center justify-center shadow-xs">
+        <div className="sticky top-0 z-20 flex items-center justify-between gap-2 px-4 sm:px-6 py-3 sm:py-4 bg-stone-50/90 border-b border-stone-200 backdrop-blur-md">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <div className="w-10 h-10 rounded-2xl bg-stone-900 text-white flex items-center justify-center shadow-xs shrink-0">
               <Gauge className="w-5 h-5" />
             </div>
-            <div>
-              <h2 id="range-modal-title" className="text-base sm:text-lg font-bold text-stone-900 leading-tight">
+            <div className="min-w-0">
+              <h2 id="range-modal-title" className="text-base sm:text-lg font-bold text-stone-900 leading-tight truncate">
                 Real-World Range &amp; Weather Simulator
               </h2>
-              <p className="text-xs text-stone-500 font-medium">
+              <p className="text-xs text-stone-500 font-medium truncate">
                 Physics-based battery range estimation for Telangana conditions
               </p>
             </div>
@@ -149,7 +149,7 @@ export const RangeSimulatorModal: React.FC<RangeSimulatorModalProps> = ({
 
           <button
             onClick={handleClose}
-            className="p-2 rounded-full text-stone-400 hover:text-stone-900 hover:bg-stone-100 transition cursor-pointer"
+            className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full text-stone-400 hover:text-stone-900 hover:bg-stone-100 transition cursor-pointer shrink-0"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -249,7 +249,7 @@ export const RangeSimulatorModal: React.FC<RangeSimulatorModalProps> = ({
                   <button
                     key={m}
                     onClick={() => setMode(m)}
-                    className={`py-1.5 px-2 rounded-lg font-bold text-xs capitalize transition cursor-pointer ${
+                    className={`py-2.5 min-h-[44px] px-2 rounded-lg font-bold text-xs capitalize transition cursor-pointer ${
                       mode === m
                         ? 'bg-stone-900 text-white'
                         : 'bg-white text-stone-700 border border-stone-300 hover:bg-stone-100'
@@ -272,7 +272,7 @@ export const RangeSimulatorModal: React.FC<RangeSimulatorModalProps> = ({
                   <button
                     key={key}
                     onClick={() => setPayload(key)}
-                    className={`py-1.5 px-2 rounded-lg font-semibold text-xs transition cursor-pointer ${
+                    className={`py-2.5 min-h-[44px] px-2 rounded-lg font-semibold text-xs transition cursor-pointer ${
                       payload === key
                         ? 'bg-stone-900 text-white'
                         : 'bg-white text-stone-700 border border-stone-300 hover:bg-stone-100'
@@ -295,7 +295,7 @@ export const RangeSimulatorModal: React.FC<RangeSimulatorModalProps> = ({
                   <button
                     key={key}
                     onClick={() => setTemperature(key)}
-                    className={`py-1.5 px-2 rounded-lg font-semibold text-xs transition cursor-pointer ${
+                    className={`py-2.5 min-h-[44px] px-2 rounded-lg font-semibold text-xs transition cursor-pointer ${
                       temperature === key
                         ? 'bg-stone-900 text-white'
                         : 'bg-white text-stone-700 border border-stone-300 hover:bg-stone-100'
@@ -318,7 +318,7 @@ export const RangeSimulatorModal: React.FC<RangeSimulatorModalProps> = ({
                   <button
                     key={key}
                     onClick={() => setTraffic(key)}
-                    className={`py-1.5 px-2 rounded-lg font-semibold text-xs transition cursor-pointer ${
+                    className={`py-2.5 min-h-[44px] px-2 rounded-lg font-semibold text-xs transition cursor-pointer ${
                       traffic === key
                         ? 'bg-stone-900 text-white'
                         : 'bg-white text-stone-700 border border-stone-300 hover:bg-stone-100'
@@ -340,7 +340,7 @@ export const RangeSimulatorModal: React.FC<RangeSimulatorModalProps> = ({
                   <button
                     key={key}
                     onClick={() => setTerrain(key)}
-                    className={`py-1.5 px-2 rounded-lg font-semibold text-xs transition cursor-pointer ${
+                    className={`py-2.5 min-h-[44px] px-2 rounded-lg font-semibold text-xs transition cursor-pointer ${
                       terrain === key
                         ? 'bg-stone-900 text-white'
                         : 'bg-white text-stone-700 border border-stone-300 hover:bg-stone-100'
@@ -372,16 +372,16 @@ export const RangeSimulatorModal: React.FC<RangeSimulatorModalProps> = ({
 
         {/* Footer */}
         <div className="p-4 sm:px-6 border-t border-stone-200 bg-stone-50/90 flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={() => openPriceModal(currentEV.id)}
-              className="px-3.5 py-1.5 rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
+              className="px-3.5 py-2.5 min-h-[44px] rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
             >
               On-Road Price Breakdown
             </button>
             <button
               onClick={() => openSavingsModal(currentEV.id)}
-              className="px-3.5 py-1.5 rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
+              className="px-3.5 py-2.5 min-h-[44px] rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
             >
               Petrol vs EV Savings
             </button>
@@ -389,7 +389,7 @@ export const RangeSimulatorModal: React.FC<RangeSimulatorModalProps> = ({
 
           <button
             onClick={() => toggleCompare(currentEV.id)}
-            className={`px-5 py-2 rounded-full text-xs font-bold transition cursor-pointer shadow-xs ${
+            className={`px-5 py-2.5 min-h-[44px] rounded-full text-xs font-bold transition cursor-pointer shadow-xs ${
               compared
                 ? 'bg-stone-900 text-white'
                 : 'bg-stone-900 hover:bg-stone-800 text-white'
