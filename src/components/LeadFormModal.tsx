@@ -9,6 +9,9 @@ interface LeadFormModalProps {
   modelId: string;
   modelName: string;
   rtoCode?: string;
+  dealerName?: string;
+  dealerId?: string;
+  slot?: string;
 }
 
 type SubmitState = 'idle' | 'sending' | 'done' | 'failed';
@@ -18,7 +21,10 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({
   onClose,
   modelId,
   modelName,
-  rtoCode
+  rtoCode,
+  dealerName,
+  dealerId,
+  slot
 }) => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -40,6 +46,9 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({
       modelId,
       modelName,
       rtoCode,
+      dealerName: dealerName || undefined,
+      dealerId: dealerId || undefined,
+      slot: slot || undefined,
       name: name.trim(),
       phone,
       area: area.trim(),
@@ -61,7 +70,13 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({
         localStorage.setItem('ev_tg_leads', JSON.stringify(queue));
       }
       setState('done');
-      trackEvent('lead_submit', { model: modelId });
+      {
+        const props: Record<string, string | number | boolean> = { model: modelId };
+        if (dealerName) props.dealer = dealerName;
+        else if (dealerId) props.dealer = dealerId;
+        if (slot) props.slot = slot;
+        trackEvent('lead_submit', props);
+      }
     } catch {
       setState('failed');
     }
@@ -90,7 +105,7 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({
             <CheckCircle2 className="w-10 h-10 text-signal mx-auto mb-3" />
             <h2 className="text-lg font-bold text-ink">Test ride requested</h2>
             <p className="text-sm text-stone-500 mt-1.5 leading-relaxed">
-              A dealer near you will call {phone} about the {modelName} within 1–2 working days.
+              {dealerName ? `${dealerName} will call` : 'A dealer near you will call'} {phone} about the {modelName}{slot ? ` for ${slot}` : ''} within 1–2 working days.
             </p>
             <button
               type="button"
@@ -108,6 +123,26 @@ export const LeadFormModal: React.FC<LeadFormModalProps> = ({
             <p className="text-xs text-stone-500 mt-1">
               {modelName} · No purchase obligation
             </p>
+            {(dealerName || slot) && (
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                {dealerName && (
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-paper border border-quartzite text-[11px] font-semibold text-ink">
+                    <MapPin className="w-3 h-3 text-stone-500" />
+                    {dealerName}
+                  </span>
+                )}
+                {slot && (
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-milestone/10 border border-milestone/20 text-[11px] font-semibold text-milestone">
+                    {slot}
+                  </span>
+                )}
+                {rtoCode && (
+                  <span className="inline-flex items-center px-2 py-1 rounded-full bg-stone-100 border border-stone-200 text-[10px] font-bold tracking-wide uppercase text-stone-600">
+                    {rtoCode}
+                  </span>
+                )}
+              </div>
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-3.5 mt-5">
               <div>

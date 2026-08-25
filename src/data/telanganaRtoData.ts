@@ -11,6 +11,73 @@ export const TSSPDCL_DOMESTIC_TARIFF_SLABS = [
   { slab: 'Weighted Average', ratePerKwh: 7.50 }
 ];
 
+/**
+ * Calculate telescopic TSSPDCL domestic bill for a given total unit consumption.
+ * Uses simple LT-I slabs defined above (₹5.50/₹7.20/₹8.50) — matches the
+ * weighted average ₹7.50/kWh baseline used across the savings engine.
+ * Returns rounded ₹.
+ */
+export function calculateTSSPDCLBill(totalUnits: number): number {
+  if (totalUnits <= 0) return 0;
+  let bill = 0;
+  let remaining = totalUnits;
+  const slab1 = Math.min(remaining, 100);
+  bill += slab1 * 5.50;
+  remaining -= slab1;
+  if (remaining <= 0) return Math.round(bill);
+  const slab2 = Math.min(remaining, 100);
+  bill += slab2 * 7.20;
+  remaining -= slab2;
+  if (remaining <= 0) return Math.round(bill);
+  bill += remaining * 8.50;
+  return Math.round(bill);
+}
+// Alias for task wording — allows `import { calculateBill }`
+export const calculateBill = calculateTSSPDCLBill;
+
+/**
+ * Detailed LT-I telescopic billing as displayed in TSSPDCLTariffModal
+ * (Categories A/B/C with customer charges & electricity duty).
+ * Kept for reference and advanced calculators.
+ */
+export function calculateDetailedTSSPDCLBill(units: number): number {
+  let bill = 0;
+  if (units <= 100) {
+    if (units <= 50) bill = units * 1.95;
+    else bill = 50 * 1.95 + (units - 50) * 3.10;
+  } else if (units <= 200) {
+    if (units <= 100) bill = units * 3.40;
+    else bill = 100 * 3.40 + (units - 100) * 4.80;
+  } else {
+    if (units <= 200) bill = units * 5.10;
+    else if (units <= 300) bill = 200 * 5.10 + (units - 200) * 7.70;
+    else if (units <= 400) bill = 200 * 5.10 + 100 * 7.70 + (units - 300) * 9.00;
+    else bill = 200 * 5.10 + 100 * 7.70 + 100 * 9.00 + (units - 400) * 9.50;
+  }
+  const customerCharge = units <= 100 ? 25 : units <= 200 ? 50 : 70;
+  const electricityDuty = units * 0.06;
+  return Math.round(bill + customerCharge + electricityDuty);
+}
+
+export interface IncrementalEVCostResult {
+  baseBill: number;
+  combinedBill: number;
+  incrementalCost: number;
+  effectiveRate: number;
+  evUnits: number;
+  flatCost: number;
+}
+
+export function calculateIncrementalEVCost(baseUnits: number, evUnits: number, flatRate: number = TELANGANA_AVG_ELECTRICITY_RATE): IncrementalEVCostResult {
+  const safeEvUnits = Math.max(0, Math.round(evUnits));
+  const baseBill = calculateTSSPDCLBill(baseUnits);
+  const combinedBill = calculateTSSPDCLBill(baseUnits + safeEvUnits);
+  const incrementalCost = Math.max(0, combinedBill - baseBill);
+  const effectiveRate = safeEvUnits > 0 ? incrementalCost / safeEvUnits : 0;
+  const flatCost = Math.round(safeEvUnits * flatRate);
+  return { baseBill, combinedBill, incrementalCost, effectiveRate, evUnits: safeEvUnits, flatCost };
+}
+
 export const TELANGANA_EV_POLICY_HIGHLIGHTS = {
   policyName: "Telangana Electric Vehicle & Energy Storage Policy (2024–2026)",
   governmentOrder: "G.O. Ms No. 41 (Transport, Roads & Buildings Department)",

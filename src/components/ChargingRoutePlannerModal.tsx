@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { useCompare } from '../context/CompareContext';
 import {
   X,
@@ -11,7 +11,8 @@ import {
   Compass,
   Layers,
   CheckCircle2,
-  Sliders
+  Sliders,
+  AlertTriangle
 } from 'lucide-react';
 import {
   TELANGANA_CHARGING_STATIONS
@@ -24,6 +25,17 @@ import { calculateHighwayRoutePlan } from '../utils/routePlannerEngine';
 import { getEVModelById } from '../data/evModels';
 import type { EVModel } from '../types/ev';
 import type { HighwayCorridor } from '../types/charging';
+import {
+  STATION_STATUS_KEY,
+  type LiveStatus,
+  type StationStatusMap,
+  type StationStatusEntry,
+  loadStationStatusMap,
+  formatRelativeTime,
+  isBrokenWarning,
+  getStatusDotClass,
+  getStatusTextClass
+} from '../utils/stationLiveStatus';
 
 interface ChargingRoutePlannerModalProps {
   isOpen: boolean;
@@ -73,6 +85,34 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
       setActiveTab('route_planner');
     }
   }, [initialCorridorId]);
+
+  // Live crowdsourced status: map stationId -> { status, timestamp, count }
+  const [stationStatusMap, setStationStatusMap] = useState<StationStatusMap>(() => loadStationStatusMap());
+
+  // Keep relative timestamps fresh without user action (e.g., "2h ago" -> "3h ago")
+  const [, setTick] = useState(0);
+  useEffect(() => {
+    const id = window.setInterval(() => setTick(t => t + 1), 60_000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  const handleLiveStatusUpdate = useCallback((stationId: string, status: LiveStatus) => {
+    setStationStatusMap(prev => {
+      const prevEntry: StationStatusEntry | undefined = prev[stationId];
+      const nextEntry: StationStatusEntry = {
+        status,
+        timestamp: new Date().toISOString(),
+        count: (prevEntry?.count ?? 0) + 1
+      };
+      const next: StationStatusMap = { ...prev, [stationId]: nextEntry };
+      try {
+        localStorage.setItem(STATION_STATUS_KEY, JSON.stringify(next));
+      } catch {
+        // ignore quota / private mode errors
+      }
+      return next;
+    });
+  }, []);
 
   // Near-me: sort filtered stations by haversine distance once location is granted
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
@@ -567,25 +607,39 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-                {sortedStations.map(station => (
+                {sortedStations.map(station => {
+                  const live: StationStatusEntry | undefined = stationStatusMap[station.id];
+                  const showWarning = isBrokenWarning(live);
+                  const dotClass = live ? getStatusDotClass(live.status) : '';
+                  const textClass = live ? getStatusTextClass(live.status) : '';
+                  return (
                   <div
                     key={station.id}
                     className="p-4 rounded-2xl bg-white border border-stone-200 hover:border-stone-300 hover:shadow-md transition flex flex-col justify-between gap-3"
                   >
                     <div className="space-y-2">
                       <div className="flex items-start justify-between gap-2">
-                        <div>
-                          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase bg-stone-100 text-stone-800 border border-stone-200">
-                            {station.network}
-                          </span>
-                          <h4 className="text-sm font-bold text-stone-900 mt-1">
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase bg-stone-100 text-stone-800 border border-stone-200">
+                              {station.network}
+                            </span>
+                            {live && (
+                              <span
+                                className={`w-2.5 h-2.5 rounded-full border-2 border-white shadow-sm shrink-0 ${dotClass}`}
+                                title={`Live: ${live.status} • ${formatRelativeTime(live.timestamp)}`}
+                                aria-label={`Live status: ${live.status}`}
+                              />
+                            )}
+                          </div>
+                          <h4 className="text-sm font-bold text-ink mt-1">
                             {station.name}
                           </h4>
                           <p className="text-xs text-stone-500">
                             {station.cityOrHighway} • {station.district}
                           </p>
                         </div>
-                        <span className="text-xs font-mono font-bold text-stone-900 bg-stone-100 px-2.5 py-1 rounded-lg border border-stone-200 shrink-0">
+                        <span className="text-xs font-mono font-bold text-ink bg-paper px-2.5 py-1 rounded-lg border border-quartzite shrink-0">
                           {station.maxPowerKw} kW
                         </span>
                       </div>
@@ -617,6 +671,71 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                           </span>
                         ))}
                       </div>
+
+                      {/* Aggregate warning: >2 broken within 24h */}
+                      {showWarning && live && (
+                        <div className="flex items-start gap-1.5 px-2.5 py-2 rounded-xl bg-red-50 border border-red-200 text-[11px] font-semibold text-red-700 leading-snug">
+                          <AlertTriangle className="w-3.5 h-3.5 shrink-0 mt-px" />
+                          <span>Multiple recent reports: station may be unreliable — {live.count} broken reports within 24h</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Live crowdsourced status */}
+                    <div className="space-y-2 pt-2 border-t border-stone-100">
+                      <div className="flex flex-wrap gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() => handleLiveStatusUpdate(station.id, 'working')}
+                          aria-pressed={live?.status === 'working'}
+                          aria-label="Mark station as working"
+                          className={`px-2.5 py-1 rounded-full text-[11px] font-bold border transition cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ink ${
+                            live?.status === 'working'
+                              ? 'bg-signal text-white border-signal shadow-xs'
+                              : 'bg-white text-stone-700 border-stone-200 hover:bg-signal/10 hover:border-signal/30 hover:text-signal'
+                          }`}
+                        >
+                          ● Working
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleLiveStatusUpdate(station.id, 'occupied')}
+                          aria-pressed={live?.status === 'occupied'}
+                          aria-label="Mark station as occupied"
+                          className={`px-2.5 py-1 rounded-full text-[11px] font-bold border transition cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ink ${
+                            live?.status === 'occupied'
+                              ? 'bg-amber-500 text-white border-amber-500 shadow-xs'
+                              : 'bg-white text-stone-700 border-stone-200 hover:bg-amber-50 hover:border-amber-300 hover:text-amber-700'
+                          }`}
+                        >
+                          ● Occupied
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleLiveStatusUpdate(station.id, 'broken')}
+                          aria-pressed={live?.status === 'broken'}
+                          aria-label="Mark station as broken"
+                          className={`px-2.5 py-1 rounded-full text-[11px] font-bold border transition cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ink ${
+                            live?.status === 'broken'
+                              ? 'bg-red-500 text-white border-red-500 shadow-xs'
+                              : 'bg-white text-stone-700 border-stone-200 hover:bg-red-50 hover:border-red-300 hover:text-red-700'
+                          }`}
+                        >
+                          ● Broken
+                        </button>
+                      </div>
+                      <div className="flex items-center gap-1.5 text-[11px] min-h-[16px]">
+                        {live ? (
+                          <>
+                            <span className={`w-2 h-2 rounded-full shrink-0 ${dotClass}`} aria-hidden="true" />
+                            <span className="text-stone-600 font-medium">
+                              Last: {formatRelativeTime(live.timestamp)} by you • {live.count} check-in{live.count !== 1 ? 's' : ''} · <span className={`font-bold capitalize ${textClass}`}>{live.status}</span>
+                            </span>
+                          </>
+                        ) : (
+                          <span className="text-stone-400 font-medium">No check-ins yet — be first to report</span>
+                        )}
+                      </div>
                     </div>
 
                     <div className="flex items-center justify-between pt-2 border-t border-stone-100">
@@ -628,7 +747,7 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                           href={station.googleMapsUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition shadow-xs"
+                          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-ink hover:bg-stone-800 text-white text-xs font-bold transition shadow-xs"
                         >
                           <span>Directions</span>
                           <ExternalLink className="w-3.5 h-3.5" />
@@ -636,7 +755,8 @@ export const ChargingRoutePlannerModal: React.FC<ChargingRoutePlannerModalProps>
                       )}
                     </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>

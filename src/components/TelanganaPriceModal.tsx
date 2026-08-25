@@ -10,6 +10,7 @@ import {
   TELANGANA_RTOS, 
   getRtoByCode 
 } from '../data/telanganaRtoData';
+import { InsuranceQuotesPanel } from './InsuranceQuotesPanel';
 import { VehicleImage } from './VehicleImage';
 import {
   X,
@@ -358,6 +359,9 @@ Generated via EV Compare Telangana Portal (2026)`;
               </div>
             </div>
           </div>
+
+          {/* Insurance Comparison — collapsible stack */}
+          <InsuranceQuotesPanel model={model} onRoadPrice={breakdown.totalTelanganaOnRoadPrice} />
         </div>
 
         {/* Footer CTAs */}

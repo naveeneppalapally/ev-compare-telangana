@@ -10,6 +10,7 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { Footer } from './components/Footer';
 
 // Modals are code-split: each chunk loads on first open instead of bloating the initial bundle
+const AdminPanel = React.lazy(() => import('./components/AdminPanel'));
 const CompareMatrix = React.lazy(() => import('./components/CompareMatrix'));
 const TelanganaPriceModal = React.lazy(() => import('./components/TelanganaPriceModal'));
 const VehicleDetailModal = React.lazy(() => import('./components/VehicleDetailModal'));
@@ -113,6 +114,25 @@ const AppContent: React.FC = () => {
 };
 
 export const App: React.FC = () => {
+  const [isAdmin, setIsAdmin] = React.useState(
+    () => typeof window !== 'undefined' && window.location.hash === '#admin'
+  );
+  React.useEffect(() => {
+    const onHash = () => setIsAdmin(window.location.hash === '#admin');
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+
+  if (isAdmin) {
+    return (
+      <ErrorBoundary>
+        <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-sm text-stone-500">Loading admin…</div>}>
+          <AdminPanel />
+        </Suspense>
+      </ErrorBoundary>
+    );
+  }
+
   return (
     <ErrorBoundary>
       <CompareProvider>

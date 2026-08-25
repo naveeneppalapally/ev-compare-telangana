@@ -7,8 +7,12 @@ import { shareComparison } from '../utils/shareCard';
 import { getBrandSource } from '../data/brandSources';
 import { EV_CATALOG_LAST_UPDATED } from '../data/catalogMeta';
 import { LeadFormModal } from './LeadFormModal';
+import { DealerStockPanel } from './DealerStockPanel';
 import { trackEvent } from '../utils/analytics';
 import { VehicleImage } from './VehicleImage';
+import { ResaleForecastCard } from './ResaleForecastCard';
+import { OwnerReportsPanel } from './OwnerReportsPanel';
+import { ColourVisualizerModal } from './ColourVisualizerModal';
 import {
   X,
   Check,
@@ -16,7 +20,9 @@ import {
   Share2,
   CheckCircle2,
   ThumbsUp,
-  ThumbsDown
+  ThumbsDown,
+  Expand,
+  Palette
 } from 'lucide-react';
 
 export interface VehicleDetailModalProps {
@@ -56,6 +62,7 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   const [isCopied, setIsCopied] = useState(false);
   const [isLeadOpen, setIsLeadOpen] = useState(false);
+  const [isColourVisualizerOpen, setIsColourVisualizerOpen] = useState(false);
   const prevTitleRef = React.useRef<string | null>(null);
   const prevCanonicalRef = React.useRef<string | null>(null);
 
@@ -219,11 +226,16 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
             <div className="space-y-5">
               <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                 <div className="md:col-span-6">
-                  <div className="h-64 rounded-2xl overflow-hidden bg-white border border-stone-200 relative flex items-center justify-center p-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsColourVisualizerOpen(true)}
+                    className="group relative h-64 w-full rounded-2xl overflow-hidden bg-white border border-stone-200 flex items-center justify-center p-2 cursor-pointer hover:border-quartzite hover:shadow-md transition text-left"
+                    aria-label={`Open colour visualizer — ${selectedColor.name} — ${model.colorOptions?.length ?? 0} colours`}
+                  >
                     <VehicleImage
                       model={model}
                       colorName={selectedColorIndex > 0 ? selectedColor?.name : null}
-                      className="w-full h-full"
+                      className="w-full h-full pointer-events-none"
                       objectFit="contain"
                     />
                     {selectedColor && (
@@ -232,12 +244,16 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                         <span className="text-[9px] text-stone-400 ml-1.5">indicative</span>
                       </span>
                     )}
+                    <span className="absolute top-3 right-3 z-10 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-ink/90 backdrop-blur-md text-white text-[11px] font-semibold border border-white/10 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition">
+                      <Expand className="w-3 h-3" />
+                      Expand
+                    </span>
                     <div className="absolute bottom-3 left-3 bg-ink/90 backdrop-blur-md text-white text-[11px] font-mono px-2.5 py-1 rounded-lg z-10">
                       {model.isIceBenchmark
                         ? '109.5cc Petrol ICE'
                         : `${model.specs.batteryCapacityKwh} kWh • ${model.specs.batteryChemistry}`}
                     </div>
-                  </div>
+                  </button>
 
                   {model.colorOptions && model.colorOptions.length > 0 && (
                     <div className="mt-3 px-1 space-y-1.5">
@@ -265,6 +281,14 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                             }`}
                           />
                         ))}
+                        <button
+                          type="button"
+                          onClick={() => setIsColourVisualizerOpen(true)}
+                          className="ml-1 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-paper border border-quartzite text-ink text-xs font-semibold hover:bg-white hover:border-stone-300 transition cursor-pointer"
+                        >
+                          <Palette className="w-3.5 h-3.5 text-stone-500" />
+                          View all colours
+                        </button>
                       </div>
                     </div>
                   )}
@@ -303,6 +327,12 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                       Save {formatINR(priceBreakdown.savingsFromTelanganaPolicy)} under G.O. Ms No. 41 in Telangana
                     </span>
                   </div>
+
+                  {/* Dealer Stock Near You */}
+                  <DealerStockPanel
+                    model={model}
+                    rtoCode={selectedRtoCode || selectedDistrict.rtoCode}
+                  />
 
                   <div className="grid grid-cols-2 gap-2 text-xs">
                     <div className="p-3 rounded-xl bg-stone-50 border border-stone-200">
@@ -521,8 +551,42 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                   })}
                 </ul>
               </div>
+
+              <ResaleForecastCard model={model} />
             </div>
           )}
+
+          {/* Collapsible Resale & Battery Forecast — visible across all tabs */}
+          <details className="rounded-2xl bg-white border border-stone-200 overflow-hidden group">
+            <summary className="flex items-center justify-between px-4 py-3 bg-stone-50/70 cursor-pointer list-none select-none">
+              <span className="text-xs font-bold text-ink flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-signal" />
+                3-Year Resale & Battery Forecast — Telangana Heat (32°C avg)
+              </span>
+              <span className="text-[11px] font-semibold px-2 py-1 rounded-full bg-white border border-stone-200 text-stone-600 group-open:rotate-180 transition">
+                ⌄
+              </span>
+            </summary>
+            <div className="p-4 border-t border-stone-200">
+              <ResaleForecastCard model={model} />
+            </div>
+          </details>
+
+          {/* Owner Real-World Range Reports — collapsible, below resale card */}
+          <details className="rounded-2xl bg-white border border-stone-200 overflow-hidden group">
+            <summary className="flex items-center justify-between px-4 py-3 bg-stone-50/70 cursor-pointer list-none select-none">
+              <span className="text-xs font-bold text-ink flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-milestone" />
+                Owner Real-World Range Reports — {model.name}
+              </span>
+              <span className="text-[11px] font-semibold px-2 py-1 rounded-full bg-white border border-stone-200 text-stone-600 group-open:rotate-180 transition">
+                ⌄
+              </span>
+            </summary>
+            <div className="p-4 border-t border-stone-200">
+              <OwnerReportsPanel model={model} />
+            </div>
+          </details>
 
           {/* TAB 6: PROS & CONS */}
           {activeTab === 'pros-cons' && (
@@ -613,6 +677,13 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
         modelId={model.id}
         modelName={`${model.brand} ${model.name}`}
         rtoCode={selectedRtoCode || selectedDistrict.rtoCode}
+      />
+
+      <ColourVisualizerModal
+        isOpen={isColourVisualizerOpen}
+        onClose={() => setIsColourVisualizerOpen(false)}
+        model={model}
+        initialColourIndex={selectedColorIndex}
       />
     </div>
   );

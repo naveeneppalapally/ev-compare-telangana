@@ -16,8 +16,13 @@ import {
   Check,
   Share2,
   Sliders,
-  Gauge
+  Gauge,
+  Zap
 } from 'lucide-react';
+import {
+  TSSPDCL_DOMESTIC_TARIFF_SLABS,
+  calculateIncrementalEVCost
+} from '../data/telanganaRtoData';
 
 export interface SavingsCalculatorModalProps {
   model?: EVModel | null;
@@ -83,6 +88,7 @@ export const SavingsCalculatorModal: React.FC<SavingsCalculatorModalProps> = ({
   const [petrolPrice] = useState<number>(contextPetrolPrice || FINANCIAL_BENCHMARKS.HYDERABAD_PETROL_PRICE_PER_LITER);
   const [petrolMileage, setPetrolMileage] = useState<number>(benchmark.petrolMileageKmpl);
   const [electricityRate, setElectricityRate] = useState<number>(contextElectricityRate || FINANCIAL_BENCHMARKS.TSSPDCL_DOMESTIC_TARIFF_PER_KWH);
+  const [householdUnits, setHouseholdUnits] = useState<number>(150);
   const [rtoCode] = useState<string>(contextRtoCode || selectedDistrict?.rtoCode || 'TG-09');
 
   useEffect(() => {
@@ -119,6 +125,52 @@ export const SavingsCalculatorModal: React.FC<SavingsCalculatorModalProps> = ({
     });
   }, [activeModel, dailyKm, daysPerMonth, petrolPrice, petrolMileage, electricityRate]);
 
+  // Personalized incremental cost using true TSSPDCL telescopic slabs
+  const personalizedMetrics = useMemo(() => {
+    if (!activeModel) return null;
+    const batteryKwh = Number(activeModel.specs.batteryCapacityKwh) || 3.0;
+    const cityRange = Number(activeModel.specs.realWorldCityRangeKm) || 100;
+    const whPerKm = cityRange > 0 ? Math.round((batteryKwh * 1000) / cityRange) : FINANCIAL_BENCHMARKS.DEFAULT_EV_WH_PER_KM;
+    const gridKwhPerKm = (whPerKm / 1000) / FINANCIAL_BENCHMARKS.CHARGER_EFFICIENCY_FACTOR;
+    const monthlyKmVal = dailyKm * daysPerMonth;
+    const evKwhRounded = Math.max(0, Math.round(monthlyKmVal * gridKwhPerKm));
+    const inc = calculateIncrementalEVCost(householdUnits, evKwhRounded, electricityRate);
+    const personalizedEvPowerCostPerKm = evKwhRounded > 0 ? inc.incrementalCost / Math.max(1, monthlyKmVal) : 0;
+    const petrolFuelCostPerKm = petrolPrice / Math.max(1, petrolMileage);
+    const petrolMaintPerKm = FINANCIAL_BENCHMARKS.PETROL_MAINTENANCE_PER_KM;
+    const petrolTotalCostPerKm = petrolFuelCostPerKm + petrolMaintPerKm;
+    const evMaintPerKm = FINANCIAL_BENCHMARKS.EV_MAINTENANCE_PER_KM;
+    const personalizedEvTotalCostPerKm = personalizedEvPowerCostPerKm + evMaintPerKm;
+    const monthlyPetrolCost = Math.round(monthlyKmVal * petrolTotalCostPerKm);
+    const personalizedMonthlyEvCost = Math.round(inc.incrementalCost + monthlyKmVal * evMaintPerKm);
+    const personalizedMonthlySavings = monthlyPetrolCost - personalizedMonthlyEvCost;
+    const flatMonthlyEvCost = Math.round(evKwhRounded * electricityRate + monthlyKmVal * evMaintPerKm);
+    const flatMonthlySavings = monthlyPetrolCost - flatMonthlyEvCost;
+    return {
+      whPerKm,
+      gridKwhPerKm,
+      monthlyKm: monthlyKmVal,
+      evKwh: evKwhRounded,
+      baseBill: inc.baseBill,
+      combinedBill: inc.combinedBill,
+      incrementalCost: inc.incrementalCost,
+      effectiveRate: inc.effectiveRate,
+      flatCost: inc.flatCost,
+      flatRate: electricityRate,
+      personalizedEvPowerCostPerKm: Math.round(personalizedEvPowerCostPerKm * 100) / 100,
+      personalizedEvTotalCostPerKm: Math.round(personalizedEvTotalCostPerKm * 100) / 100,
+      monthlyPetrolCost,
+      personalizedMonthlyEvCost,
+      personalizedMonthlySavings,
+      flatMonthlyEvCost,
+      flatMonthlySavings,
+      savingsDelta: personalizedMonthlySavings - flatMonthlySavings,
+    };
+  }, [activeModel, dailyKm, daysPerMonth, householdUnits, electricityRate, petrolPrice, petrolMileage]);
+
+  const displayMonthlySavings = personalizedMetrics?.personalizedMonthlySavings ?? savingsResult?.monthlySavings ?? 0;
+  const displayEvPowerCostPerKm = personalizedMetrics?.personalizedEvPowerCostPerKm ?? savingsResult?.evPowerCostPerKm ?? 0.25;
+
   const evPricing = useMemo(() => {
     if (!activeModel) return null;
     return calculateTelanganaOnRoadPrice(activeModel, rtoCode);
@@ -132,13 +184,17 @@ export const SavingsCalculatorModal: React.FC<SavingsCalculatorModalProps> = ({
 
   const handleCopySummary = useCallback(() => {
     if (!savingsResult || !activeModel || !evPricing) return;
+    const p = personalizedMetrics;
     const text = `EV ROI Summary (Telangana Edition):
 Vehicle: ${activeModel.brand} ${activeModel.name}
 Telangana Net On-Road (${rtoCode}): ${formatINR(evPricing.totalTelanganaOnRoadPrice)} (₹0 Road Tax Applied)
 Equivalent Petrol Benchmark: ${benchmark.modelName} (Mileage: ${petrolMileage} km/L)
 Daily Commute: ${dailyKm} km/day (${dailyKm * daysPerMonth} km/mo)
+Household base: ${householdUnits} units — EV adds ${p?.evKwh ?? 0} kWh/mo
 
-Monthly Cash Saved: ${formatINR(savingsResult.monthlySavings)}
+Monthly Cash Saved (flat @₹${electricityRate.toFixed(2)}): ${formatINR(savingsResult.monthlySavings)}
+Your true incremental cost: ${p ? formatINR(p.incrementalCost) : '—'} (at ${householdUnits} units base, effective ₹${p?.effectiveRate.toFixed(2) ?? '—'}/kWh) vs flat ${p ? formatINR(p.flatCost) : '—'}
+Monthly Cash Saved (personalized): ${p ? formatINR(p.personalizedMonthlySavings) : formatINR(savingsResult.monthlySavings)}
 Annual Net Savings: ${formatINR(savingsResult.totalAnnualNetSavings)}
 5-Year Operational Savings: ${formatINR(savingsResult.fiveYearSavings)}
 Breakeven Payback: ${savingsResult.paybackFormatted || `${savingsResult.paybackPeriodMonths} Months`}
@@ -149,7 +205,7 @@ Generated by EV Compare Telangana (2026)`;
       if (copyTimeoutRef.current) window.clearTimeout(copyTimeoutRef.current);
       copyTimeoutRef.current = window.setTimeout(() => setIsCopied(false), 2500);
     }).catch(() => {});
-  }, [savingsResult, activeModel, evPricing, rtoCode, benchmark, petrolMileage, dailyKm, daysPerMonth]);
+  }, [savingsResult, activeModel, evPricing, rtoCode, benchmark, petrolMileage, dailyKm, daysPerMonth, personalizedMetrics, householdUnits, electricityRate]);
 
   useEffect(() => () => { if (copyTimeoutRef.current) window.clearTimeout(copyTimeoutRef.current); }, []);
 
@@ -312,15 +368,18 @@ Generated by EV Compare Telangana (2026)`;
                 </div>
                 <div className="flex justify-between text-xs">
                   <span className="text-stone-500">EV ({activeModel.brand}):</span>
-                  <span className="font-mono font-bold text-stone-900">
-                    ₹{(savingsResult.evPowerCostPerKm || 0.25).toFixed(2)}/km
+                  <span className="font-mono font-bold text-stone-900" title={personalizedMetrics ? `Personalized ₹${personalizedMetrics.personalizedEvPowerCostPerKm.toFixed(2)}/km at ${householdUnits}u base (effective ₹${personalizedMetrics.effectiveRate.toFixed(2)}/kWh)` : undefined}>
+                    ₹{(displayEvPowerCostPerKm || 0.25).toFixed(2)}/km
+                    {personalizedMetrics && personalizedMetrics.effectiveRate !== electricityRate && (
+                      <span className="ml-1 text-[10px] font-normal text-amber-700"> (pers. ₹{personalizedMetrics.effectiveRate.toFixed(2)})</span>
+                    )}
                   </span>
                 </div>
               </div>
               <div className="pt-2 border-t border-stone-200 flex justify-between items-center text-xs">
                 <span className="text-stone-600 font-semibold">Monthly Saving:</span>
                 <span className="font-mono font-bold text-stone-900">
-                  {formatINR(savingsResult.monthlySavings)}/mo
+                  {formatINR(displayMonthlySavings)}/mo
                 </span>
               </div>
             </div>
@@ -330,10 +389,13 @@ Generated by EV Compare Telangana (2026)`;
                 Monthly Cash Saved
               </span>
               <div className="text-2xl font-black text-stone-900 font-mono tracking-tight my-1">
-                {formatINR(savingsResult.monthlySavings)}<span className="text-xs font-normal text-stone-500"> / mo</span>
+                {formatINR(displayMonthlySavings)}<span className="text-xs font-normal text-stone-500"> / mo</span>
               </div>
               <p className="text-[11px] text-stone-600">
-                {formatINR(savingsResult.annualSavings)} saved every year on fuel
+                {formatINR(personalizedMetrics ? personalizedMetrics.personalizedMonthlySavings * 12 : savingsResult.annualSavings)} saved every year on fuel
+                {personalizedMetrics && personalizedMetrics.savingsDelta !== 0 && (
+                  <span className="ml-1 text-[10px] text-stone-500"> (flat {formatINR(savingsResult.annualSavings)}/yr)</span>
+                )}
               </p>
               <div className="pt-2 border-t border-stone-200 flex justify-between items-center text-xs">
                 <span className="text-stone-600 font-semibold">5-Yr Operational:</span>
@@ -409,7 +471,7 @@ Generated by EV Compare Telangana (2026)`;
 
               <div>
                 <div className="flex justify-between mb-1">
-                  <span className="text-stone-600">TSSPDCL Rate:</span>
+                  <span className="text-stone-600">TSSPDCL Rate (flat):</span>
                   <span className="font-mono font-bold text-stone-900">₹{electricityRate.toFixed(2)} / kWh</span>
                 </div>
                 <input
@@ -422,6 +484,86 @@ Generated by EV Compare Telangana (2026)`;
                   className="w-full h-1.5 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-stone-900"
                 />
               </div>
+            </div>
+
+            {/* Personalized TSSPDCL incremental slab — household units */}
+            <div className="mt-4 p-4 rounded-2xl bg-white border border-stone-200 shadow-sm space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-stone-700 flex items-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5 text-amber-600" />
+                  Personalized TSSPDCL Slab — Monthly household units
+                </span>
+                <span className="text-[10px] font-semibold text-stone-500 bg-stone-100 px-2 py-0.5 rounded-full">
+                  {TSSPDCL_DOMESTIC_TARIFF_SLABS[0].ratePerKwh.toFixed(2)} / {TSSPDCL_DOMESTIC_TARIFF_SLABS[1].ratePerKwh.toFixed(2)} / {TSSPDCL_DOMESTIC_TARIFF_SLABS[2].ratePerKwh.toFixed(2)} slabs
+                </span>
+              </div>
+
+              <div>
+                <div className="flex justify-between mb-1 text-xs">
+                  <span className="text-stone-600">Monthly household units:</span>
+                  <span className="font-mono font-bold text-stone-900">{householdUnits} units</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="range"
+                    min="0"
+                    max="500"
+                    step="10"
+                    value={householdUnits}
+                    onChange={(e) => setHouseholdUnits(Number(e.target.value))}
+                    className="flex-1 h-1.5 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-stone-900"
+                  />
+                  <input
+                    type="number"
+                    min={0}
+                    max={500}
+                    step={10}
+                    value={householdUnits}
+                    onChange={(e) => {
+                      const v = Number(e.target.value);
+                      if (!Number.isNaN(v)) setHouseholdUnits(Math.min(500, Math.max(0, v)));
+                    }}
+                    className="w-20 py-1 px-2 bg-white border border-stone-300 rounded-lg text-xs font-mono font-bold text-stone-900 text-center focus:outline-none focus:ring-2 focus:ring-stone-900/10"
+                  />
+                </div>
+                <div className="flex justify-between text-[10px] text-stone-500 mt-1 font-mono">
+                  <span>0 units</span>
+                  <span>500 units</span>
+                </div>
+              </div>
+
+              {personalizedMetrics && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                  <div className="p-3 rounded-xl bg-amber-50 border border-amber-200">
+                    <div className="text-[11px] font-bold text-amber-800 uppercase tracking-wider">Your true incremental cost: {formatINR(personalizedMetrics.incrementalCost)} (at {householdUnits} units base)</div>
+                    <div className="mt-1 space-y-1 font-mono text-[11px] text-stone-700">
+                      <div className="flex justify-between"><span>EV units added:</span><span className="font-bold">{personalizedMetrics.evKwh} kWh / mo</span></div>
+                      <div className="flex justify-between"><span>Effective rate:</span><span className="font-bold text-stone-900">₹{personalizedMetrics.effectiveRate.toFixed(2)} / kWh</span></div>
+                      <div className="flex justify-between"><span>Base bill ({householdUnits}u):</span><span>{formatINR(personalizedMetrics.baseBill)}</span></div>
+                      <div className="flex justify-between"><span>Combined bill ({householdUnits + personalizedMetrics.evKwh}u):</span><span>{formatINR(personalizedMetrics.combinedBill)}</span></div>
+                      <div className="flex justify-between pt-1 border-t border-amber-200"><span>EV cost/km (personalized):</span><span className="font-bold">₹{personalizedMetrics.personalizedEvPowerCostPerKm.toFixed(2)}/km</span></div>
+                    </div>
+                  </div>
+                  <div className="p-3 rounded-xl bg-stone-50 border border-stone-200">
+                    <div className="text-[11px] font-bold text-stone-500 uppercase tracking-wider">Flat vs personalized</div>
+                    <div className="mt-1 space-y-1 font-mono text-[11px] text-stone-700">
+                      <div className="flex justify-between"><span>Flat cost @ ₹{personalizedMetrics.flatRate.toFixed(2)}:</span><span className="font-bold">{formatINR(personalizedMetrics.flatCost)}</span></div>
+                      <div className="flex justify-between"><span>True incremental cost:</span><span className="font-bold text-stone-900">{formatINR(personalizedMetrics.incrementalCost)}</span></div>
+                      <div className="flex justify-between pt-1 border-t border-stone-200">
+                        <span>Delta vs flat:</span>
+                        <span className={`font-bold ${personalizedMetrics.savingsDelta >= 0 ? 'text-green-700' : 'text-red-700'}`}>
+                          {personalizedMetrics.savingsDelta >= 0 ? '+' : ''}{formatINR(personalizedMetrics.savingsDelta)} / mo
+                        </span>
+                      </div>
+                      <div className="flex justify-between"><span>Monthly savings (personalized):</span><span className="font-bold text-stone-900">{formatINR(personalizedMetrics.personalizedMonthlySavings)}/mo</span></div>
+                      <div className="flex justify-between text-stone-500"><span>Flat savings:</span><span>{formatINR(personalizedMetrics.flatMonthlySavings)}/mo</span></div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              <p className="text-[10px] text-stone-500 leading-relaxed">
+                Calculated as <span className="font-mono font-semibold">bill({householdUnits}+EV) − bill({householdUnits})</span> using TSSPDCL domestic telescopic slabs (₹5.50/₹7.20/₹8.50). Your effective ₹/kWh replaces the flat ₹{electricityRate.toFixed(2)} for true TCO.
+              </p>
             </div>
           </div>
 
