@@ -138,16 +138,16 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
     }
   };
 
-  return (
+   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 overflow-y-auto bg-stone-900/60 backdrop-blur-md animate-fadeIn text-stone-900 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] sm:pt-4 sm:pb-4"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto bg-stone-900/60 backdrop-blur-md animate-fadeIn text-stone-900"
       role="dialog"
       aria-modal="true"
       aria-labelledby="detail-modal-title"
     >
       <div className="fixed inset-0" onClick={handleClose} />
 
-      <div className="relative w-full max-w-4xl bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[100dvh] sm:max-h-[92vh]">
+      <div className="relative w-full max-w-4xl bg-white border border-stone-200 rounded-[20px] sm:rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[calc(100dvh-1.5rem)] sm:max-h-[92vh]">
         
         {/* Header — stacks on mobile so nothing overlaps or truncates to "U.." */}
         <div className="sticky top-0 z-20 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-4 sm:px-6 py-3 sm:py-4 bg-white/95 border-b border-stone-200 backdrop-blur-md">
@@ -229,7 +229,7 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                   <button
                     type="button"
                     onClick={() => setIsColourVisualizerOpen(true)}
-                    className="group relative h-64 w-full rounded-2xl overflow-hidden bg-white border border-stone-200 flex items-center justify-center p-2 cursor-pointer hover:border-quartzite hover:shadow-md transition text-left"
+                    className="group relative aspect-[16/11] w-full rounded-2xl overflow-hidden bg-gradient-to-b from-stone-50 to-white border border-stone-200 flex items-center justify-center p-4 sm:p-6 cursor-pointer hover:border-stone-300 hover:shadow-md transition text-left"
                     aria-label={`Open colour visualizer — ${selectedColor.name} — ${model.colorOptions?.length ?? 0} colours`}
                   >
                     <VehicleImage
@@ -237,6 +237,7 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                       colorName={selectedColorIndex > 0 ? selectedColor?.name : null}
                       className="w-full h-full pointer-events-none"
                       objectFit="contain"
+                      imageClassName="drop-shadow-sm"
                     />
                     {selectedColor && (
                       <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-ink text-[11px] font-semibold px-2.5 py-1 rounded-lg z-10 border border-stone-200">
@@ -626,17 +627,17 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
           )}
         </div>
 
-        {/* Footer CTAs */}
-        <div className="p-4 sm:px-6 border-t border-stone-200 bg-stone-50/90 flex flex-wrap items-center justify-between gap-3">
+        {/* Footer CTAs — stacked on mobile, row on desktop */}
+        <div className="p-4 sm:px-6 border-t border-stone-200 bg-white flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={() => {
                 setActivePriceModalModel(model);
                 handleClose();
               }}
-              className="px-3.5 py-2.5 min-h-[44px] rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
+              className="px-4 py-2.5 min-h-[44px] rounded-full bg-stone-900 text-white hover:bg-black text-xs font-semibold transition cursor-pointer shadow-sm"
             >
-              On-Road Price Breakdown
+              On-Road Price
             </button>
             <button
               onClick={() => {
@@ -644,9 +645,9 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                 setIsRangeSimulatorModalOpen(true);
                 handleClose();
               }}
-              className="px-3.5 py-2.5 min-h-[44px] rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
+              className="px-4 py-2.5 min-h-[44px] rounded-full bg-white hover:bg-stone-50 text-stone-700 border border-stone-200 text-xs font-semibold transition cursor-pointer"
             >
-              Range Simulator
+              Range
             </button>
             {!model.isIceBenchmark && (
               <button
@@ -654,9 +655,9 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
                   openRoutePlanner(model.id);
                   handleClose();
                 }}
-                className="px-3.5 py-2.5 min-h-[44px] rounded-full bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 text-xs font-bold transition cursor-pointer"
+                className="px-4 py-2.5 min-h-[44px] rounded-full bg-white hover:bg-stone-50 text-stone-700 border border-stone-200 text-xs font-semibold transition cursor-pointer"
               >
-                ⚡ Highway Route Simulation
+                Highway Route
               </button>
             )}
           </div>
@@ -666,9 +667,9 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
               if (compared) removeFromCompare(model.id);
               else addToCompare(model.id);
             }}
-            className="px-5 py-2.5 min-h-[44px] rounded-full bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition cursor-pointer shadow-xs"
+            className="w-full sm:w-auto px-6 py-3 min-h-[48px] rounded-full bg-ink hover:bg-black text-white text-sm font-bold transition cursor-pointer shadow-md flex items-center justify-center gap-2"
           >
-            {compared ? 'In Comparison Tray ✓' : '+ Add to Compare'}
+            {compared ? 'In Comparison ✓' : '+ Add to Compare'}
           </button>
         </div>
       </div>
