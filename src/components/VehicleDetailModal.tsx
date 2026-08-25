@@ -149,45 +149,45 @@ export const VehicleDetailModal: React.FC<VehicleDetailModalProps> = ({
 
       <div className="relative w-full max-w-4xl bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden z-10 my-auto flex flex-col max-h-[100dvh] sm:max-h-[92vh]">
         
-        {/* Header */}
-        <div className="sticky top-0 z-20 flex items-center justify-between gap-2 px-4 sm:px-6 py-3 sm:py-4 bg-stone-50/90 border-b border-stone-200 backdrop-blur-md flex-wrap sm:flex-nowrap">
-          <div className="flex items-center gap-3 min-w-0 flex-1">
+        {/* Header — stacks on mobile so nothing overlaps or truncates to "U.." */}
+        <div className="sticky top-0 z-20 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-4 sm:px-6 py-3 sm:py-4 bg-white/95 border-b border-stone-200 backdrop-blur-md">
+          <div className="flex items-center gap-3 min-w-0">
             <div className="w-10 h-10 rounded-2xl bg-stone-900 text-white flex items-center justify-center shadow-xs shrink-0">
               <Zap className="w-5 h-5" />
             </div>
             <div className="min-w-0">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs font-bold uppercase tracking-wider text-stone-500">{model.brand}</span>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-stone-200 text-stone-800">
-                  {model.category === 'motorcycle' ? '🏍️ Motorcycle' : '🛵 Scooter'}
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-stone-500 truncate">{model.brand}</span>
+                <span className="hidden sm:inline-flex text-[10px] font-bold px-2 py-0.5 rounded-full bg-stone-100 text-stone-600 border border-stone-200 shrink-0">
+                  {model.category === 'motorcycle' ? 'Motorcycle' : 'Scooter'}
                 </span>
               </div>
-              <h2 id="detail-modal-title" className="text-base sm:text-lg font-extrabold text-stone-900 leading-tight truncate">
+              <h2 id="detail-modal-title" className="text-base sm:text-lg font-bold text-stone-900 leading-tight">
                 {model.name}
               </h2>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 flex-wrap shrink-0">
+          <div className="flex items-center gap-2 self-stretch sm:self-auto">
             {!model.isIceBenchmark && (
               <button
                 type="button"
                 onClick={() => setIsLeadOpen(true)}
-                className="flex items-center gap-1.5 px-4 py-2.5 min-h-[44px] rounded-full bg-milestone hover:bg-[#0077ed] text-white text-xs font-semibold transition cursor-pointer"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2.5 min-h-[44px] rounded-full bg-[#0a84ff] hover:bg-[#0077ed] text-white text-xs font-semibold transition cursor-pointer shadow-sm"
               >
                 <span>Book Test Ride</span>
               </button>
             )}
             <button
               onClick={handleShare}
-              className="flex items-center gap-1.5 px-3.5 py-2.5 min-h-[44px] rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold border border-stone-300 transition cursor-pointer"
+              className="flex items-center justify-center gap-1.5 px-3.5 py-2.5 min-h-[44px] rounded-full bg-white hover:bg-stone-50 text-stone-700 text-xs font-semibold border border-stone-200 transition cursor-pointer shrink-0"
             >
               {isCopied ? <Check className="w-3.5 h-3.5 text-stone-900" /> : <Share2 className="w-3.5 h-3.5 text-stone-600" />}
-              <span>{isCopied ? 'Shared' : 'WhatsApp'}</span>
+              <span className="hidden xs:inline">{isCopied ? 'Shared' : 'WhatsApp'}</span>
             </button>
             <button
               onClick={handleClose}
-              className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full text-stone-400 hover:text-stone-900 hover:bg-stone-100 transition cursor-pointer shrink-0"
+              className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 transition cursor-pointer shrink-0"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
